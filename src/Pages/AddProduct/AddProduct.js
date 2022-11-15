@@ -25,7 +25,7 @@ export default function AddProduct() {
   }
 
   return (
-    <div className="py-6 px-headerPaddingX">
+    <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
         <h2 className="font-bold text-2xl leading-8">Добавить продукт</h2>
       </div>

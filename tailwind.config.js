@@ -22,6 +22,7 @@ module.exports = {
         homeInpWidth:'284px',
         homeSortWidth:'170px',
         addProductListWidth:'65%',
+        submitBtnsWidth:'331px',
       },
       height:{
         logoHeight:'17px',
@@ -41,6 +42,8 @@ module.exports = {
         addProductSizeBtnBg:"#9CDAFF",
         headerInpBg:"#FBFBFC",
         filterBg:'#109ef4',
+        resetBtn:'#F2F2F2',
+        submitBtnBg:'#2B3D91',
       },
       colors:{
         addProductColor:"#24283A",
@@ -53,6 +56,7 @@ module.exports = {
         supportColor:'#109EF4',
         homeColor:'#333',
         homeSortWrap:'#666',
+        russuanColor:"#2B3D91",
       },
       lineHeight:{
         lead:'150%',
