@@ -12,30 +12,30 @@ export default function Header() {
   const [langName, setLangName] = useState("Ру")
 
   const chooseName = (evt) => {
-    if (evt.target.textContent == 'Uz') {
+    if (evt.target.textContent === 'Uz') {
       setLangName('Uz')
       setFlagImg(uzbFlag)
     }
-    if (evt.target.textContent == "Us") {
+    if (evt.target.textContent === "Us") {
       setLangName('Us')
       setFlagImg(usaFlag)
     }
-    if (evt.target.textContent == "Ру") {
+    if (evt.target.textContent === "Ру") {
       setLangName('Ру')
       setFlagImg(ruFlag)
     }
 
   }
   const chooseImg = (evt) => {
-    if (evt.target.alt == 'uzb') {
+    if (evt.target.alt === 'uzb') {
       setFlagImg(uzbFlag)
       setLangName('Uz')
     }
-    if (evt.target.alt == 'usa') {
+    if (evt.target.alt === 'usa') {
       setFlagImg(usaFlag)
       setLangName('Us')
     }
-    if (evt.target.alt == 'ru') {
+    if (evt.target.alt === 'ru') {
       setFlagImg(ruFlag)
       setLangName('Ру')
     }
