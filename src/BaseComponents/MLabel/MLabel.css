@@ -1,0 +1,50 @@
+.label {
+  width: 96px;
+  height: 22px;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label_new {
+  background: #0bcc23;
+}
+
+.label_sale {
+  background: #ff5c5c;
+}
+
+.label_xit {
+  background: #ff3a3a;
+}
+
+.label_simple {
+  background: #f2f2f2;
+  color: black;
+}
+
+.label_recommend {
+  background: #22b0f8;
+}
+
+.label_paid {
+  background: #0bcc23;
+}
+
+.label_reject {
+  background: #ff3a3a;
+}
+
+.label_pending {
+  background: #ffe600;
+  color: black;
+}
+
+.label_process{
+    background: #22B0F8;
+}
