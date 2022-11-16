@@ -1,7 +1,7 @@
-import React from 'react'
-import './FormInput.css'
+import React from "react";
+import "./FormInput.css";
 
-function FormInput({name,required,type,id,placeholder }) {
+function FormInput({ name, required, type, id, placeholder }) {
   return (
     <>
       <input
@@ -13,7 +13,7 @@ function FormInput({name,required,type,id,placeholder }) {
         placeholder={placeholder}
       />
     </>
-  )
+  );
 }
 
-export default FormInput
+export default FormInput;

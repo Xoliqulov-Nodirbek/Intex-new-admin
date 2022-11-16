@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Images() {
-  return (
-    <div className=''>Images</div>
-  )
+  return <div className="">Images</div>;
 }
