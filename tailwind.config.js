@@ -6,8 +6,6 @@ module.exports = {
       margin:{
         navBarIcon:'14px',
         submitBtn:'70px',
-      margin: {
-        navBarIcon: "14px",
       },
       padding: {
         headerInpPl: "38px",
@@ -16,18 +14,6 @@ module.exports = {
         homeContentPadding: "30px",
         selectInp: "17.5px",
       },
-      width:{
-        logoWidth:'180px',
-        loginLogoWidth:'240px',
-        sitebarWidth:'253px',
-        supportWidth:'150px',
-        headerInputWidth:'260px',
-        homeInpWidth:'284px',
-        homeSortWidth:'170px',
-        addProductListWidth:'65%',
-        submitBtnsWidth:'331px',
-        douloadWrap:'682px',
-        addProW:'32%',
       width: {
         logoWidth: "180px",
         loginLogoWidth: "240px",
@@ -92,4 +78,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
