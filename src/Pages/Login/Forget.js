@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Arrow from "../../Assets/Images/LoginImg/arrow.svg";
 import Loader from "../../Assets/Images/LoginImg/loader.svg";
 import SubmitBtn from "../../BaseComponents/SubmitFormBtn/Button";
+import { toast, Toaster } from "react-hot-toast";
 import "./login.css";
 
 const env = process.env.REACT_APP_ALL_API;
@@ -23,13 +23,23 @@ function Forget() {
         email: email,
       })
       .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          window.localStorage.setItem("email", JSON.stringify(email));
+        if (res?.status === 200) {
+          window?.localStorage.setItem("email", JSON.stringify(email));
           navigate("/verification");
           setLoading(false);
-          setEmail("");
         }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err?.response?.status === 400) {
+          toast.error("Your email is incorrect");
+        } else if (err?.message === "Network Error") {
+          toast.error(err?.message);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+        setEmail("");
       });
   };
 
@@ -38,6 +48,7 @@ function Forget() {
       <div className="login_bg fixed inset-0 flex justify-center items-center">
         <div className="max-w-login_content w-full">
           <div className="flex flex-col text-center bg-white p-11 rounded-xl relative">
+            <Toaster position="top-center" reverseOrder={false} />
             <Link
               to="/"
               className="bg-blue-form_btn flex items-center justify-center w-8 h-8 rounded-lg absolute left-6 top-6"
@@ -60,18 +71,28 @@ function Forget() {
               Для сброса пароля на ваш номер телефона придет SMS-сообщение,
               через которое вы сможете обновить пароль.
             </p>
-            <form className="flex flex-col text-center" onSubmit={postRequest}>
-              <label className="flex flex-col text-start font-medium text-base">
-                Номер телефона
+            <form
+              className="flex flex-col text-center"
+              onSubmit={postRequest}
+              autoComplete="off"
+            >
+              <div className="relative">
                 <input
-                  className="text-base font-normal rounded-lg border outline-none px-3 py-2 mt-2 mb-3"
-                  type="email"
                   value={email}
-                  placeholder="Введите ваше электронной почты..."
+                  type="text"
+                  id="floating_outlined"
+                  className="block px-2.5 pb-2 pt-4 w-full text-sm bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 peer"
+                  placeholder=" "
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-              </label>
+                <label
+                  htmlFor="floating_outlined"
+                  className="absolute text-base text-black dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                >
+                  Эл.почта
+                </label>
+              </div>
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (

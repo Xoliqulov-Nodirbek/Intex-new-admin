@@ -6,6 +6,7 @@ import IsVisible from "../../Assets/Images/LoginImg/IsVisible.png";
 import Loader from "../../Assets/Images/LoginImg/loader.svg";
 import SubmitBtn from "../../BaseComponents/SubmitFormBtn/Button";
 import { useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 import "./login.css";
 
 const env = process.env.REACT_APP_ALL_API;
@@ -32,16 +33,25 @@ function NewPassword() {
           token: verificationPassword,
         })
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             navigate("/");
-            setLoading(false);
-            setNewPassword("");
-            setNewPassword1("");
           }
+        })
+        .catch((err) => {
+          if (err?.message === "Network Error") {
+            toast.error(err?.message);
+          }
+        })
+        .finally(() => {
+          setNewPassword("");
+          setNewPassword1("");
+          setLoading(false);
         });
     } else {
-      console.log("warning");
+      toast.error("Your passwords are not the same!");
+      setNewPassword("");
+      setNewPassword1("");
+      setLoading(false);
     }
   };
 
@@ -50,6 +60,7 @@ function NewPassword() {
       <div className="login_bg fixed inset-0 flex justify-center items-center">
         <div className="max-w-login_content w-full">
           <div className="flex flex-col text-center bg-white p-11 rounded-xl relative">
+            <Toaster position="top-center" reverseOrder={false} />
             <h1 className="font-bold text-3xl text-supportColor">
               INTEX-MARKET
             </h1>
@@ -57,60 +68,76 @@ function NewPassword() {
               Введите новый пароль
             </p>
             <form className="flex flex-col text-center" onSubmit={postRequest}>
-              <label className="relative flex flex-col text-start font-medium text-base text-addProductColor">
-                Новый пароль
-                <input
-                  className="text-base font-normal rounded-lg border outline-none pl-3 pr-9 py-2 mt-2 mb-5"
-                  type={icon ? "text" : "password"}
-                  value={newPassword}
-                  placeholder="Введите новый пароль..."
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required
-                />
-                {newPassword ? (
-                  <div
-                    className="cursor-pointer absolute right-0 top-[42px] mr-2"
-                    onClick={() => {
-                      setIcon(!icon);
-                    }}
+              <div className="mb-6">
+                <div className="relative">
+                  <input
+                    value={newPassword}
+                    type={icon ? "text" : "password"}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    id="outlined_success"
+                    aria-describedby="outlined_success_help"
+                    className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 focus:border-inputColor peer"
+                    placeholder=" "
+                  />
+                  {newPassword ? (
+                    <div
+                      className="cursor-pointer absolute right-0 top-3 mr-2"
+                      onClick={() => {
+                        setIcon(!icon);
+                      }}
+                    >
+                      {icon ? (
+                        <img className="w-6" src={IsVisible} alt="show_image" />
+                      ) : (
+                        <img className="w-6" src={Visible} alt="show_image" />
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <label
+                    htmlFor="outlined_success"
+                    className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-3 peer-focus:px-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
-                    {icon ? (
-                      <img className="w-6" src={IsVisible} alt="show_image" />
-                    ) : (
-                      <img className="w-6" src={Visible} alt="show_image" />
-                    )}
-                  </div>
-                ) : (
-                  ""
-                )}
-              </label>
-              <label className="relative flex flex-col text-start font-medium text-base text-addProductColor">
-                Потвердить новый пароль
-                <input
-                  className="text-base font-normal rounded-lg border outline-none pl-3 pr-9 py-2 mt-2 mb-5"
-                  type={icon1 ? "text" : "password"}
-                  value={newPassword1}
-                  placeholder="Потвердите новый пароль..."
-                  onChange={(e) => setNewPassword1(e.target.value)}
-                  required
-                />
-                {newPassword1 ? (
-                  <div
-                    className="cursor-pointer absolute right-0 top-[42px] mr-2"
-                    onClick={() => {
-                      setIcon1(!icon1);
-                    }}
+                    Введите новый пароль
+                  </label>
+                </div>
+              </div>
+              <div>
+                <div className="relative">
+                  <input
+                    value={newPassword1}
+                    type={icon1 ? "text" : "password"}
+                    onChange={(e) => setNewPassword1(e.target.value)}
+                    id="outlined_successs"
+                    aria-describedby="outlined_success_help"
+                    className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 focus:border-inputColor peer"
+                    placeholder=" "
+                  />
+                  {newPassword1 ? (
+                    <div
+                      className="cursor-pointer absolute right-0 top-3 mr-2"
+                      onClick={() => {
+                        setIcon1(!icon1);
+                      }}
+                    >
+                      {icon1 ? (
+                        <img className="w-6" src={IsVisible} alt="show_image" />
+                      ) : (
+                        <img className="w-6" src={Visible} alt="show_image" />
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <label
+                    htmlFor="outlined_successs"
+                    className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-3 peer-focus:px-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
-                    {icon1 ? (
-                      <img className="w-6" src={IsVisible} alt="show_image" />
-                    ) : (
-                      <img className="w-6" src={Visible} alt="show_image" />
-                    )}
-                  </div>
-                ) : (
-                  ""
-                )}
-              </label>
+                    Введите новый пароль
+                  </label>
+                </div>
+              </div>
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (

@@ -65,6 +65,7 @@ module.exports = {
         blue: {
           form_btn: "#2B3D90",
         },
+        inputColor: "#E3E5E5",
       },
       lineHeight: {
         lead: "150%",
