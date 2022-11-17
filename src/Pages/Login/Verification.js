@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Arrow from "../../Assets/Images/LoginImg/arrow.svg";
 import Loader from "../../Assets/Images/LoginImg/loader.svg";
 import SubmitBtn from "../../BaseComponents/SubmitFormBtn/Button";
+import { toast, Toaster } from "react-hot-toast";
 import "./login.css";
 
 const env = process.env.REACT_APP_ALL_API;
@@ -17,11 +18,9 @@ function Verification() {
   const [password4, setPassword4] = useState("");
   const [password5, setPassword5] = useState("");
   const [loading, setLoading] = useState(false);
-  const [parol, setParol] = useState();
   const [email, setEmail] = useState(
     JSON.parse(window.localStorage.getItem("email"))
   );
-
   const navigate = useNavigate();
 
   const newPassword = Number(
@@ -37,12 +36,27 @@ function Verification() {
         confirmation_code: newPassword,
       })
       .then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           window.localStorage.setItem("password", JSON.stringify(newPassword));
           navigate("/newPassword");
-          setLoading(false);
-          setPassword("");
         }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err?.response?.status === 400) {
+          toast.error("Your password is incorrect!");
+        } else if (err?.message === "Network Error") {
+          toast.error(err?.message);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+        setPassword("");
+        setPassword1("");
+        setPassword2("");
+        setPassword3("");
+        setPassword4("");
+        setPassword5("");
       });
   };
 
@@ -51,6 +65,7 @@ function Verification() {
       <div className="login_bg fixed inset-0 flex justify-center items-center">
         <div className="max-w-login_content w-full">
           <div className="flex flex-col text-center bg-white p-11 rounded-xl relative">
+            <Toaster position="top-center" reverseOrder={false} />
             <Link
               to="/forget"
               className="bg-blue-form_btn flex items-center justify-center w-8 h-8 rounded-lg absolute left-6 top-6"

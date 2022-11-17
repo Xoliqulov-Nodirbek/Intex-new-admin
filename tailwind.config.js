@@ -3,6 +3,7 @@ module.exports = {
   content: ["./src/**/*.{html,js,tsx}"],
   theme: {
     extend: {
+      6: "6px",
       margin: {
         navBarIcon: "14px",
       },
@@ -64,6 +65,7 @@ module.exports = {
         blue: {
           form_btn: "#2B3D90",
         },
+        inputColor: "#E3E5E5",
       },
       lineHeight: {
         lead: "150%",
