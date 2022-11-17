@@ -1,12 +1,12 @@
-import React from 'react'
-import './MLabel.css'
+import React from "react";
+import "./MLabel.css";
 
-function MLabel({type,children}) {
+function MLabel({ type, children }) {
   return (
     <>
-      <div className={`label ${type}`} >{children}</div>
+      <div className={`label ${type}`}>{children}</div>
     </>
-  )
+  );
 }
 
-export default MLabel
+export default MLabel;
