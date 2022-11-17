@@ -8,21 +8,6 @@ export default function AddProduct() {
   const [info, setInfo] = useState(true);
   const [img, setImg] = useState(false);
   const [atr, setAtr] = useState(false);
-  const openInfo = () => {
-    setInfo(true);
-    setImg(false);
-    setAtr(false);
-  };
-  const openImg = () => {
-    setImg(true);
-    setInfo(false);
-    setAtr(false);
-  };
-  const openAtribut = () => {
-    setAtr(true);
-    setImg(false);
-    setInfo(false);
-  };
 
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
@@ -32,7 +17,6 @@ export default function AddProduct() {
       <div className="bg-white p-6 rounded-xl">
         <ul className="flex items-center list-none space-x-4 w-addProductListWidth border-b-2">
           <li
-            onClick={() => openInfo()}
             className={` font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
           >
             Информация
@@ -40,14 +24,12 @@ export default function AddProduct() {
           </li>
           <li
             className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
-            onClick={() => openImg()}
           >
             Изображение
             {img ? <Line /> : ""}
           </li>
           <li
             className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
-            onClick={() => openAtribut()}
           >
             Атрибуты
             {atr ? <Line /> : ""}
@@ -74,9 +56,6 @@ export default function AddProduct() {
           )}
           {atr ? <AtributPage /> : ""}
         </div>
-        {info ? <Information /> : ""}
-        {img ? <ProductImgs /> : ""}
-        {atr ? <AtributPage /> : ""}
       </div>
     </div>
   );
