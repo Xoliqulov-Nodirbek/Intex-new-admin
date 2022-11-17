@@ -94,6 +94,7 @@ function Fix({ fixClass, activeText }) {
         </svg>
 
     )
+}
 function UImg({ underClass }) {
   return (
     <svg
