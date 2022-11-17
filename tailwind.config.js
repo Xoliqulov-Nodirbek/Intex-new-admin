@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       margin:{
         navBarIcon:'14px',
+        submitBtn:'70px',
       },
       padding:{
         headerInpPl:'38px',
@@ -23,6 +24,8 @@ module.exports = {
         homeSortWidth:'170px',
         addProductListWidth:'65%',
         submitBtnsWidth:'331px',
+        douloadWrap:'682px',
+        addProW:'32%',
       },
       height:{
         logoHeight:'17px',

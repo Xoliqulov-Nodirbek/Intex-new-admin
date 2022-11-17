@@ -10,6 +10,10 @@ import Settings from "./Pages/Settings/Settings";
 import AddProduct from "./Pages/AddProduct/AddProduct";
 import AddCategory from "./Pages/AddCategory/AddCategory";
 import AddAtribut from "./Pages/AddAtribut/AddAtribut";
+import Infotmation from "./Pages/AddProduct/ProductPages/Infotmation/Infotmation";
+import AtributPage from "./Pages/AddProduct/ProductPages/AtributPage/AtributPage";
+import ProductImages from "./Pages/AddProduct/ProductPages/ProductImages/Images"
+
 import "./Assets/main.css";
 
 export default function Authentication() {
@@ -26,9 +30,9 @@ export default function Authentication() {
             <Route path="/order" element={<Order />} />
             <Route path="/callBack" element={<CallBack />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/addProduct" element={<AddProduct />} />
+            <Route path="/addProduct" element={<AddProduct />}/>
             <Route path="/addCategory" element={<AddCategory />} />
-            <Route path="/addAtribut" element={<AddAtribut />} />
+            <Route path="/addAtribut" element={<AddAtribut/>} />
           </Routes>
         </div>
       </div>

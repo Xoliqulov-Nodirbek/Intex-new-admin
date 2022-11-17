@@ -45,7 +45,7 @@ export default function Header() {
       <div className='bg-white w-full py-headerPaddingTopBottom px-headerPaddingX border-b-2 flex items-center justify-between'>
         <input id='search-inp' autoComplete='off' className='w-headerInputWidth outline-none py-2.5 pr-3 pl-headerInpPl bg-headerInpBg rounded-xl' type="text" placeholder='Поиск' />
         <div className='flex items-center space-x-8'>
-          <div onClick={() => setDown(!down)} className='flex z-50 items-center cursor-pointer bg-defaultBtnBg rounded-lg py-2.5 pl-2 pr-2 relative'>
+          <div onClick={() => setDown(!down)} className='flex z-40 items-center cursor-pointer bg-defaultBtnBg rounded-lg py-2.5 pl-2 pr-2 relative'>
             <img src={flagImg} alt="ru" width="28" height="20" />
             <span className='ml-2.5'>{langName}</span>
             <img className={`${down ? "-rotate-180" : "-rotate-0"} duration-200 ml-2.5`} src={DropIcon} alt="Drop img" width="12" height="8" />
