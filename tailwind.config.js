@@ -3,9 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,js,tsx}"],
   theme: {
     extend: {
-      6: "6px",
-      margin: {
-        navBarIcon: "14px",
+      margin:{
+        navBarIcon:'14px',
+        submitBtn:'70px',
       },
       padding: {
         headerInpPl: "38px",
@@ -79,4 +79,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}
