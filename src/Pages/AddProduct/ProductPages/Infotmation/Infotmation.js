@@ -8,12 +8,34 @@ import {
   RightEquals,
   Fix,
 } from "./InfoImgs";
+function Infotmation({ submitProduct, imagesPage, atributPage }) {
 
 function Infotmation() {
   const [openInformation, setOpenInformation] = useState(true);
   const [infoEng, setInfoEng] = useState(false);
   const [infoUz, setInfoUz] = useState(false);
   const [bold, setBold] = useState(false);
+  const [under, setUnder] = useState(false);
+  const [ital, setItal] = useState(false);
+  const [fully, setFully] = useState(false);
+  const [leftSide, setLeftSide] = useState(false);
+  const [rightSide, setRightSide] = useState(false);
+  const [fixed, setFixed] = useState(false);
+  const [sel, setSel] = useState(false);
+  const [country, setCountry] = useState(false);
+  const [cate, setCate] = useState(false);
+  const handlSubmit = (evt) => {
+    evt.preventDefault();
+    imagesPage(true);
+    submitProduct(false);
+    atributPage(false);
+  };
+  const handleSeleted = () => {
+    setSel(true);
+  };
+
+  return (
+    <form onSubmit={handlSubmit} className="">
   return (
     <form className="pb-10">
       <div className={`border-b-2 ${openInformation ? "pb-6" : ""}`}>
@@ -56,6 +78,7 @@ function Infotmation() {
                   <input
                     className="p-4 rounded-lg border border-solid border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                     type="text"
+                    // onChange={(e)=>setPool({...pool, poolColor: e.target.value})}
                     placeholder="Каркасный басейн Intex прямоуголь.."
                     autoComplete="off"
                   />
@@ -63,6 +86,28 @@ function Infotmation() {
                 <div className="flex flex-col w-[100%]">
                   <label className="mb-3">Призводства</label>
                   <select
+                    onChange={handleSeleted}
+                    className={`p-selectInp rounded-lg appearance-none border border-solid ${
+                      sel ? "" : "text-addProductLinks"
+                    } border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
+                  >
+                    <option
+                      selected
+                      disabled
+                      className="text-addProductLinks"
+                      value="chance"
+                    >
+                      Выберите призводству продукта
+                    </option>
+                    <option className="text-black" value="chance">
+                      Intex
+                    </option>
+                    <option className="text-black" value="chance">
+                      Intex
+                    </option>
+                    <option className="text-black" value="chance">
+                      Intex
+                    </option>
                     id="proSelect"
                     className="p-selectInp rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                   >
@@ -79,6 +124,82 @@ function Infotmation() {
                 <div className="border-2 w-[100%] p-2.5 rounded-xl inline-block">
                   <div className="flex items-center space-x-2.5">
                     <BImg
+                      activeText={
+                        bold
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      boldClass={() => setBold(!bold)}
+                    />
+                    <UImg
+                      activeText={
+                        under
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      underClass={() => setUnder(!under)}
+                    />
+                    <IImg
+                      activeText={
+                        ital
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      italicClass={() => setItal(!ital)}
+                    />
+                    <FullEaquals
+                      activeText={
+                        fully
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      fullClass={() => {
+                        setFully(!fully);
+                        setLeftSide(false);
+                        setRightSide(false);
+                      }}
+                    />
+                    <LeftEaquals
+                      activeText={
+                        leftSide
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      leftClass={() => {
+                        setLeftSide(!leftSide);
+                        setFully(false);
+                        setRightSide(false);
+                      }}
+                    />
+                    <RightEquals
+                      activeText={
+                        rightSide
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      rightClass={() => {
+                        setRightSide(!rightSide);
+                        setFully(false);
+                        setLeftSide(false);
+                      }}
+                    />
+                    <Fix
+                      activeText={
+                        fixed
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      fixClass={() => setFixed(!fixed)}
+                    />
+                  </div>
+                  <textarea
+                    className={`mt-4 w-[100%] ${fully ? "text-center" : ""} ${
+                      leftSide ? "text-left" : ""
+                    } ${rightSide ? "text-right" : ""} placeholder:text-sm ${
+                      ital ? "italic" : ""
+                    } placeholder:font-normal ${
+                      under ? "underline" : ""
+                    } outline-none ${bold ? "font-bold" : ""} `}
                       activeText={bold ? "scale-150 duration-300" : ""}
                       boldClass={() => setBold(!bold)}
                     />
@@ -104,6 +225,12 @@ function Infotmation() {
               <div>
                 <label>Страна призводства</label>
                 <select
+                onChange={() => setCountry(true)}
+                  defaultValue={"check"}
+                  id="proSelect"
+                  className={`p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid ${
+                    country ? "" : "text-addProductLinks"
+                  } border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
                   defaultValue={"check"}
                   id="proSelect"
                   className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
@@ -111,11 +238,30 @@ function Infotmation() {
                   <option className="text-addProductLinks" value="chence">
                     Выберите страна призводства
                   </option>
+                  <option className=" text-black" value="chence">
+                    Узбекистан
+                  </option>
+                  <option className="text-black" value="chence">
+                    Узбекистан
+                  </option>
                 </select>
               </div>
               <div>
                 <label>Категория</label>
                 <select
+                onChange={() => setCate(true)}
+                  defaultValue={"check"}
+                  id="proSelect"
+                  className={`p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid ${cate ? "" : "text-addProductLinks"} border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}>
+                  <option disabled className="text-addProductLinks" value="chance">
+                    Выберите категория продукта
+                  </option>
+                  <option className="text-black" value="chance">
+                  Каркасные бассейны
+                  </option>
+                  <option className="text-black" value="chance">
+                  Каркасные бассейны
+                  </option>
                   defaultValue={"check"}
                   id="proSelect"
                   className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
@@ -185,6 +331,18 @@ function Infotmation() {
                 <div className="flex flex-col w-[100%]">
                   <label className="mb-3">production</label>
                   <select
+                  onChange={(evt) => (evt.target.value == "default" ? evt.target.classList.add("salom") : "")}
+                    id="proSelect"
+                    className={`p-selectInp rounded-lg appearance-none border border-solid  border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}>
+                    <option className="text-addProductLinks" value="default">
+                      Choose a product
+                    </option>
+                    <option className="text-black" value="chance">
+                      Intex
+                    </option>
+                    <option className="text-black" value="chance">
+                      Intex
+                    </option>
                     id="proSelect"
                     className="p-selectInp rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                   >
@@ -200,15 +358,83 @@ function Infotmation() {
                 </h3>
                 <div className="border-2 w-[100%] p-2.5 rounded-xl inline-block">
                   <div className="flex items-center space-x-2.5">
-                    <BImg boldClass={() => console.log("B")} />
-                    <UImg underClass={() => console.log("U")} />
-                    <IImg italicClass={() => console.log("I")} />
-                    <FullEaquals fullClass={() => console.log("Full")} />
-                    <LeftEaquals leftClass={() => console.log("Left")} />
-                    <RightEquals rightClass={() => console.log("Right")} />
-                    <Fix fixClass={() => console.log("Fix")} />
+                    <BImg
+                      activeText={
+                        bold
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      boldClass={() => setBold(!bold)}
+                    />
+                    <UImg
+                      activeText={
+                        under
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      underClass={() => setUnder(!under)}
+                    />
+                    <IImg
+                      activeText={
+                        ital
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      italicClass={() => setItal(!ital)}
+                    />
+                    <FullEaquals
+                      activeText={
+                        fully
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      fullClass={() => {
+                        setFully(!fully);
+                        setLeftSide(false);
+                        setRightSide(false);
+                      }}
+                    />
+                    <LeftEaquals
+                      activeText={
+                        leftSide
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      leftClass={() => {
+                        setLeftSide(!leftSide);
+                        setFully(false);
+                        setRightSide(false);
+                      }}
+                    />
+                    <RightEquals
+                      activeText={
+                        rightSide
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      rightClass={() => {
+                        setRightSide(!rightSide);
+                        setFully(false);
+                        setLeftSide(false);
+                      }}
+                    />
+                    <Fix
+                      activeText={
+                        fixed
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      fixClass={() => setFixed(!fixed)}
+                    />
                   </div>
                   <textarea
+                    className={`mt-4 w-[100%] ${fully ? "text-center" : ""} ${
+                      leftSide ? "text-left" : ""
+                    } ${rightSide ? "text-right" : ""} placeholder:text-sm ${
+                      ital ? "italic" : ""
+                    } placeholder:font-normal ${
+                      under ? "underline" : ""
+                    } outline-none ${bold ? "font-bold" : ""} `}
                     className="mt-4 w-[100%] placeholder:text-sm outline-none"
                     placeholder="Enter Product Description"
                     cols={87}
@@ -315,15 +541,83 @@ function Infotmation() {
                 </h3>
                 <div className="border-2 w-[100%] p-2.5 rounded-xl inline-block">
                   <div className="flex items-center space-x-2.5">
-                    <BImg boldClass={() => console.log("B")} />
-                    <UImg underClass={() => console.log("U")} />
-                    <IImg italicClass={() => console.log("I")} />
-                    <FullEaquals fullClass={() => console.log("Full")} />
-                    <LeftEaquals leftClass={() => console.log("Left")} />
-                    <RightEquals rightClass={() => console.log("Right")} />
-                    <Fix fixClass={() => console.log("Fix")} />
+                    <BImg
+                      activeText={
+                        bold
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      boldClass={() => setBold(!bold)}
+                    />
+                    <UImg
+                      activeText={
+                        under
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      underClass={() => setUnder(!under)}
+                    />
+                    <IImg
+                      activeText={
+                        ital
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      italicClass={() => setItal(!ital)}
+                    />
+                    <FullEaquals
+                      activeText={
+                        fully
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      fullClass={() => {
+                        setFully(!fully);
+                        setLeftSide(false);
+                        setRightSide(false);
+                      }}
+                    />
+                    <LeftEaquals
+                      activeText={
+                        leftSide
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      leftClass={() => {
+                        setLeftSide(!leftSide);
+                        setFully(false);
+                        setRightSide(false);
+                      }}
+                    />
+                    <RightEquals
+                      activeText={
+                        rightSide
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      rightClass={() => {
+                        setRightSide(!rightSide);
+                        setFully(false);
+                        setLeftSide(false);
+                      }}
+                    />
+                    <Fix
+                      activeText={
+                        fixed
+                          ? "scale-150 duration-300 border-b-2 border-blue-500 rounded-sm"
+                          : "duration-300"
+                      }
+                      fixClass={() => setFixed(!fixed)}
+                    />
                   </div>
                   <textarea
+                    className={`mt-4 w-[100%] ${fully ? "text-center" : ""} ${
+                      leftSide ? "text-left" : ""
+                    } ${rightSide ? "text-right" : ""} placeholder:text-sm ${
+                      ital ? "italic" : ""
+                    } placeholder:font-normal placeholder:no-underline ${
+                      under ? "underline" : ""
+                    } outline-none ${bold ? "font-bold" : ""} `}
                     className="mt-4 w-[100%] placeholder:text-sm outline-none"
                     placeholder="Mahsulot tavsifini kiriting"
                     cols={87}
@@ -370,6 +664,7 @@ function Infotmation() {
           </div>
         </div>
       </div>
+      <div className="flex mt-6 pb-8 items-center justify-center space-x-5">
       <div className="mt-6 flex items-center justify-center space-x-5">
         <button
           className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"

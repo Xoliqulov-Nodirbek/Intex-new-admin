@@ -47,7 +47,19 @@
     text-decoration: none;
   
 }
-
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
   body{
     font-family: 'Inter', sans-serif;
     background: #E5E5E5;
@@ -118,4 +130,29 @@
   background-size: 12px 7px;
   background-position-y: center;
   background-position-x: calc(90% + 17px);
+}
+
+.number-inp{
+  background-image: url("./Images/HomeContentImg/Text.svg");
+  background-repeat: no-repeat;
+  background-position-x:calc(94%);
+  background-position-y: center;
+}
+.number-input{
+  background-image: url("./Images/HomeContentImg/cm.svg");
+  background-repeat: no-repeat;
+  background-position-x:calc(94%);
+  background-position-y: center;
+}
+.number-input-l{
+  background-image: url("./Images/HomeContentImg/kr.svg");
+  background-repeat: no-repeat;
+  background-position-x:calc(94%);
+  background-position-y: center;
+}
+.number-input-k{
+  background-image: url("./Images/HomeContentImg/l.svg");
+  background-repeat: no-repeat;
+  background-position-x:calc(94%);
+  background-position-y: center;
 }
