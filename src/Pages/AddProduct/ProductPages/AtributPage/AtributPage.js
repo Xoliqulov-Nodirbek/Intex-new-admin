@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Plas from "../../../../Assets/Images/HomeContentImg/plas-icon.svg";
+
 export default function AtributPage() {
   const [openInformation, setOpenInformation] = useState(true);
   const [usDrop, setUsDrop] = useState(false);
   const [uzDrop, setUzDrop] = useState(false);
+
   return (
     <form className="relative">
       <span className="flex items-center absolute -top-6 cursor-pointer right-0 font-medium text-sm text-supportColor">
@@ -43,7 +45,7 @@ export default function AtributPage() {
           }`}
         >
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цена
               <input
                 className="py-4 number-inp pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -51,7 +53,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цена со скидкой
               <input
                 className="py-4 number-inp pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -59,7 +61,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Тип продукта
               <select
                 defaultValue={"check"}
@@ -73,7 +75,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex flex-col w-[32%] w-addProW font-medium text-base leading-4">
               Длина
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -81,7 +83,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Ширина
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -89,7 +91,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Высота
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -98,8 +100,8 @@ export default function AtributPage() {
               />
             </label>
           </div>
-          <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+          <div className="flex  items-center mb-6 justify-between">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цвет
               <select
                 defaultValue={"check"}
@@ -111,7 +113,7 @@ export default function AtributPage() {
                 </option>
               </select>
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Вес
               <input
                 className="py-4 number-input-l pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -119,7 +121,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Высота
               <input
                 className="py-4 number-input-k pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -129,7 +131,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Статус
               <select
                 defaultValue={"check"}
@@ -175,7 +177,7 @@ export default function AtributPage() {
           }`}
         >
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цена
               <input
                 className="py-4 number-inp pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -183,7 +185,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цена со скидкой
               <input
                 className="py-4 number-inp pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -191,7 +193,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Тип продукта
               <select
                 defaultValue={"check"}
@@ -205,7 +207,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Длина
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -213,7 +215,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Ширина
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -221,7 +223,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Высота
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -231,7 +233,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цвет
               <select
                 defaultValue={"check"}
@@ -243,7 +245,7 @@ export default function AtributPage() {
                 </option>
               </select>
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Вес
               <input
                 className="py-4 number-input-l pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -251,7 +253,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Высота
               <input
                 className="py-4 number-input-k pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -261,7 +263,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Статус
               <select
                 defaultValue={"check"}
@@ -307,7 +309,7 @@ export default function AtributPage() {
           }`}
         >
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цена
               <input
                 className="py-4 number-inp pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -315,7 +317,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цена со скидкой
               <input
                 className="py-4 number-inp pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -323,7 +325,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Тип продукта
               <select
                 defaultValue={"check"}
@@ -337,7 +339,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Длина
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -345,7 +347,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Ширина
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -353,7 +355,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Высота
               <input
                 className="py-4 number-input pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -363,7 +365,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цвет
               <select
                 defaultValue={"check"}
@@ -375,7 +377,7 @@ export default function AtributPage() {
                 </option>
               </select>
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Вес
               <input
                 className="py-4 number-input-l pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -383,7 +385,7 @@ export default function AtributPage() {
                 placeholder="0"
               />
             </label>
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Высота
               <input
                 className="py-4 number-input-k pr-4 relative mt-3 pl-4 border-2 outline-none rounded-xl"
@@ -393,7 +395,7 @@ export default function AtributPage() {
             </label>
           </div>
           <div className="flex items-center mb-6 justify-between">
-            <label className="flex flex-col w-addProW font-medium text-base leading-4">
+            <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Статус
               <select
                 defaultValue={"check"}
@@ -424,6 +426,4 @@ export default function AtributPage() {
       </div>
     </form>
   );
-
-
 }
