@@ -1,10 +1,8 @@
-
 import { useState } from "react";
 import Information from "./ProductPages/Infotmation/Infotmation";
 import ProductImgs from "./ProductPages/ProductImages/Images";
 import AtributPage from "./ProductPages/AtributPage/AtributPage";
 import Line from "./../../BaseComponents/Line/Line";
-import { useState } from "react";
 
 export default function AddProduct() {
   const [info, setInfo] = useState(true);
@@ -41,26 +39,40 @@ export default function AddProduct() {
             {info ? <Line /> : ""}
           </li>
           <li
-            className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}>
-            onClick={() => openImg()}
             className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
+            onClick={() => openImg()}
           >
             Изображение
             {img ? <Line /> : ""}
           </li>
           <li
-            className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}>
-            onClick={() => openAtribut()}
             className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
+            onClick={() => openAtribut()}
           >
             Атрибуты
             {atr ? <Line /> : ""}
           </li>
         </ul>
         <div>
-          {info ? <Information submitProduct={setInfo} imagesPage={setImg} atributPage={setAtr}/> : ""}
-          {img ? <ProductImgs  atrPage={setAtr} imagePage={setImg} productPage={setInfo}/> : ""}
-          {atr ? <AtributPage/> : ""} 
+          {info ? (
+            <Information
+              submitProduct={setInfo}
+              imagesPage={setImg}
+              atributPage={setAtr}
+            />
+          ) : (
+            ""
+          )}
+          {img ? (
+            <ProductImgs
+              atrPage={setAtr}
+              imagePage={setImg}
+              productPage={setInfo}
+            />
+          ) : (
+            ""
+          )}
+          {atr ? <AtributPage /> : ""}
         </div>
         {info ? <Information /> : ""}
         {img ? <ProductImgs /> : ""}
