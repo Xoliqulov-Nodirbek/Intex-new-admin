@@ -63,4 +63,7 @@ export default function Images({productPage,imagePage, atrPage}) {
       </div>
     </form>
   );
+import React from "react";
+export default function Images() {
+  return <div className="">Images</div>;
 }

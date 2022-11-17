@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import Plas from "../../../../Assets/Images/HomeContentImg/plas-icon.svg";
-
 export default function AtributPage() {
   const [openInformation, setOpenInformation] = useState(true);
   const [usDrop, setUsDrop] = useState(false);
   const [uzDrop, setUzDrop] = useState(false);
-
   return (
     <form className="relative">
       <span className="flex items-center absolute -top-6 cursor-pointer right-0 font-medium text-sm text-supportColor">
@@ -426,4 +424,6 @@ export default function AtributPage() {
       </div>
     </form>
   );
+
+
 }

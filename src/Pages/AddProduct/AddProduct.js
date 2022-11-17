@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 import Information from "./ProductPages/Infotmation/Infotmation";
 import ProductImgs from "./ProductPages/ProductImages/Images";
 import AtributPage from "./ProductPages/AtributPage/AtributPage";
@@ -8,7 +10,22 @@ export default function AddProduct() {
   const [info, setInfo] = useState(true);
   const [img, setImg] = useState(false);
   const [atr, setAtr] = useState(false);
- 
+  const openInfo = () => {
+    setInfo(true);
+    setImg(false);
+    setAtr(false);
+  };
+  const openImg = () => {
+    setImg(true);
+    setInfo(false);
+    setAtr(false);
+  };
+  const openAtribut = () => {
+    setAtr(true);
+    setImg(false);
+    setInfo(false);
+  };
+
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
@@ -17,6 +34,7 @@ export default function AddProduct() {
       <div className="bg-white p-6 rounded-xl">
         <ul className="flex items-center list-none space-x-4 w-addProductListWidth border-b-2">
           <li
+            onClick={() => openInfo()}
             className={` font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
           >
             Информация
@@ -24,11 +42,17 @@ export default function AddProduct() {
           </li>
           <li
             className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}>
+            onClick={() => openImg()}
+            className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
+          >
             Изображение
             {img ? <Line /> : ""}
           </li>
           <li
             className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}>
+            onClick={() => openAtribut()}
+            className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
+          >
             Атрибуты
             {atr ? <Line /> : ""}
           </li>
@@ -38,6 +62,9 @@ export default function AddProduct() {
           {img ? <ProductImgs  atrPage={setAtr} imagePage={setImg} productPage={setInfo}/> : ""}
           {atr ? <AtributPage/> : ""} 
         </div>
+        {info ? <Information /> : ""}
+        {img ? <ProductImgs /> : ""}
+        {atr ? <AtributPage /> : ""}
       </div>
     </div>
   );

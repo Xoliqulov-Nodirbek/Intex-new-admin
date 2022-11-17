@@ -9,6 +9,8 @@ import {
   Fix,
 } from "./InfoImgs";
 function Infotmation({ submitProduct, imagesPage, atributPage }) {
+
+function Infotmation() {
   const [openInformation, setOpenInformation] = useState(true);
   const [infoEng, setInfoEng] = useState(false);
   const [infoUz, setInfoUz] = useState(false);
@@ -34,6 +36,8 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
 
   return (
     <form onSubmit={handlSubmit} className="">
+  return (
+    <form className="pb-10">
       <div className={`border-b-2 ${openInformation ? "pb-6" : ""}`}>
         <div
           onClick={() => setOpenInformation(!openInformation)}
@@ -103,6 +107,12 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
                     </option>
                     <option className="text-black" value="chance">
                       Intex
+                    </option>
+                    id="proSelect"
+                    className="p-selectInp rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                  >
+                    <option className="text-addProductLinks" value="chance">
+                      Выберите призводству продукта
                     </option>
                   </select>
                 </div>
@@ -190,6 +200,20 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
                     } placeholder:font-normal ${
                       under ? "underline" : ""
                     } outline-none ${bold ? "font-bold" : ""} `}
+                      activeText={bold ? "scale-150 duration-300" : ""}
+                      boldClass={() => setBold(!bold)}
+                    />
+                    <UImg underClass={() => console.log("U")} />
+                    <IImg italicClass={() => console.log("I")} />
+                    <FullEaquals fullClass={() => console.log("Full")} />
+                    <LeftEaquals leftClass={() => console.log("Left")} />
+                    <RightEquals rightClass={() => console.log("Right")} />
+                    <Fix fixClass={() => console.log("Fix")} />
+                  </div>
+                  <textarea
+                    className={`mt-4 w-[100%] placeholder:text-sm placeholder:font-normal outline-none ${
+                      bold ? "font-bold" : ""
+                    } `}
                     placeholder="Введите Описание продукта"
                     cols={87}
                     rows={5}
@@ -207,6 +231,9 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
                   className={`p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid ${
                     country ? "" : "text-addProductLinks"
                   } border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
+                  defaultValue={"check"}
+                  id="proSelect"
+                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                 >
                   <option className="text-addProductLinks" value="chence">
                     Выберите страна призводства
@@ -234,6 +261,13 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
                   </option>
                   <option className="text-black" value="chance">
                   Каркасные бассейны
+                  </option>
+                  defaultValue={"check"}
+                  id="proSelect"
+                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                >
+                  <option className="text-addProductLinks" value="chance">
+                    Выберите категория продукта
                   </option>
                 </select>
               </div>
@@ -308,6 +342,12 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
                     </option>
                     <option className="text-black" value="chance">
                       Intex
+                    </option>
+                    id="proSelect"
+                    className="p-selectInp rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                  >
+                    <option className="text-addProductLinks" value="chance">
+                      Choose a product
                     </option>
                   </select>
                 </div>
@@ -395,6 +435,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
                     } placeholder:font-normal ${
                       under ? "underline" : ""
                     } outline-none ${bold ? "font-bold" : ""} `}
+                    className="mt-4 w-[100%] placeholder:text-sm outline-none"
                     placeholder="Enter Product Description"
                     cols={87}
                     rows={5}
@@ -577,6 +618,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
                     } placeholder:font-normal placeholder:no-underline ${
                       under ? "underline" : ""
                     } outline-none ${bold ? "font-bold" : ""} `}
+                    className="mt-4 w-[100%] placeholder:text-sm outline-none"
                     placeholder="Mahsulot tavsifini kiriting"
                     cols={87}
                     rows={5}
@@ -623,6 +665,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage }) {
         </div>
       </div>
       <div className="flex mt-6 pb-8 items-center justify-center space-x-5">
+      <div className="mt-6 flex items-center justify-center space-x-5">
         <button
           className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"
           type="reset"
