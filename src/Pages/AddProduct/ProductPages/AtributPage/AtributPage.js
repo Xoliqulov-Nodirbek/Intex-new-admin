@@ -1,15 +1,69 @@
 import React, { useState } from "react";
 import Plas from "../../../../Assets/Images/HomeContentImg/plas-icon.svg";
 
-export default function AtributPage() {
+export default function AtributPage({ atributInfo, setAtributInfo }) {
   const [openInformation, setOpenInformation] = useState(true);
   const [usDrop, setUsDrop] = useState(false);
   const [uzDrop, setUzDrop] = useState(false);
 
+  const resultSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target[29].value);
+    setAtributInfo([
+      ...atributInfo,
+      {
+        artibutValues: {
+          ru: {
+            summ: e.target[0].value,
+            saleSum: e.target[1].value,
+            typeProducts: e.target[2].value,
+            widthPro: e.target[3].value,
+            lengProd: e.target[4].value,
+            heightPro: e.target[5].value,
+            color: e.target[6].value,
+            weight: e.target[7].value,
+            heightTo: e.target[8].value,
+            status: e.target[9].value,
+          },
+          us: {
+            summ: e.target[10].value,
+            saleSum: e.target[11].value,
+            typeProducts: e.target[12].value,
+            widthPro: e.target[13].value,
+            lengProd: e.target[14].value,
+            heightPro: e.target[15].value,
+            color: e.target[16].value,
+            weight: e.target[17].value,
+            heightTo: e.target[18].value,
+            status: e.target[19].value,
+          },
+          uz: {
+            summ: e.target[20].value,
+            saleSum: e.target[21].value,
+            typeProducts: e.target[22].value,
+            widthPro: e.target[23].value,
+            lengProd: e.target[24].value,
+            heightPro: e.target[25].value,
+            color: e.target[26].value,
+            weight: e.target[27].value,
+            heightTo: e.target[28].value,
+            status: e.target[29].value,
+          },
+        },
+      },
+    ]);
+  };
+
   return (
-    <form className="relative">
+    <form onSubmit={resultSubmit} className="relative">
       <span className="flex items-center absolute -top-6 cursor-pointer right-0 font-medium text-sm text-supportColor">
-        <img className="mr-2" src={Plas} alt="IMg plas" width="12" height="12" />
+        <img
+          className="mr-2"
+          src={Plas}
+          alt="IMg plas"
+          width="12"
+          height="12"
+        />
         Добавить атрибуть
       </span>
       <div className="border-b-2">
@@ -64,12 +118,19 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Тип продукта
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Введите Форму продукта
+                </option>
+                <option className="text-black" value="melkiy">
+                  Melkiy
                 </option>
               </select>
             </label>
@@ -104,12 +165,19 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цвет
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Синий
+                </option>
+                <option className="text-black" value="DEFAULT">
+                  green
                 </option>
               </select>
             </label>
@@ -134,12 +202,22 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Статус
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Выберите статус продукта
+                </option>
+                <option className="text-black" value="DEFAULT">
+                  Рекомендуем
+                </option>
+                <option className="text-black" value="DEFAULT">
+                  Рекомендуем
                 </option>
               </select>
             </label>
@@ -196,12 +274,19 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Тип продукта
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Введите Форму продукта
+                </option>
+                <option className="text-black" value="type product">
+                  type product
                 </option>
               </select>
             </label>
@@ -236,12 +321,19 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цвет
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Синий
+                </option>
+                <option className="text-black" value="green">
+                  GREEN
                 </option>
               </select>
             </label>
@@ -266,12 +358,22 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Статус
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Выберите статус продукта
+                </option>
+                <option className="text-black" value="рекомендуем">
+                  Рекомендуем
+                </option>
+                <option className="text-black" value="рекомендуем">
+                  Рекомендуем
                 </option>
               </select>
             </label>
@@ -328,12 +430,22 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Тип продукта
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Введите Форму продукта
+                </option>
+                <option className="text-black" value="DEFAULT">
+                  Метпллическим каркасом
+                </option>
+                <option className="text-black" value="DEFAULT">
+                  Метпллическим каркасом
                 </option>
               </select>
             </label>
@@ -368,11 +480,21 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Цвет
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="chence"
+                >
+                  Синий
+                </option>
+                <option className="text-black" value="chence">
+                  Синий
+                </option>
+                <option className="text-black" value="chence">
                   Синий
                 </option>
               </select>
@@ -398,12 +520,22 @@ export default function AtributPage() {
             <label className="flex w-[32%] flex-col w-addProW font-medium text-base leading-4">
               Статус
               <select
-                defaultValue={"check"}
+                defaultValue={"DEFAULT"}
                 id="proSelect"
-                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                className="p-selectInp mt-3 w-[100%] rounded-xl appearance-none border-2 border-solid text-black border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
               >
-                <option className="text-addProductLinks" value="chence">
+                <option
+                  disabled
+                  className="text-addProductLinks"
+                  value="DEFAULT"
+                >
                   Выберите статус продукта
+                </option>
+                <option className="text-BLACK" value="Рекомендуем">
+                  Рекомендуем
+                </option>
+                <option className="text-BLACK" value="Рекомендуем">
+                  Рекомендуем
                 </option>
               </select>
             </label>

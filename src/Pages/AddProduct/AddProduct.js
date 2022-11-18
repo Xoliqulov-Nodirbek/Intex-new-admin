@@ -8,7 +8,39 @@ export default function AddProduct() {
   const [info, setInfo] = useState(true);
   const [img, setImg] = useState(false);
   const [atr, setAtr] = useState(false);
-
+  const [formInfo, setFormInfo] = useState([
+    {
+      ru: {
+        nameProduct: "",
+        whichCopany: "",
+        userInfo: "",
+        countryPro: "",
+        categoryPro: "",
+        countPro: "",
+      },
+    },
+    {
+      us: {
+        nameProduct: "",
+        whichCopany: "",
+        userInfo: "",
+        countryPro: "",
+        categoryPro: "",
+        countPro: "",
+      },
+    },
+    {
+      uz: {
+        nameProduct: "",
+        whichCopany: "",
+        userInfo: "",
+        countryPro: "",
+        categoryPro: "",
+        countPro: "",
+      },
+    },
+  ]);
+  console.log(formInfo);
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
@@ -38,6 +70,8 @@ export default function AddProduct() {
         <div>
           {info ? (
             <Information
+              infoForm={formInfo}
+              setInfoForm={setFormInfo}
               submitProduct={setInfo}
               imagesPage={setImg}
               atributPage={setAtr}
@@ -47,6 +81,8 @@ export default function AddProduct() {
           )}
           {img ? (
             <ProductImgs
+              imgInfo={formInfo}
+              setImgInfo={setFormInfo}
               atrPage={setAtr}
               imagePage={setImg}
               productPage={setInfo}
@@ -54,7 +90,11 @@ export default function AddProduct() {
           ) : (
             ""
           )}
-          {atr ? <AtributPage /> : ""}
+          {atr ? (
+            <AtributPage atributInfo={formInfo} setAtributInfo={setFormInfo} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
