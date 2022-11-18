@@ -39,7 +39,7 @@ export default function SiteBar() {
 
 
   return (
-    <div className='bg-white w-sitebarWidth h-screen relative'>
+    <div className='bg-white w-sitebarWidth h-screen relative flex-shrink-0'>
       <div className='pb-9  px-5'>
         <div className='py-8 border-b-2'>
           <Link to={'/'}>

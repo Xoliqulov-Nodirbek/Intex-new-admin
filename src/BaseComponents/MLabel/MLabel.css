@@ -11,32 +11,32 @@
   justify-content: center;
 }
 
-.label_new {
+.label_New {
   background: #0bcc23;
 }
 
-.label_sale {
+.label_Discount {
   background: #ff5c5c;
 }
 
-.label_xit {
+.label_Xit {
   background: #ff3a3a;
 }
 
-.label_simple {
+.label_Simple {
   background: #f2f2f2;
   color: black;
 }
 
-.label_recommend {
+.label_Recommend {
   background: #22b0f8;
 }
 
-.label_paid {
+.label_Paid {
   background: #0bcc23;
 }
 
-.label_reject {
+.label_Reject {
   background: #ff3a3a;
 }
 

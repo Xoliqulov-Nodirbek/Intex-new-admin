@@ -6,9 +6,9 @@ function App() {
   const [token] = useToken();
 
   if (token) {
-    return <Authentication />;
+    return <Authentication/>;
   } else {
-    return <Unauthentication />;
+    return <Unauthentication/>;
   }
 }
 

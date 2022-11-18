@@ -16,19 +16,19 @@ export default function Authentication() {
   return (
     <>
       <div className="flex">
-        <SiteBar />
-        <div className="w-full">
-          <Header />
+        <SiteBar/>
+        <div className="w-full overflow-x-hidden">
+          <Header/>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/category" element={<Catergory />} />
-            <Route path="/atribut" element={<Atribut />} />
-            <Route path="/order" element={<Order />} />
-            <Route path="/callBack" element={<CallBack />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/addProduct" element={<AddProduct />} />
-            <Route path="/addCategory" element={<AddCategory />} />
-            <Route path="/addAtribut" element={<AddAtribut />} />
+            <Route path="/" element={<Home/>}/>
+            <Route path="/category" element={<Catergory/>}/>
+            <Route path="/atribut" element={<Atribut/>}/>
+            <Route path="/order" element={<Order/>}/>
+            <Route path="/callBack" element={<CallBack/>}/>
+            <Route path="/settings" element={<Settings/>}/>
+            <Route path="/addProduct" element={<AddProduct/>}/>
+            <Route path="/addCategory" element={<AddCategory/>}/>
+            <Route path="/addAtribut" element={<AddAtribut/>}/>
           </Routes>
         </div>
       </div>
