@@ -6,44 +6,38 @@ import Arrow from "../../Assets/Images/LoginImg/arrow.svg";
 import Loader from "../../Assets/Images/LoginImg/loader.svg";
 import SubmitBtn from "../../BaseComponents/SubmitFormBtn/Button";
 import { toast, Toaster } from "react-hot-toast";
+import ReactCodeInput from "react-code-input";
 import "./login.css";
 
 const env = process.env.REACT_APP_ALL_API;
 
 function Verification() {
   const [password, setPassword] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [password3, setPassword3] = useState("");
-  const [password4, setPassword4] = useState("");
-  const [password5, setPassword5] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState(
     JSON.parse(window.localStorage.getItem("email"))
   );
   const navigate = useNavigate();
 
-  const newPassword = Number(
-    password + password1 + password2 + password3 + password4 + password5
-  );
-
   const postRequest = async (e) => {
     e.preventDefault();
+
     setLoading(true);
     axios
       .post(`${env}admins/forgot-password/confirm`, {
         email: email,
-        confirmation_code: newPassword,
+        confirmation_code: Number(password),
       })
       .then((res) => {
         if (res?.status === 200) {
-          window.localStorage.setItem("password", JSON.stringify(newPassword));
+          window.localStorage.setItem("password", password);
           navigate("/newPassword");
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err?.response?.status === 400) {
+          toast.error("Your password is incorrect!");
+        } else if (err?.response?.status === 409) {
           toast.error("Your password is incorrect!");
         } else if (err?.message === "Network Error") {
           toast.error(err?.message);
@@ -52,11 +46,6 @@ function Verification() {
       .finally(() => {
         setLoading(false);
         setPassword("");
-        setPassword1("");
-        setPassword2("");
-        setPassword3("");
-        setPassword4("");
-        setPassword5("");
       });
   };
 
@@ -88,54 +77,24 @@ function Verification() {
               Введите SMS-код, полученный на ваш номер телефона +998901234567
             </p>
             <form className="flex flex-col text-center" onSubmit={postRequest}>
-              <div className="flex justify-between">
-                <input
-                  className="text-lg font-medium rounded-lg border outline-none w-10 h-12 px-3 py-2 mt-2 mb-3"
-                  type="text"
+              <div className="flex justify-center">
+                <ReactCodeInput
+                  onChange={(e) => setPassword(e)}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  maxLength={1}
-                  required
-                />
-                <input
-                  className="text-lg font-medium rounded-lg border outline-none w-10 h-12 px-3 py-2 mt-2 mb-3"
+                  className={"space-x-6"}
+                  inputStyle={{
+                    font: "bold",
+                    fontSize: "20px",
+                    textAlign: "center",
+                    width: "40px",
+                    height: "50px",
+                    outline: "none",
+                    border: "2px solid #E3E5E5",
+                    borderRadius: "8px",
+                  }}
                   type="text"
-                  value={password1}
-                  onChange={(e) => setPassword1(e.target.value)}
-                  maxLength={1}
-                  required
-                />
-                <input
-                  className="text-lg font-medium rounded-lg border outline-none w-10 h-12 px-3 py-2 mt-2 mb-3"
-                  type="text"
-                  value={password2}
-                  onChange={(e) => setPassword2(e.target.value)}
-                  maxLength={1}
-                  required
-                />
-                <input
-                  className="text-lg font-medium rounded-lg border outline-none w-10 h-12 px-3 py-2 mt-2 mb-3"
-                  type="text"
-                  value={password3}
-                  onChange={(e) => setPassword3(e.target.value)}
-                  maxLength={1}
-                  required
-                />
-                <input
-                  className="text-lg font-medium rounded-lg border outline-none w-10 h-12 px-3 py-2 mt-2 mb-3"
-                  type="text"
-                  value={password4}
-                  onChange={(e) => setPassword4(e.target.value)}
-                  maxLength={1}
-                  required
-                />
-                <input
-                  className="text-lg font-medium rounded-lg border outline-none w-10 h-12 px-3 py-2 mt-2 mb-3"
-                  type="text"
-                  value={password5}
-                  onChange={(e) => setPassword5(e.target.value)}
-                  maxLength={1}
-                  required
+                  fields={6}
+                  autoComplete="off"
                 />
               </div>
               <Link
