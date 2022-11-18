@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg"
 import MButton from '../../BaseComponents/MButton/MButton'
+import OrderPage from './OrderPage'
 
 export default function Home() {
+  const [showModal, setShowMoadal] = useState(false);
   return (
     <>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
@@ -31,11 +33,14 @@ export default function Home() {
                   <path d="M9 11L12 14L15 11" stroke="#04009A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <MButton BType='add bg-filterBg' type='button'>Добавить</MButton>
+              <button  onClick={()=> setShowMoadal(true)} BType='add bg-filterBg'  className='add bg-filterBg' type='button'>Добавить</button>
             </div>
           </div>
         </div>
       </div>
+      <button BType='add bg-filterBg'  className='add bg-filterBg' type='button'>Добавить</button>
+
+      <OrderPage isVisible={showModal} onClose={()=>{ setShowMoadal(false)}}/>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg"
 import MButton from '../../BaseComponents/MButton/MButton'
@@ -32,11 +32,12 @@ export default function Home() {
                   <path d="M9 11L12 14L15 11" stroke="#04009A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <Link to="/addAtribut" className='add bg-filterBg' type='button'>Добавить</Link>
+              <button  className='add bg-filterBg' type='button'>Добавить</button>
             </div>
           </div>
         </div>
       </div>
+      
     </>
   )
 }

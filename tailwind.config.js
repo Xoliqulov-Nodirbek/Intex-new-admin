@@ -12,6 +12,8 @@ module.exports = {
         headerPaddingX:'30px',
         homeContentPadding:'30px',
         selectInp:"17.5px",
+        buttonModalY: "13px",
+        buttonModalX: "121px",
       },
       width:{
         logoWidth:'180px',
@@ -23,11 +25,14 @@ module.exports = {
         homeSortWidth:'170px',
         addProductListWidth:'65%',
         submitBtnsWidth:'331px',
+        orderModal:"730px",
+
       },
       height:{
         logoHeight:'17px',
         logoLoginHeight:'22px',
         addProductHeight:'3px',
+        orderModal:"700px"
       },
       backgroundColor:{
         loginBtn:"#2B3D90",
@@ -57,6 +62,7 @@ module.exports = {
         homeColor:'#333',
         homeSortWrap:'#666',
         russuanColor:"#2B3D91",
+        borderColor:"#E3E5E5"
       },
       lineHeight:{
         lead:'150%',
