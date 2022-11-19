@@ -70,7 +70,6 @@ export default function AddProduct() {
         <div>
           {info ? (
             <Information
-              infoForm={formInfo}
               setInfoForm={setFormInfo}
               submitProduct={setInfo}
               imagesPage={setImg}

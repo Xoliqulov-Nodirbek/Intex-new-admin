@@ -8,13 +8,7 @@ import {
   RightEquals,
   Fix,
 } from "./InfoImgs";
-function Infotmation({
-  submitProduct,
-  imagesPage,
-  atributPage,
-  infoForm,
-  setInfoForm,
-}) {
+function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
   const [openInformation, setOpenInformation] = useState(true);
   const [infoEng, setInfoEng] = useState(false);
   const [infoUz, setInfoUz] = useState(false);
@@ -25,9 +19,7 @@ function Infotmation({
   const [leftSide, setLeftSide] = useState(false);
   const [rightSide, setRightSide] = useState(false);
   const [fixed, setFixed] = useState(false);
-  const [sel, setSel] = useState(false);
-  const [country, setCountry] = useState(false);
-  const [cate, setCate] = useState(false);
+
   const handlSubmit = (evt) => {
     evt.preventDefault();
     imagesPage(true);
@@ -61,9 +53,6 @@ function Infotmation({
         },
       },
     ]);
-  };
-  const handleSeleted = () => {
-    setSel(true);
   };
 
   return (
@@ -106,7 +95,7 @@ function Infotmation({
                 <div className="flex flex-col relative w-[100%]">
                   <label className="mb-3 ">Название продукта</label>
                   <input
-                    className={`p-4 rounded-lg border  border-solid border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
+                    className={`$ p-4 rounded-lg border border-solid border-addProductLinks outline-none placeholder:text-base placeholder:font-normal  leading-4`}
                     type="text"
                     placeholder="Каркасный басейн Intex прямоуголь.."
                     autoComplete="off"
@@ -116,10 +105,7 @@ function Infotmation({
                   <label className="mb-3">Призводства</label>
                   <select
                     defaultValue={"DEFAULT"}
-                    onChange={handleSeleted}
-                    className={`p-selectInp rounded-lg appearance-none border border-solid ${
-                      sel ? "" : "text-addProductLinks"
-                    } border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
+                    className={`p-selectInp rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
                   >
                     <option
                       disabled
@@ -234,12 +220,9 @@ function Infotmation({
               <div>
                 <label>Страна призводства</label>
                 <select
-                  onChange={() => setCountry(true)}
                   defaultValue={"DEFAULT"}
                   id="proSelect"
-                  className={`p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid ${
-                    country ? "" : "text-addProductLinks"
-                  } border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
+                  className={`p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
                 >
                   <option
                     disabled
@@ -259,12 +242,9 @@ function Infotmation({
               <div>
                 <label>Категория</label>
                 <select
-                  onChange={() => setCate(true)}
                   defaultValue={"DEFAULT"}
                   id="proSelect"
-                  className={`p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid ${
-                    cate ? "" : "text-addProductLinks"
-                  } border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
+                  className={`p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
                 >
                   <option
                     disabled
@@ -342,13 +322,8 @@ function Infotmation({
                   <label className="mb-3">production</label>
                   <select
                     defaultValue={"DEFAULT"}
-                    onChange={(evt) =>
-                      evt.target.value == "default"
-                        ? evt.target.classList.add("salom")
-                        : ""
-                    }
                     id="proSelect"
-                    className={`p-selectInp rounded-lg appearance-none border border-solid  border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
+                    className={`p-selectInp rounded-lg appearance-none border border-solid text-navBarColor  border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4`}
                   >
                     <option
                       disabled
@@ -462,7 +437,7 @@ function Infotmation({
                 <select
                   defaultValue={"DEFAULT"}
                   id="proSelect"
-                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                 >
                   <option
                     disabled
@@ -471,7 +446,7 @@ function Infotmation({
                   >
                     Select country of origin
                   </option>
-                  <option className="text-addProductLinks" value="uzbekistan">
+                  <option className="text-navBarColor" value="uzbekistan">
                     Uzbekistan
                   </option>
                 </select>
@@ -481,7 +456,7 @@ function Infotmation({
                 <select
                   defaultValue={"DEFAULT"}
                   id="proSelect"
-                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                 >
                   <option
                     disabled
@@ -490,10 +465,10 @@ function Infotmation({
                   >
                     Select product category
                   </option>
-                  <option className="text-addProductLinks" value="red-pool">
+                  <option className="text-navBarColor" value="red-pool">
                     Red Pool
                   </option>
-                  <option className="text-addProductLinks" value="red-pool">
+                  <option className="text-navBarColor" value="red-pool">
                     Red Pool
                   </option>
                 </select>
@@ -558,7 +533,7 @@ function Infotmation({
                   <select
                     defaultValue={"DEFAULT"}
                     id="proSelect"
-                    className="p-selectInp rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                    className="p-selectInp rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                   >
                     <option
                       disabled
@@ -567,13 +542,10 @@ function Infotmation({
                     >
                       Mahsulotni tanlang
                     </option>
-                    <option
-                      className="text-addProductLinks"
-                      value="qizil basseyn"
-                    >
+                    <option className="text-navBarColor" value="qizil basseyn">
                       Qizil basseyn
                     </option>
-                    <option className="text-addProductLinks" value="">
+                    <option className="text-navBarColor" value="">
                       Qizil basseyn
                     </option>
                   </select>
@@ -675,7 +647,7 @@ function Infotmation({
                 <select
                   defaultValue={"DEFAULT"}
                   id="proSelect"
-                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                 >
                   <option
                     disabled
@@ -684,10 +656,10 @@ function Infotmation({
                   >
                     Kelib chiqqan mamlakatni tanlang
                   </option>
-                  <option className="text-addProductLinks" value="uzbekistan">
+                  <option className="text-navBarColor" value="uzbekistan">
                     Uzbekistan
                   </option>
-                  <option className="text-addProductLinks" value="uzbekistan">
+                  <option className="text-navBarColor" value="uzbekistan">
                     Uzbekistan
                   </option>
                 </select>
@@ -697,21 +669,15 @@ function Infotmation({
                 <select
                   defaultValue={8}
                   id="proSelect"
-                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-addProductLinks border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
+                  className="p-selectInp mt-3 w-[100%] rounded-lg appearance-none border border-solid text-navBarColor border-addProductLinks outline-none placeholder:text-base placeholder:font-normal leading-4"
                 >
                   <option className="text-addProductLinks" value="">
                     Mahsulot toifasini tanlang
                   </option>
-                  <option
-                    className="text-addProductLinks"
-                    value="qizil basseyn"
-                  >
+                  <option className="text-navBarColor" value="qizil basseyn">
                     Qizil basseyn
                   </option>
-                  <option
-                    className="text-addProductLinks"
-                    value="qizil basseyn"
-                  >
+                  <option className="text-navBarColor" value="qizil basseyn">
                     Qizil basseyn
                   </option>
                 </select>
