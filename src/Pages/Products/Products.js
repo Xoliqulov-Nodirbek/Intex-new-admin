@@ -3,20 +3,43 @@ import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableRow from "../../components/TableRow/TableRow";
 import LimitSelect from "../../components/LimitSelect/LimitSelect";
+import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
+import axios from "axios";
 
 export default function Products() {
   const [data, setData] = React.useState([]);
+  const [isChecked, setIsChecked] = React.useState(false);
+  const [checkedCount, setCheckedCount] = React.useState(0);
+
+  const handleChange = (evt) => {
+    if (evt.target.checked) {
+      setCheckedCount(checkedCount + 1);
+    } else {
+      setCheckedCount(checkedCount - 1);
+    }
+  };
 
   React.useEffect(() => {
-    fetch(
-      "https://intex-shop-production.up.railway.app/api/products/getAll?page=0&limit=10"
-    )
-      .then((res) => res.json())
-      .then((data) => setData(data.result));
+    axios
+      .get(
+        "https://intex-shop-production.up.railway.app/api/products/getAll?page=0&limit=10"
+      )
+      .then((res) => {
+        setData(res?.data.result);
+      });
   }, []);
 
   return (
-    <div className=" bg-white border-b  rounded-b-xl">
+    <div className=" bg-white border-b  rounded-xl">
+      <div className="flex py-3 px-4 items-center">
+        <input
+          className="mr-3"
+          type="checkbox"
+          onChange={() => setIsChecked(!isChecked)}
+        />
+        <span className="text-[#b9b9b9] mr-3">{checkedCount}, Выбрано</span>
+        <img src={Trash} alt="Trash icon" />
+      </div>
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
           <thead className="bg-[#f2f2f2]">
@@ -49,7 +72,13 @@ export default function Products() {
             {data.length ? (
               data.map((item) => {
                 return (
-                  <TableRow styles="py-0" data={item} key={item.id}></TableRow>
+                  <TableRow
+                    styles="py-0"
+                    data={item}
+                    key={item.id}
+                    isChecked={isChecked}
+                    handleChange={handleChange}
+                  ></TableRow>
                 );
               })
             ) : (
