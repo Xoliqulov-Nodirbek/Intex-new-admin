@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import TableData from "../TableData/TableData";
 import MLabel from "../../BaseComponents/MLabel/MLabel";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
@@ -11,7 +11,7 @@ export default function TableRow({
   isChecked,
 }) {
   return (
-    <tr className={`flex  items-center py-3 border-b `}>
+    <tr className={`flex  items-center border-b ${styles}`}>
       {children ? (
         children
       ) : (

@@ -19,7 +19,7 @@ export default function Home() {
           </h2>
         </Link>
       </div>
-      <div className="pt-6 pb-8 px-homeContentPadding">
+      <div className="pt-6 pb-8 overflow-y-auto h-[100vh] px-homeContentPadding">
         <div className="mb-4">
           <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">
             Список продуктов

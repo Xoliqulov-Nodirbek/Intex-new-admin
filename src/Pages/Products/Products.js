@@ -2,7 +2,6 @@ import React from "react";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableRow from "../../components/TableRow/TableRow";
-import LimitSelect from "../../components/LimitSelect/LimitSelect";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 
@@ -10,6 +9,9 @@ export default function Products() {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
+  const [limit, setLimit] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const [totalPage, setTotalpage] = React.useState(0)
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -22,15 +24,25 @@ export default function Products() {
   React.useEffect(() => {
     axios
       .get(
-        "https://intex-shop-production.up.railway.app/api/products/getAll?page=0&limit=10"
+        `https://intex-shop-production.up.railway.app/api/products/getAll?page=${page}&limit=${limit}`
       )
       .then((res) => {
-        setData(res?.data.result);
+        setData(res?.data);
+        setTotalpage(res.data?.total_count.count);
       });
-  }, []);
+  }, [limit, page]);
+
+  console.log(page);
+
+  let options = [];
+
+  for (let i = 0; data.total_pages + 1 > i; i++) {
+    options.push(i);
+  }
+
 
   return (
-    <div className=" bg-white border-b  rounded-xl">
+    <div className=" bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
         <input
           className="mr-3"
@@ -43,7 +55,7 @@ export default function Products() {
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
           <thead className="bg-[#f2f2f2]">
-            <TableRow>
+            <TableRow styles="py-[13px]">
               <TableHeader styles="w-11 pr-3 justify-center">
                 <input className="" type="checkbox" />
               </TableHeader>
@@ -69,11 +81,11 @@ export default function Products() {
             </TableRow>
           </thead>
           <tbody className="bg-white">
-            {data.length ? (
-              data.map((item) => {
+            {data.result?.length ? (
+              data.result?.map((item) => {
                 return (
                   <TableRow
-                    styles="py-0"
+                    styles="py-1.5"
                     data={item}
                     key={item.id}
                     isChecked={isChecked}
@@ -89,18 +101,31 @@ export default function Products() {
       </div>
       <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
         <div className="flex">
-          <LimitSelect></LimitSelect>
+          <select
+            className="rounded-md bg-[#f2f2f2] outline-none w-12 px-1 mr-3"
+            onChange={(evt) => setLimit(evt.target.value)}
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+          </select>
           <span className="m-0 mr-3 text-paginationColor text-sm">
             Элементы на каждой странице
           </span>
           <span className="text-sm text-paginationButtonColor">
-            1-10 из 200 предметов
+            1-5 из {totalPage} предметов
           </span>
         </div>
         <div className="flex items-center">
-          <LimitSelect></LimitSelect>
+          <input
+            className="w-12 text-center outline-none text-sm text-paginationButtonColor rounded-md bg-[#f2f2f2]  "
+            type="nubmer"
+            value={page}
+            onChange={(evt) => setPage(evt.target.value)}
+            maxLength={1}
+
+          />
           <span className="mr-3.5 text-sm text-paginationButtonColor">
-            из 44 страниц
+            из {totalPage / limit} страниц
           </span>
           <span className="flex">
             <button className="mr-4 text-paginationButtonColor">&#60;</button>
