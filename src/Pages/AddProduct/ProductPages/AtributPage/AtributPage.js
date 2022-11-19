@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import Plas from "../../../../Assets/Images/HomeContentImg/plas-icon.svg";
 
-export default function AtributPage({ atributInfo, setAtributInfo }) {
+export default function AtributPage({
+  atributInfo,
+  setAtributInfo,
+  productBasic,
+  imaPage,
+  atributPage,
+}) {
   const [openInformation, setOpenInformation] = useState(true);
   const [usDrop, setUsDrop] = useState(false);
   const [uzDrop, setUzDrop] = useState(false);
@@ -52,6 +58,9 @@ export default function AtributPage({ atributInfo, setAtributInfo }) {
         },
       },
     ]);
+    atributPage(false);
+    imaPage(false);
+    productBasic(true);
   };
 
   return (
