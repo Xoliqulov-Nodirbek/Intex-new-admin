@@ -34,13 +34,6 @@ export default function Products() {
 
   console.log(page);
 
-  let options = [];
-
-  for (let i = 0; data.total_pages + 1 > i; i++) {
-    options.push(i);
-  }
-
-
   return (
     <div className=" bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
