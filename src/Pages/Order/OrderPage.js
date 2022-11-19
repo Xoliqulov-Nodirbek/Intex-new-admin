@@ -122,7 +122,7 @@ function OrderPage({ isVisible, onClose }) {
           </div>
 
           <div className=" flex flex-wrap  px-6 justify-between">
-            <div className="relative">
+            <label className="relative">
               <p className="text-base font-medium mb-3">Номер заказа</p>
               <input
                 type="number"
@@ -143,8 +143,8 @@ function OrderPage({ isVisible, onClose }) {
                   {formik.errors.orders}
                 </span>
               ) : null}
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium  mb-3">Имя</p>
               <input
                 type="text"
@@ -165,8 +165,8 @@ function OrderPage({ isVisible, onClose }) {
                   {formik.errors.name}
                 </span>
               ) : null}
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Номер телефона</p>
               <div
                 className={
@@ -197,8 +197,8 @@ function OrderPage({ isVisible, onClose }) {
                   </span>
                 ) : null}
               </div>
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Адрес</p>
               <div
                 className={
@@ -232,8 +232,8 @@ function OrderPage({ isVisible, onClose }) {
                   </span>
                 ) : null}
               </div>
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium  mb-3 mt-8">
                 Кол-во продуктов
               </p>
@@ -256,8 +256,8 @@ function OrderPage({ isVisible, onClose }) {
                   {formik.errors.numberproduct}
                 </span>
               ) : null}
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Обшая цена</p>
               <div
                 className={
@@ -283,8 +283,8 @@ function OrderPage({ isVisible, onClose }) {
                   </span>
                 ) : null}
               </div>
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium text-addProductColor mb-3 mt-8">
                 Цена со скидкой
               </p>
@@ -313,8 +313,8 @@ function OrderPage({ isVisible, onClose }) {
                   </span>
                 ) : null}
               </div>
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Статус</p>
               <select
                 defaultValue={"check"}
@@ -328,8 +328,8 @@ function OrderPage({ isVisible, onClose }) {
                   В ожидании
                 </option>
               </select>
-            </div>
-            <div className="relative">
+            </label>
+            <label className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Время заказа</p>
               <input
                 type="date"
@@ -350,7 +350,7 @@ function OrderPage({ isVisible, onClose }) {
                   {formik.errors.date}
                 </span>
               ) : null}
-            </div>
+            </label>
           </div>
 
           <div className="flex flex-row px-6 pt-8 pb-7 justify-between">

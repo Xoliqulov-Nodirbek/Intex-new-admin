@@ -38,7 +38,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <button BType='add bg-filterBg'  className='add bg-filterBg' type='button'>Добавить</button>
 
       <OrderPage isVisible={showModal} onClose={()=>{ setShowMoadal(false)}}/>
     </>
