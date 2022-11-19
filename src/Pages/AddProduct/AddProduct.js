@@ -40,7 +40,7 @@ export default function AddProduct() {
       },
     },
   ]);
-  console.log(formInfo);
+  // console.log(formInfo);
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
@@ -91,7 +91,13 @@ export default function AddProduct() {
             ""
           )}
           {atr ? (
-            <AtributPage atributInfo={formInfo} setAtributInfo={setFormInfo} />
+            <AtributPage
+              atributPage={setAtr}
+              imaPage={setImg}
+              productBasic={setInfo}
+              atributInfo={formInfo}
+              setAtributInfo={setFormInfo}
+            />
           ) : (
             ""
           )}

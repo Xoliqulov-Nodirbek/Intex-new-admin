@@ -35,6 +35,10 @@ function Forget() {
           toast.error("Your email is incorrect");
         } else if (err?.message === "Network Error") {
           toast.error(err?.message);
+        } else if (err.status === 409) {
+          toast.error(err?.message);
+        } else if (err?.response?.status === 503) {
+          toast.error("This email not registered!");
         }
       })
       .finally(() => {
@@ -80,14 +84,15 @@ function Forget() {
                 <input
                   value={email}
                   type="text"
-                  id="floating_outlined"
+                  id="floating_outlineds"
                   className="block px-2.5 pb-2 pt-4 w-full text-sm bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 peer"
                   placeholder=" "
                   onChange={(e) => setEmail(e.target.value)}
+                  maxLength={50}
                   required
                 />
                 <label
-                  htmlFor="floating_outlined"
+                  htmlFor="floating_outlineds"
                   className="absolute text-base text-black dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >
                   Эл.почта

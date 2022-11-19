@@ -37,7 +37,7 @@ export default function Images({
       <h2 className="my-6 mb-4 font-medium  text-base">Изображение</h2>
       <label className="inline-block cursor-pointer">
         <input onChange={handlChange} className="visually-hidden" type="file" />
-        <div className="bg-headerInpBg w-douloadWrap py-8 text-center rounded-xl">
+        <div className="bg-headerInpBg w-douloadWrap py-8 w-productImgUploadWidth text-center rounded-xl">
           <img
             className="mx-auto mb-2"
             src={DounloadImg}
