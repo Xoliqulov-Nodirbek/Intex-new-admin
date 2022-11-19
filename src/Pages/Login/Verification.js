@@ -49,6 +49,25 @@ function Verification() {
       });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    axios
+      .post(`${env}admins/forgot-password`, {
+        email: email,
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          toast.success("Confirmation code send your email!");
+        }
+      })
+      .catch((err) => {
+        if (err?.message === "Network Error") {
+          toast.error(err?.message);
+        }
+      });
+  };
+
   return (
     <section>
       <div className="login_bg fixed inset-0 flex justify-center items-center">
@@ -97,12 +116,12 @@ function Verification() {
                   autoComplete="off"
                 />
               </div>
-              <Link
-                to={"/verification"}
-                className="text-end text-sm text-supportColor font-medium mt-3"
+              <button
+                onClick={handleSubmit}
+                className="text-end text-sm text-supportColor font-medium mt-6"
               >
                 SMS ni qayta jo’natish
-              </Link>
+              </button>
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (
