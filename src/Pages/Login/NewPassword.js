@@ -30,7 +30,7 @@ function NewPassword() {
       axios
         .post(`${env}admins/reset_password`, {
           password: newPassword,
-          token: verificationPassword,
+          varification_number: verificationPassword,
         })
         .then((res) => {
           if (res.status === 200) {
@@ -76,8 +76,11 @@ function NewPassword() {
                     onChange={(e) => setNewPassword(e.target.value)}
                     id="outlined_success"
                     aria-describedby="outlined_success_help"
-                    className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 focus:border-inputColor peer"
+                    className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 focus:border-inputColor peer pr-10"
                     placeholder=" "
+                    required
+                    minLength={4}
+                    maxLength={16}
                   />
                   {newPassword ? (
                     <div
@@ -109,10 +112,13 @@ function NewPassword() {
                     value={newPassword1}
                     type={icon1 ? "text" : "password"}
                     onChange={(e) => setNewPassword1(e.target.value)}
-                    id="outlined_successs"
+                    id="outlined_successed"
                     aria-describedby="outlined_success_help"
-                    className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 focus:border-inputColor peer"
+                    className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 focus:border-inputColor peer pr-10"
                     placeholder=" "
+                    required
+                    minLength={4}
+                    maxLength={16}
                   />
                   {newPassword1 ? (
                     <div
@@ -131,7 +137,7 @@ function NewPassword() {
                     ""
                   )}
                   <label
-                    htmlFor="outlined_successs"
+                    htmlFor="outlined_successed"
                     className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-3 peer-focus:px-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
                     Введите новый пароль

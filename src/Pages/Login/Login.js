@@ -29,7 +29,6 @@ function Login() {
         password: password,
       })
       .then((res) => {
-        console.log("ishladi", res);
         if (res?.data?.token) {
           setToken(res?.data?.token);
         } else if (res?.status === 201) {
@@ -75,6 +74,7 @@ function Login() {
                   className="block px-2.5 pb-2 pt-4 w-full text-sm bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 peer"
                   placeholder=" "
                   onChange={(e) => setName(e.target.value)}
+                  maxLength={45}
                   required
                 />
                 <label
@@ -90,10 +90,13 @@ function Login() {
                     value={password}
                     type={icon ? "text" : "password"}
                     onChange={(e) => setPassword(e.target.value)}
-                    id="outlined_success1"
+                    id="outlined_successs"
                     aria-describedby="outlined_success_help"
                     className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 focus:border-inputColor peer"
                     placeholder=" "
+                    minLength={4}
+                    maxLength={16}
+                    required
                   />
                   {password ? (
                     <div
@@ -112,7 +115,7 @@ function Login() {
                     ""
                   )}
                   <label
-                    htmlFor="outlined_success1"
+                    htmlFor="outlined_successs"
                     className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
                     Пароль
