@@ -19,7 +19,6 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
   const [leftSide, setLeftSide] = useState(false);
   const [rightSide, setRightSide] = useState(false);
   const [fixed, setFixed] = useState(false);
-  const [validation, setValidation] = useState("");
 
   const handlSubmit = (evt) => {
     evt.preventDefault();
@@ -96,7 +95,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                 <div className="flex flex-col relative w-[100%]">
                   <label className="mb-3 ">Название продукта</label>
                   <input
-                    className={`$ p-4 rounded-lg borde border-solid border-addProductLinks outline-none placeholder:text-base placeholder:font-normal  leading-4`}
+                    className={`$ p-4 rounded-lg border border-solid border-addProductLinks outline-none placeholder:text-base placeholder:font-normal  leading-4`}
                     type="text"
                     placeholder="Каркасный басейн Intex прямоуголь.."
                     autoComplete="off"
