@@ -3,9 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,js,tsx}"],
   theme: {
     extend: {
-      margin:{
-        navBarIcon:'14px',
-        submitBtn:'70px',
+      margin: {
+        navBarIcon: "14px",
+        submitBtn: "70px",
       },
       padding: {
         headerInpPl: "38px",
@@ -25,6 +25,7 @@ module.exports = {
         addProductListWidth: "65%",
         submitBtnsWidth: "331px",
         submitBtn: "360px",
+        productImgUploadWidth: "682px",
       },
       maxWidth: {
         login_content: "495px",
@@ -79,4 +80,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
