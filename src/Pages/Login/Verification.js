@@ -51,7 +51,6 @@ function Verification() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     axios
       .post(`${env}admins/forgot-password`, {
         email: email,
