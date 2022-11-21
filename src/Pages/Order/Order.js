@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg"
 import MButton from '../../BaseComponents/MButton/MButton'
 import OrderPage from './OrderPage'
+import ProductOrder from './ProductOrder'
 
 export default function Home() {
   const [showModal, setShowMoadal] = useState(false);
@@ -18,7 +19,7 @@ export default function Home() {
         </Link>
       </div>
       <div className='pt-6 pb-8 px-homeContentPadding '>
-        <div>
+        <div className='mb-4'>
           <h2 className='text-navBarColor font-bold leading-8 text-2xl mb-4'>Заказы</h2>
           <div className='bg-white py-3 px-4 rounded-xl flex items-center justify-between'>
             <div className='flex items-center'>
@@ -37,6 +38,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <ProductOrder/>
+      
       </div>
       
 
