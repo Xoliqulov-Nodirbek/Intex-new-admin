@@ -40,13 +40,12 @@ export default function Home() {
                   <path d="M9 11L12 14L15 11" stroke="#04009A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-<<<<<<< HEAD
+
               <button  className='add bg-filterBg' type='button'>Добавить</button>
-=======
+
               <Link to="/addAtribut" className="add bg-filterBg" type="button">
                 Добавить
               </Link>
->>>>>>> 36fe53e86e97280c00fb0b917afcb8e7deb5ab41
             </div>
           </div>
         </div>
