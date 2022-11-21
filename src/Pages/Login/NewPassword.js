@@ -39,7 +39,7 @@ function NewPassword() {
         })
         .catch((err) => {
           if (err?.message === "Network Error") {
-            toast.error(err?.message);
+            toast.error("Сетевая ошибка");
           }
         })
         .finally(() => {
@@ -48,7 +48,7 @@ function NewPassword() {
           setLoading(false);
         });
     } else {
-      toast.error("Your passwords are not the same!");
+      toast.error("Ваши пароли не совпадают!");
       setNewPassword("");
       setNewPassword1("");
       setLoading(false);
