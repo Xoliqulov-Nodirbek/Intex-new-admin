@@ -99,9 +99,6 @@ function IbrohimTest() {
               name="description"
               placeholder="Введите Описание продукта"
             />
-
-
-
             <br />
             <MButton BType="login" type="submit">
               Войти
