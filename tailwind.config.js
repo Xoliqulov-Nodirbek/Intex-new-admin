@@ -24,6 +24,9 @@ module.exports = {
         addProductListWidth: "65%",
         submitBtnsWidth: "331px",
       },
+      maxWidth: {
+        login_content: "450px",
+      },
       height: {
         logoHeight: "17px",
         logoLoginHeight: "22px",
@@ -57,11 +60,14 @@ module.exports = {
         homeColor: "#333",
         homeSortWrap: "#666",
         russuanColor: "#2B3D91",
-        paginationColor: '#A6A8B1',
-        paginationButtonColor: '#666666'
+        paginationColor: "#A6A8B1",
+        paginationButtonColor: "#666666",
+        blue: {
+          form_btn: "#2B3D90",
+        },
       },
       fontFamily: {
-        inter: 'Inter'
+        inter: "Inter",
       },
       lineHeight: {
         lead: "150%",

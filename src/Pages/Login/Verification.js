@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Arrow from "../../Assets/Images/LoginImg/arrow.svg";
 import Loader from "../../Assets/Images/LoginImg/loader.svg";
@@ -14,6 +14,12 @@ const env = process.env.REACT_APP_ALL_API;
 function Verification() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinuts] = useState(0);
+
+  const [backMinutes, setbackMinutes] = useState();
+  const [bacSeconds, setbacSeconds] = useState();
+
   const [email, setEmail] = useState(
     JSON.parse(window.localStorage.getItem("email"))
   );
@@ -67,6 +73,19 @@ function Verification() {
       });
   };
 
+  var timer;
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    timer = setInterval(() => {
+      setSeconds(seconds + 1);
+      if (seconds === 59) {
+        setMinuts(minutes + 1);
+        setSeconds(0);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  });
+
   return (
     <section>
       <div className="login_bg fixed inset-0 flex justify-center items-center">
@@ -94,6 +113,10 @@ function Verification() {
             <p className="text-sm text-navBarColor mt-2 mb-5 w-10/12 mx-auto">
               Введите SMS-код, полученный на ваш номер телефона +998901234567
             </p>
+            <h1>
+              {minutes < 10 ? "0" + minutes : minutes} :{" "}
+              {seconds < 10 ? "0" + seconds : seconds}
+            </h1>
             <form className="flex flex-col text-center" onSubmit={postRequest}>
               <div className="flex justify-center">
                 <ReactCodeInput

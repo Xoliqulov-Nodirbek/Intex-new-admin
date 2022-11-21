@@ -5,7 +5,7 @@ function SubmitBtn({ children, onClick }) {
     <>
       <button
         type="submit"
-        className={`button_form bg-blue-form_btn w-submitBtn rounded-xl py-3 text-white font-medium text-lg`}
+        className={`button_form bg-blue-form_btn w-submitBtnsWidth rounded-xl py-3 text-white font-medium text-lg`}
       >
         {children}
       </button>
