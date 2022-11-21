@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Plas from "../../../../Assets/Images/HomeContentImg/plas-icon.svg";
-
+import { Modal } from "../../../../components/Modal/Modal";
+import DelteModal from "../../../../Assets/Images/HomeContentImg/deleteModal.svg";
 export default function AtributPage({
   atributInfo,
   setAtributInfo,
@@ -11,6 +12,7 @@ export default function AtributPage({
   const [openInformation, setOpenInformation] = useState(true);
   const [usDrop, setUsDrop] = useState(false);
   const [uzDrop, setUzDrop] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const resultSubmit = (e) => {
     e.preventDefault();
@@ -64,7 +66,10 @@ export default function AtributPage({
 
   return (
     <form onSubmit={resultSubmit} className="relative">
-      <span className="flex items-center absolute -top-6 cursor-pointer right-0 font-medium text-sm text-supportColor">
+      <span
+        onClick={() => setShowModal(true)}
+        className="flex items-center absolute -top-6 cursor-pointer right-0 font-medium text-sm text-supportColor"
+      >
         <img
           className="mr-2"
           src={Plas}
@@ -564,9 +569,14 @@ export default function AtributPage({
           Cледующий
         </button>
       </div>
-      <div className="">
-        <div className=""></div>
-      </div>
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+        <div className="w-modalWidth py-7 px-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2>Добавить атрибуть</h2>
+            <img src={DelteModal} alt="Delete Modal" width={32} height={32} />
+          </div>
+        </div>
+      </Modal>
     </form>
   );
 }
