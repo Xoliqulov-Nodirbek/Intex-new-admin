@@ -564,6 +564,9 @@ export default function AtributPage({
           Cледующий
         </button>
       </div>
+      <div className="">
+        <div className=""></div>
+      </div>
     </form>
   );
 }
