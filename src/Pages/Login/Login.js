@@ -37,7 +37,7 @@ function Login() {
       })
       .catch((err) => {
         if (err?.response?.status === 401) {
-          toast.error(err?.response?.data?.message);
+          toast.error("Эл.адрес или пароль неверны");
         } else if (err?.response?.status === 400) {
           toast.error("Ошибка электронной почты");
         } else if (err?.message === "Network Error") {
@@ -83,7 +83,7 @@ function Login() {
                   htmlFor="floating_outlined"
                   className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >
-                  Эл. адрес
+                  Эл.адрес
                 </label>
               </div>
               <div>

@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Arrow from "../../Assets/Images/LoginImg/arrow.svg";
 import Loader from "../../Assets/Images/LoginImg/loader.svg";
 import SubmitBtn from "../../BaseComponents/SubmitFormBtn/Button";
 import { toast, Toaster } from "react-hot-toast";
 import ReactCodeInput from "react-code-input";
+import OtpTimer from "otp-timer";
 import "./login.css";
 
 const env = process.env.REACT_APP_ALL_API;
@@ -14,11 +15,6 @@ const env = process.env.REACT_APP_ALL_API;
 function Verification() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinuts] = useState(0);
-
-  const [backMinutes, setbackMinutes] = useState();
-  const [bacSeconds, setbacSeconds] = useState();
 
   const [email, setEmail] = useState(
     JSON.parse(window.localStorage.getItem("email"))
@@ -42,11 +38,11 @@ function Verification() {
       })
       .catch((err) => {
         if (err?.response?.status === 400) {
-          toast.error("Your password is incorrect!");
+          toast.error("Ваш пароль неверен!");
         } else if (err?.response?.status === 409) {
-          toast.error("Your password is incorrect!");
+          toast.error("Ваш пароль неверен!");
         } else if (err?.message === "Network Error") {
-          toast.error(err?.message);
+          toast.error("Сетевая ошибка");
         }
       })
       .finally(() => {
@@ -56,35 +52,21 @@ function Verification() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     axios
       .post(`${env}admins/forgot-password`, {
         email: email,
       })
       .then((res) => {
         if (res?.status === 200) {
-          toast.success("Confirmation code send your email!");
+          toast.success("Код подтверждения отправить на почту!");
         }
       })
       .catch((err) => {
         if (err?.message === "Network Error") {
-          toast.error(err?.message);
+          toast.error("Сетевая ошибка");
         }
       });
   };
-
-  var timer;
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    timer = setInterval(() => {
-      setSeconds(seconds + 1);
-      if (seconds === 59) {
-        setMinuts(minutes + 1);
-        setSeconds(0);
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  });
 
   return (
     <section>
@@ -111,12 +93,8 @@ function Verification() {
               Введите SMS-код
             </p>
             <p className="text-sm text-navBarColor mt-2 mb-5 w-10/12 mx-auto">
-              Введите SMS-код, полученный на ваш номер телефона +998901234567
+              Введите SMS-код, полученный на ваш Адрес электронной почты
             </p>
-            <h1>
-              {minutes < 10 ? "0" + minutes : minutes} :{" "}
-              {seconds < 10 ? "0" + seconds : seconds}
-            </h1>
             <form className="flex flex-col text-center" onSubmit={postRequest}>
               <div className="flex justify-center">
                 <ReactCodeInput
@@ -136,14 +114,22 @@ function Verification() {
                   type="text"
                   fields={6}
                   autoComplete="off"
+                  requered
                 />
               </div>
-              <button
-                onClick={handleSubmit}
-                className="text-end text-sm text-supportColor font-medium mt-6"
-              >
-                SMS ni qayta jo’natish
-              </button>
+              <div className="flex justify-end mt-6">
+                <OtpTimer
+                  style={{ fontSize: "60px" }}
+                  textColor={"#109EF4"}
+                  minutes={1}
+                  seconds={60}
+                  text=""
+                  ButtonText="SMS ni qayta jo’natish"
+                  background={"#fff"}
+                  buttonColor={"#109EF4"}
+                  resend={handleSubmit}
+                />
+              </div>
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (
