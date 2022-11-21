@@ -14,7 +14,6 @@ export default function AtributPage({
 
   const resultSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target[29].value);
     setAtributInfo([
       ...atributInfo,
       {
