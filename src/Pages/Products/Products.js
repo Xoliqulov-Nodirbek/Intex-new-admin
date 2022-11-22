@@ -4,7 +4,9 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
-export default function Products() {
+
+const env = process.env.REACT_APP_ALL_API;
+
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
@@ -22,9 +24,7 @@ export default function Products() {
 
   React.useEffect(() => {
     axios
-      .get(
-        `https://intex-shop-production.up.railway.app/api/products/getAll?page=${page}&limit=${limit}`
-      )
+      .get(`${env}products/getAll?page=${page}&limit=${limit}`)
       .then((res) => {
         setData(res?.data);
         setTotalpage(res.data?.total_count.count);
