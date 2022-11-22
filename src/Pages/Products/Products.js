@@ -6,7 +6,7 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 
 const env = process.env.REACT_APP_ALL_API;
-
+const Products = () => {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
@@ -28,7 +28,6 @@ const env = process.env.REACT_APP_ALL_API;
       .then((res) => {
         setData(res?.data);
         setTotalpage(res.data?.total_count.count);
-      
       });
   }, [limit, page]);
 
@@ -48,7 +47,7 @@ const env = process.env.REACT_APP_ALL_API;
           <thead className="bg-[#f2f2f2]">
             <TableRow styles="py-[13px]">
               <TableHeader styles="w-11 pr-3 justify-center">
-                <input className="" type="checkbox" readOnly checked={false}/>
+                <input className="" type="checkbox" readOnly checked={false} />
               </TableHeader>
               <TableHeader styles="w-[66px]" sortIcon={true}>
                 ID
@@ -126,12 +125,20 @@ const env = process.env.REACT_APP_ALL_API;
             >
               &#60;
             </button>
-            <button className=" text-paginationButtonColor" onClick={() => {
-              page===Math.floor(totalPage/limit) ? setPage(Math.floor(totalPage/limit)) : setPage(page + 1)
-            }}>&#62;</button>
+            <button
+              className=" text-paginationButtonColor"
+              onClick={() => {
+                page === Math.floor(totalPage / limit)
+                  ? setPage(Math.floor(totalPage / limit))
+                  : setPage(page + 1);
+              }}
+            >
+              &#62;
+            </button>
           </span>
         </div>
       </div>
     </div>
   );
-}
+};
+export default Products;
