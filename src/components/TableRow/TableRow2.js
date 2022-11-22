@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 import TableData from "../TableData/TableData";
 import MLabel from "../../BaseComponents/MLabel/MLabel";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
+import ProductModal from "../ProductModal/ProductModal";
 
 export default function TableRow2({
   children,
@@ -9,7 +10,9 @@ export default function TableRow2({
   data,
   handleChange,
   isChecked,
-}) {
+}) 
+{
+  const [isClick, setIsClick] = useState(false);
   return (
     <tr className={`flex  items-center border-b ${styles}`}>
       {children ? (
@@ -39,10 +42,15 @@ export default function TableRow2({
             <MLabel type={`label_${data.name_ru}`}>Новинки</MLabel>
           </TableData>
           
-          <TableData styles="w-[95px] pr-3 justify-center">
-            <button onClick={()=> console.log("clicked")}>
+          <TableData styles="w-[95px] pr-3 justify-center relative">
+            <button
+              onClick={() => {
+                setIsClick(!isClick);
+              }}
+            >
               <img src={ThreeDotsSvg} alt="three dots icon" />
             </button>
+            {isClick ? <ProductModal /> : ""}
           </TableData>
         </>
       )}
