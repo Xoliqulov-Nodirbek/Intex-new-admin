@@ -4,14 +4,13 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
-
 export default function Products() {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
-  const [totalPage, setTotalpage] = React.useState(0)
+  const [totalPage, setTotalpage] = React.useState(0);
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -29,10 +28,9 @@ export default function Products() {
       .then((res) => {
         setData(res?.data);
         setTotalpage(res.data?.total_count.count);
+      
       });
   }, [limit, page]);
-
-  console.log(page);
 
   return (
     <div className=" bg-white border-b rounded-xl mb-[100px]">
@@ -50,7 +48,7 @@ export default function Products() {
           <thead className="bg-[#f2f2f2]">
             <TableRow styles="py-[13px]">
               <TableHeader styles="w-11 pr-3 justify-center">
-                <input className="" type="checkbox" />
+                <input className="" type="checkbox" readOnly checked={false}/>
               </TableHeader>
               <TableHeader styles="w-[66px]" sortIcon={true}>
                 ID
@@ -115,14 +113,22 @@ export default function Products() {
             value={page}
             onChange={(evt) => setPage(evt.target.value)}
             maxLength={1}
-
           />
           <span className="mr-3.5 text-sm text-paginationButtonColor">
-            из {totalPage / limit} страниц
+            из {Math.floor(totalPage / limit)} страниц
           </span>
           <span className="flex">
-            <button className="mr-4 text-paginationButtonColor">&#60;</button>
-            <button className=" text-paginationButtonColor">&#62;</button>
+            <button
+              className="mr-4 text-paginationButtonColor"
+              onClick={() => {
+                page === 0 ? setPage(0) : setPage(page - 1);
+              }}
+            >
+              &#60;
+            </button>
+            <button className=" text-paginationButtonColor" onClick={() => {
+              page===Math.floor(totalPage/limit) ? setPage(Math.floor(totalPage/limit)) : setPage(page + 1)
+            }}>&#62;</button>
           </span>
         </div>
       </div>

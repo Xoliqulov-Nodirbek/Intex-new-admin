@@ -80,6 +80,9 @@ module.exports = {
       translate: {
         bottom: "60px",
       },
+      boxShadow: {
+        editProduct: '0px 12px 23px rgba(150, 150, 150, 0.1)'
+      }
     },
   },
   plugins: [],
