@@ -71,36 +71,36 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
     setUzDrop(!uzDrop);
   };
   const onSubmit = (values, { resetForm }) => {
-    console.log(values.ruCountry);
+    // console.log(values);
     imagesPage(true);
     submitProduct(false);
     atributPage(false);
     setInfoForm([
       {
         ru: {
-          nameProduct: values.ruName,
-          whichCopany: values.number,
-          userInfo: values.ruText,
-          countryPro: values.ruCountryt,
-          categoryPro: values.ruProduct,
-          countPro: values.ruPriceNum,
+          ruNamePro: values.ruName,
+          ruWork: values.ruProiz,
+          ruTexrArea: values.ruText,
+          ruConutry: values.usCountry,
+          ruCategory: values.ruProduct,
+          ruPrice: values.ruPriceNum,
         },
-        // us: {
-        //   nameProduct: values.target[6].value,
-        //   whichCopany: values.target[7].value,
-        //   userInfo: values.target[8].value,
-        //   countryPro: values.target[9].value,
-        //   categoryPro: values.target[10].value,
-        //   countPro: values.target[11].value,
-        // },
-        // uz: {
-        //   nameProduct: values.target[12].value,
-        //   whichCopany: values.target[13].value,
-        //   userInfo: values.target[14].value,
-        //   countryPro: values.target[15].value,
-        //   categoryPro: values.target[16].value,
-        //   countPro: values.target[17].value,
-        // },
+        us: {
+          usNamePro: values.usName,
+          usWork: values.usProiz,
+          usTexrArea: values.usText,
+          usConutry: values.usCountry,
+          usCategory: values.usProduct,
+          usPrice: values.usPriceNum,
+        },
+        uz: {
+          uzNamePro: values.uzName,
+          uzWork: values.uzProiz,
+          uzTexrArea: values.uzText,
+          uzConutry: values.uzCountry,
+          uzCategory: values.uzProduct,
+          uzPrice: values.uzPriceNum,
+        },
       },
     ]);
     resetForm();
@@ -307,7 +307,20 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                 </div>
               </div>
             </DropDown>
-            <button type="submit">Click</button>
+            <div className="flex mt-6 pb-8 items-center justify-center space-x-5">
+              <button
+                className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"
+                type="reset"
+              >
+                Отменить
+              </button>
+              <button
+                className="py-3 text-white rounded-2xl w-submitBtnsWidth bg-submitBtnBg font-bold text-lg"
+                type="submit"
+              >
+                Cледующий
+              </button>
+            </div>
           </Form>
         )}
       </Formik>
