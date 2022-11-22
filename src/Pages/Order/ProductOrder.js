@@ -1,9 +1,9 @@
 import React from "react";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import TableHeader from "../../components/TableHeader/TableHeader";
-import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
+import TableRow2 from "../../components/TableRow/TableRow2";
 
 export default function ProductOrder() {
   const [data, setData] = React.useState([]);
@@ -24,16 +24,22 @@ export default function ProductOrder() {
   React.useEffect(() => {
     axios
       .get(
-        `https://intex-shop-production.up.railway.app/api/products/getAll?page=${page}&limit=${limit}`
+        `https://intex-shop-production.up.railway.app/api/orders?page=0&limit=10`,{
+          headers:{
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5vZGlyYmVrIiwicm9sZXMiOiJhZG1pbiIsImlhdCI6MTY2OTEwNzU2NiwiZXhwIjoxNjY5MTE0NzY2fQ.ziGmQ4wsMN3iWU30pvaKilU-SitA5w_dSqP2I4XRbxY'
+
+          }
+        }
       )
       .then((res) => {
         setData(res?.data);
+        
         setTotalpage(res.data?.total_count.count);
       });
   }, [limit, page]);
 
   console.log(page);
-  console.log(data);
+  console.log(data.result);
 
   return (
     <div className=" bg-white border-b rounded-xl mb-[100px]">
@@ -49,7 +55,7 @@ export default function ProductOrder() {
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
           <thead className="bg-[#f2f2f2]">
-            <TableRow styles="py-[13px]">
+            <TableRow2 styles="py-[13px]">
               <TableHeader styles="w-11 pr-3 justify-center">
                 <input className="" type="checkbox" />
               </TableHeader>
@@ -74,19 +80,19 @@ export default function ProductOrder() {
                   <img src={ThreeDotsSvg} alt="three dots icon" />
                 </button>
               </TableHeader>
-            </TableRow>
+            </TableRow2>
           </thead>
           <tbody className="bg-white">
             {data.result?.length ? (
               data.result?.map((item) => {
                 return (
-                  <TableRow
+                  <TableRow2
                     styles="py-1.5"
                     data={item}
                     key={item.id}
                     isChecked={isChecked}
                     handleChange={handleChange}
-                  ></TableRow>
+                  ></TableRow2>
                 );
               })
             ) : (
