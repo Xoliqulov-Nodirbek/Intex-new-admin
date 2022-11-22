@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TableData from "../TableData/TableData";
 import MLabel from "../../BaseComponents/MLabel/MLabel";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
@@ -12,19 +12,18 @@ export default function TableRow({
   isChecked,
 }) {
   const [checker, setChecker] = useState(false);
-  const [isClicked, setIsClicked] = useState(false)
- 
-  const handleCheck = (e) =>{
-    
-        if(e.target.checked){
-          setChecker(true)
-            e.target.checked = true
-        }else{
-          setChecker(false)
-          e.target.checked = false
-        }
-  }
-  
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleCheck = (e) => {
+    if (e.target.checked) {
+      setChecker(true);
+      e.target.checked = true;
+    } else {
+      setChecker(false);
+      e.target.checked = false;
+    }
+  };
+
   return (
     <tr className={`flex  items-center border-b ${styles}`}>
       {children ? (
@@ -36,8 +35,18 @@ export default function TableRow({
             <input
               className="inputs"
               type="checkbox"
-              checked={(checker == true && isChecked  == false)  ? true  : (checker == false && isChecked == false) ? false : (checker==false && isChecked == true) ? true : (checker == true && isChecked == true) ? true : true}
-              onChange={(e)=>handleCheck(e)}
+              checked={
+                checker === true && isChecked === false
+                  ? true
+                  : checker === false && isChecked === false
+                  ? false
+                  : checker === false && isChecked === true
+                  ? true
+                  : checker === true && isChecked === true
+                  ? true
+                  : true
+              }
+              onChange={(e) => handleCheck(e)}
             />
           </TableData>
           <TableData styles="w-[66px]">{data.id}</TableData>
@@ -53,10 +62,14 @@ export default function TableRow({
             <MLabel type={`label_${data.status_en}`}>Новинки</MLabel>
           </TableData>
           <TableData styles="w-[95px] pr-3 justify-center relative">
-            <button onClick={() => {setIsClicked(!isClicked)}}>
+            <button
+              onClick={() => {
+                setIsClicked(!isClicked);
+              }}
+            >
               <img src={ThreeDotsSvg} alt="three dots icon" />
             </button>
-            {isClicked ? <ProductModal/> : ''}
+            {isClicked ? <ProductModal /> : ""}
           </TableData>
         </>
       )}
