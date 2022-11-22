@@ -27,7 +27,7 @@ export default function ProductOrder() {
       .get(
         `https://intex-shop-production.up.railway.app/api/orders?page=0&limit=10`,{
           headers:{
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5vZGlyYmVrIiwicm9sZXMiOiJhZG1pbiIsImlhdCI6MTY2OTEwNzU2NiwiZXhwIjoxNjY5MTE0NzY2fQ.ziGmQ4wsMN3iWU30pvaKilU-SitA5w_dSqP2I4XRbxY'
+            'Authorization': ' Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5vZGlyYmVrIiwicm9sZXMiOiJhZG1pbiIsImlhdCI6MTY2OTEzNDAyMSwiZXhwIjoxNjY5MTQxMjIxfQ.PgCvPd_RMb4VqlmtkhnZcsCJtRqhVTIMG2R8TTolAaI'
 
           }
         }
@@ -40,7 +40,7 @@ export default function ProductOrder() {
   }, [limit, page]);
 
   console.log(page);
-  console.log(data.result[1].count);
+  console.log(data.result);
 
   return (
     <>
