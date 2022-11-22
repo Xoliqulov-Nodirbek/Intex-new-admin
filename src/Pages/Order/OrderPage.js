@@ -5,6 +5,7 @@ import axios from "axios";
 import CloseSvg from "../../Assets/Images/NavbarImgs/close.svg";
 import uzbFlag from "../../Assets/Images/HeaderImgs/uzb-flag.svg";
 import addressLogo from "../../Assets/Images/NavbarImgs/addresLogo.svg";
+import { useState } from "react";
 
 let token = "5783030372:AAHFLmlGunmbxmIDCpA3ra67L9tnVV1paJg";
 let chatId = "63647653";
@@ -82,8 +83,9 @@ const validationSchema = Yup.object({
     .max(20, "Maximum 20 characters"),
 });
 
-function OrderPage({ isVisible, onClose }) {
-  const formik = useFormik({
+function OrderPage({ isVisible, onClose, data }) {
+  const [numberOrder, setNumberOrder] = useState(data.order_number)
+    const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
@@ -125,6 +127,7 @@ function OrderPage({ isVisible, onClose }) {
             <label className="relative">
               <p className="text-base font-medium mb-3">Номер заказа</p>
               <input
+                value={numberOrder}
                 type="number"
                 name="orders"
                 id="orders"
@@ -136,7 +139,7 @@ function OrderPage({ isVisible, onClose }) {
                 minLength="3"
                 maxLength="25"
                 {...formik.getFieldProps("orders")}
-                placeholder="#12345"
+               
               />
               {formik.touched.orders && formik.errors.orders ? (
                 <span className="text-red-600 text-xs absolute -bottom-4 left-2">
