@@ -23,6 +23,7 @@ module.exports = {
         homeSortWidth: "170px",
         addProductListWidth: "65%",
         submitBtnsWidth: "331px",
+        730: "682px",
       },
       maxWidth: {
         login_content: "450px",
@@ -62,8 +63,12 @@ module.exports = {
         russuanColor: "#2B3D91",
         paginationColor: "#A6A8B1",
         paginationButtonColor: "#666666",
+        lineColor: "#F2F2F2",
         blue: {
           form_btn: "#2B3D90",
+        },
+        red: {
+          deleteColor: "#F51659",
         },
       },
       fontFamily: {

@@ -5,13 +5,15 @@ import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 
+const env = process.env.REACT_APP_ALL_API;
+
 export default function Products() {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
-  const [totalPage, setTotalpage] = React.useState(0)
+  const [totalPage, setTotalpage] = React.useState(0);
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -23,9 +25,7 @@ export default function Products() {
 
   React.useEffect(() => {
     axios
-      .get(
-        `https://intex-shop-production.up.railway.app/api/products/getAll?page=${page}&limit=${limit}`
-      )
+      .get(`${env}products/getAll?page=${page}&limit=${limit}`)
       .then((res) => {
         setData(res?.data);
         setTotalpage(res.data?.total_count.count);
@@ -115,7 +115,6 @@ export default function Products() {
             value={page}
             onChange={(evt) => setPage(evt.target.value)}
             maxLength={1}
-
           />
           <span className="mr-3.5 text-sm text-paginationButtonColor">
             из {totalPage / limit} страниц

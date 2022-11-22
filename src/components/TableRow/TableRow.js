@@ -17,12 +17,7 @@ export default function TableRow({
       ) : (
         <>
           <TableData styles="w-11 pr-3 justify-center">
-            <input
-              className=""
-              type="checkbox"
-              onChange={handleChange}
-              
-            />
+            <input className="" type="checkbox" onChange={handleChange} />
           </TableData>
           <TableData styles="w-[66px]">{data.id}</TableData>
           <TableData styles="w-[300px] truncate" image={true}>

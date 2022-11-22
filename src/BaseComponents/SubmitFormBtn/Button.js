@@ -1,6 +1,6 @@
 import "./Button.css";
 
-function SubmitBtn({ children, onClick }) {
+function SubmitBtn({ children }) {
   return (
     <>
       <button
