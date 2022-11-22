@@ -11,36 +11,36 @@ export default function AddProduct() {
   const [formInfo, setFormInfo] = useState([
     {
       ru: {
-        nameProduct: "",
-        whichCopany: "",
-        userInfo: "",
-        countryPro: "",
-        categoryPro: "",
-        countPro: "",
+        ruNamePro: "",
+        ruWork: "",
+        ruTexrArea: "",
+        ruConutry: "",
+        ruCategory: "",
+        ruPrice: "",
       },
     },
     {
       us: {
-        nameProduct: "",
-        whichCopany: "",
-        userInfo: "",
-        countryPro: "",
-        categoryPro: "",
-        countPro: "",
+        usNamePro: "",
+        usWork: "",
+        usTexrArea: "",
+        usConutry: "",
+        usCategory: "",
+        usPrice: "",
       },
     },
     {
       uz: {
-        nameProduct: "",
-        whichCopany: "",
-        userInfo: "",
-        countryPro: "",
-        categoryPro: "",
-        countPro: "",
+        uzNamePro: "",
+        uzWork: "",
+        uzTexrArea: "",
+        uzConutry: "",
+        uzCategory: "",
+        uzPrice: "",
       },
     },
   ]);
-  // console.log(formInfo);
+  console.log(formInfo);
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">

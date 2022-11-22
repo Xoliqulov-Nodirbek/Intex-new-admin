@@ -32,13 +32,13 @@ function Forget() {
       .catch((err) => {
         console.log(err);
         if (err?.response?.status === 400) {
-          toast.error("Your email is incorrect");
+          toast.error("Ваш эл.почта неверен");
         } else if (err?.message === "Network Error") {
-          toast.error(err?.message);
+          toast.error("Сетевая ошибка");
         } else if (err.status === 409) {
           toast.error(err?.message);
         } else if (err?.response?.status === 503) {
-          toast.error("This email not registered!");
+          toast.error("Эта эл.почта не зарегистрирована!");
         }
       })
       .finally(() => {

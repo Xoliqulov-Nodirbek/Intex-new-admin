@@ -13,7 +13,7 @@ import "./login.css";
 const env = process.env.REACT_APP_ALL_API;
 
 function Login() {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [icon, setIcon] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ function Login() {
     setLoading(true);
     axios
       .post(`${env}admins/login`, {
-        username: name,
+        email: email,
         password: password,
       })
       .then((res) => {
@@ -37,14 +37,16 @@ function Login() {
       })
       .catch((err) => {
         if (err?.response?.status === 401) {
-          toast.error(err?.response?.data?.message);
+          toast.error("Эл.адрес или пароль неверны");
+        } else if (err?.response?.status === 400) {
+          toast.error("Ошибка электронной почты");
         } else if (err?.message === "Network Error") {
           toast.error(err?.message);
         }
       })
       .finally(() => {
         setLoading(false);
-        setName("");
+        setEmail("");
         setPassword("");
       });
   };
@@ -68,12 +70,12 @@ function Login() {
             >
               <div className="relative mb-5">
                 <input
-                  value={name}
+                  value={email}
                   type="text"
                   id="floating_outlined"
                   className="block px-2.5 pb-2 pt-4 w-full text-sm bg-transparent rounded-lg border border-inputColor appearance-none dark:text-black dark:border-inputColor dark:focus:border-inputColor focus:outline-none focus:ring-0 peer"
                   placeholder=" "
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   maxLength={45}
                   required
                 />
@@ -81,7 +83,7 @@ function Login() {
                   htmlFor="floating_outlined"
                   className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >
-                  Имя
+                  Эл.адрес
                 </label>
               </div>
               <div>
