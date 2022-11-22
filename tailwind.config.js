@@ -24,6 +24,7 @@ module.exports = {
         addProductListWidth: "65%",
         submitBtnsWidth: "331px",
         730: "682px",
+        modalWidth: "730px",
       },
       maxWidth: {
         login_content: "450px",
@@ -48,6 +49,7 @@ module.exports = {
         filterBg: "#109ef4",
         resetBtn: "#F2F2F2",
         submitBtnBg: "#2B3D91",
+        modalBg: " rgba(0, 0, 0, 0.15)",
       },
       colors: {
         addProductColor: "#24283A",
@@ -83,6 +85,9 @@ module.exports = {
       translate: {
         bottom: "60px",
       },
+      boxShadow: {
+        editProduct: '0px 12px 23px rgba(150, 150, 150, 0.1)'
+      }
     },
   },
   plugins: [],
