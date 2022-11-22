@@ -39,7 +39,7 @@ export default function ProductOrder() {
   }, [limit, page]);
 
   console.log(page);
-  console.log(data.result);
+  console.log(data.result.created_at);
 
   return (
     <div className=" bg-white border-b rounded-xl mb-[100px]">

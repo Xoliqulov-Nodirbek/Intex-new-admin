@@ -36,11 +36,11 @@ export default function TableRow2({
           <TableData styles="w-[153px]">{data.discount_summa ? data.discount_summa + " cум" : "-"}</TableData>
           <TableData styles="w-[145px]">{data.cteated_at}</TableData>
           <TableData styles="w-[140px]">
-            <MLabel type={`label_${data.status_en}`}>Новинки</MLabel>
+            <MLabel type={`label_${data.name_ru}`}>Новинки</MLabel>
           </TableData>
           
           <TableData styles="w-[95px] pr-3 justify-center">
-            <button>
+            <button onClick={()=> console.log("clicked")}>
               <img src={ThreeDotsSvg} alt="three dots icon" />
             </button>
           </TableData>
