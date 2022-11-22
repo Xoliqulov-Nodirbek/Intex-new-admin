@@ -84,8 +84,8 @@ const validationSchema = Yup.object({
 });
 
 function OrderPage({ isVisible, onClose, data }) {
-  console.log(data[1].name);
-  const [numberOrder, setNumberOrder] = useState(data[1].name)
+  
+  const [numberOrder, setNumberOrder] = useState("12345")
     const formik = useFormik({
     initialValues,
     onSubmit,
