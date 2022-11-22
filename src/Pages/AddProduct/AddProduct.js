@@ -40,7 +40,7 @@ export default function AddProduct() {
       },
     },
   ]);
-  // console.log(formInfo);
+  console.log(formInfo);
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
