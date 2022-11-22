@@ -3,10 +3,10 @@ import { Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
 
 function Input(props) {
-  const { label, name, ...rest } = props;
+  const { label, className, name, ...rest } = props;
 
   return (
-    <div className={`flex flex-col w-[346px]`}>
+    <div className={`flex flex-col ${className}`}>
       <label htmlFor={name} className="text-addProductColor mb-3">
         {label}
       </label>

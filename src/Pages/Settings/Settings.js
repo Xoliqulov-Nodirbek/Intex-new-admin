@@ -8,6 +8,8 @@ import axios from "axios";
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import EditImg from "../../Assets/Images/SettingsImg/edit.svg";
 import Close from "../../Assets/Images/SettingsImg/close.svg";
+import FormikControl from "../../BaseComponents/FormInput/FormikControl";
+import MButton from "../../BaseComponents/MButton/MButton";
 
 const env = process.env.REACT_APP_ALL_API;
 
@@ -45,6 +47,19 @@ export default function Home() {
       work_ru: address.work_ru,
       work_en: address.work_en,
     });
+  };
+
+  const initialValues = {
+    address: "",
+  };
+
+  const validationSchema = Yup.object({
+    address: Yup.string().required("Required address!"),
+  });
+
+  const onSubmit = (values, { resetForm }) => {
+    console.log(values);
+    resetForm();
   };
 
   return (
@@ -248,6 +263,27 @@ export default function Home() {
                 </button>
               </div>
             </form> */}
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+            >
+              {(formik) => (
+                <Form>
+                  <FormikControl
+                    control="input"
+                    type="address"
+                    id="address"
+                    label="Адрес"
+                    name="address"
+                    className="w-[346px]"
+                  />
+                  <MButton type={"submit"} BType="next">
+                    Сохранить
+                  </MButton>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       </Modal>
