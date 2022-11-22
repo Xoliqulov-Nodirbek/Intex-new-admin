@@ -1,12 +1,14 @@
-import React from 'react'
-import { Field, ErrorMessage } from 'formik'
-import TextError from './TextError'
+import React from "react";
+import { Field, ErrorMessage } from "formik";
+import TextError from "./TextError";
 
 function Textarea(props) {
-  const { label, name, ...rest } = props
+  const { label, name, ...rest } = props;
   return (
-    <div className="flex flex-col w-[712px] ">
-      <label htmlFor={name}>{label}</label>
+    <div className="flex flex-col ">
+      <label className="mb-3" htmlFor={name}>
+        {label}
+      </label>
       <Field
         as="textarea"
         id={name}
@@ -16,7 +18,7 @@ function Textarea(props) {
       />
       <ErrorMessage name={name} component={TextError} />
     </div>
-  )
+  );
 }
 
-export default Textarea
+export default Textarea;

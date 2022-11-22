@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import './Assets/main.css'
-import MButton from './BaseComponents/MButton/MButton'
-import MFilter from './BaseComponents/MFilter/MFilter'
-import MLabel from './BaseComponents/MLabel/MLabel'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
-import FormikContainer from './BaseComponents/FormInput/FormikContainer'
-import FormikControl from './BaseComponents/FormInput/FormikControl'
+import React, { useEffect, useState } from "react";
+import "./Assets/main.css";
+import MButton from "./BaseComponents/MButton/MButton";
+import MFilter from "./BaseComponents/MFilter/MFilter";
+import MLabel from "./BaseComponents/MLabel/MLabel";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import FormikContainer from "./BaseComponents/FormInput/FormikContainer";
+import FormikControl from "./BaseComponents/FormInput/FormikControl";
 
 function IbrohimTest() {
   const dropdownOptions = [
-    { key: 'В ожидании', value: '' },
-    { key: 'Option1', value: 'option 1' },
-    { key: 'Option2', value: 'option 2' },
-    { key: 'Option3', value: 'option 3' },
-  ]
+    { key: "В ожидании", value: "" },
+    { key: "Option1", value: "option 1" },
+    { key: "Option2", value: "option 2" },
+    { key: "Option3", value: "option 3" },
+  ];
 
   const initialValues = {
-    name: '',
-    password: '',
+    name: "",
+    password: "",
     birthDate: null,
-    selectOption: '',
-    price: '',
-    description: ''
-  }
+    selectOption: "",
+    price: "",
+    description: "",
+  };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    password: Yup.string().required('Required'),
-    description: Yup.string().required('Required'),
-    selectOption: Yup.string().required('Required'),
-    birthDate: Yup.date().required('Required').nullable(),
-    price: Yup.number().required('Required'),
-  })
+    name: Yup.string().required("Required"),
+    password: Yup.string().required("Required"),
+    description: Yup.string().required("Required"),
+    selectOption: Yup.string().required("Required"),
+    birthDate: Yup.date().required("Required").nullable(),
+    price: Yup.number().required("Required"),
+  });
 
   const onSubmit = (values, { resetForm }) => {
-    console.log('Form data', values)
-    resetForm()
-  }
+    console.log("Form data", values);
+    resetForm();
+  };
 
   return (
     <>
@@ -77,8 +77,6 @@ function IbrohimTest() {
               placeholder="2 600 000"
             />
 
-            
-
             <FormikControl
               control="date"
               label="Pick a date"
@@ -107,7 +105,7 @@ function IbrohimTest() {
         )}
       </Formik>
     </>
-  )
+  );
 }
 
-export default IbrohimTest
+export default IbrohimTest;
