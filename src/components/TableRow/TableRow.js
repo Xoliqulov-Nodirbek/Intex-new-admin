@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import TableData from "../TableData/TableData";
 import MLabel from "../../BaseComponents/MLabel/MLabel";
-import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import ProductModal from "../ProductModal/ProductModal";
+
+// Images
+import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 
 export default function TableRow({ children, styles, data, isChecked }) {
   const [checker, setChecker] = useState(false);
@@ -25,7 +27,6 @@ export default function TableRow({ children, styles, data, isChecked }) {
       ) : (
         <>
           <TableData styles="w-11 pr-3 justify-center">
-            {/* <input className="" type="checkbox" onChange={handleChange} /> */}
             <input
               className="inputs"
               type="checkbox"

@@ -5,42 +5,45 @@ import AtributPage from "./ProductPages/AtributPage/AtributPage";
 import Line from "./../../BaseComponents/Line/Line";
 
 export default function AddProduct() {
-  const [info, setInfo] = useState(true);
+  const [info, setInfo] = useState(false);
   const [img, setImg] = useState(false);
-  const [atr, setAtr] = useState(false);
+  const [atr, setAtr] = useState(true);
+  const [result, setResult] = useState(false);
   const [formInfo, setFormInfo] = useState([
     {
       ru: {
-        nameProduct: "",
-        whichCopany: "",
-        userInfo: "",
-        countryPro: "",
-        categoryPro: "",
-        countPro: "",
+        ruNamePro: "",
+        ruWork: "",
+        ruTexrArea: "",
+        ruConutry: "",
+        ruCategory: "",
+        ruPrice: "",
       },
     },
     {
       us: {
-        nameProduct: "",
-        whichCopany: "",
-        userInfo: "",
-        countryPro: "",
-        categoryPro: "",
-        countPro: "",
+        usNamePro: "",
+        usWork: "",
+        usTexrArea: "",
+        usConutry: "",
+        usCategory: "",
+        usPrice: "",
       },
     },
     {
       uz: {
-        nameProduct: "",
-        whichCopany: "",
-        userInfo: "",
-        countryPro: "",
-        categoryPro: "",
-        countPro: "",
+        uzNamePro: "",
+        uzWork: "",
+        uzTexrArea: "",
+        uzConutry: "",
+        uzCategory: "",
+        uzPrice: "",
       },
     },
   ]);
-  console.log(formInfo);
+  if (result) {
+    console.log(formInfo);
+  }
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
@@ -91,6 +94,7 @@ export default function AddProduct() {
           )}
           {atr ? (
             <AtributPage
+              resultSubmit={setResult}
               atributPage={setAtr}
               imaPage={setImg}
               productBasic={setInfo}

@@ -1,14 +1,167 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormikControl from "../../../../BaseComponents/FormInput/FormikControl";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import DropDown from "../../../../BaseComponents/DropDown/DropDown";
 import DropImg from "../../../../Assets/Images/HomeContentImg/Drop.svg";
+import axios from "axios";
+
+const env = process.env.REACT_APP_ALL_API;
 
 function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
-  const [openDown, setOpenDown] = useState(false);
+  const [openDown, setOpenDown] = useState(true);
   const [engDrop, setEngDrop] = useState(false);
   const [uzDrop, setUzDrop] = useState(false);
+  const [infoDate, setInfoDate] = useState([]);
+  const [manufact, setManufact] = useState([]);
+  const [enManufact, setEnManufact] = useState([]);
+  const [uzManufact, setUzManufact] = useState([]);
+  const [ruCategory, setRuCategory] = useState([]);
+  const [enCategory, setEnCategory] = useState([]);
+  const [uzCategory, setUzCategory] = useState([]);
+  const [enCountry, setEnCountry] = useState([]);
+  const [uzCountry, setUzCountry] = useState([]);
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
+  // country options starts
+  useEffect(() => {
+    axios.get(`${env}countries/getAll`).then((data) => setInfoDate(data.data));
+  }, []);
+
+  const dropdownOptions = [{ key: "В ожидании", value: "" }];
+  infoDate.map((item) =>
+    dropdownOptions.push({ key: item.country_ru, value: item.country_ru })
+  );
+  // country options end
+
+  // enCountry options starts
+  useEffect(() => {
+    axios.get(`${env}countries/getAll`).then((data) => setEnCountry(data.data));
+  }, []);
+
+  const enDropdownOptions = [{ key: "В ожидании", value: "" }];
+  enCountry.map((item) =>
+    enDropdownOptions.push({ key: item.country_en, value: item.country_en })
+  );
+  // enCountry options end
+
+  // uzCountry options starts
+  useEffect(() => {
+    axios.get(`${env}countries/getAll`).then((data) => setUzCountry(data.data));
+  }, []);
+
+  const uzDropdownOptions = [{ key: "В ожидании", value: "" }];
+  uzCountry.map((item) =>
+    uzDropdownOptions.push({ key: item.country_uz, value: item.country_uz })
+  );
+  // uzCountry options end
+
+  // Призводства options start
+  useEffect(() => {
+    axios
+      .get(`${env}manufacturers/getAll`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((data) => setManufact(data.data));
+  }, [token]);
+  const factoryNames = [{ key: "В ожидании", value: "" }];
+  manufact.map((item) =>
+    factoryNames.push({
+      key: item.manufacturer_ru,
+      value: item.manufacturer_ru,
+    })
+  );
+  // Призводства options end
+
+  // enПризводства options start
+  useEffect(() => {
+    axios
+      .get(`${env}manufacturers/getAll`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((data) => setEnManufact(data.data));
+  }, [token]);
+  const enfactoryNames = [{ key: "В ожидании", value: "" }];
+  enManufact.map((item) =>
+    enfactoryNames.push({
+      key: item.manufacturer_en,
+      value: item.manufacturer_en,
+    })
+  );
+  // enПризводства options end
+
+  // enПризводства options start
+  useEffect(() => {
+    axios
+      .get(`${env}manufacturers/getAll`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((data) => setUzManufact(data.data));
+  }, [token]);
+  const uzfactoryNames = [{ key: "В ожидании", value: "" }];
+  uzManufact.map((item) =>
+    uzfactoryNames.push({
+      key: item.manufacturer_uz,
+      value: item.manufacturer_uz,
+    })
+  );
+  // enПризводства options end
+
+  //Category options start
+  useEffect(() => {
+    axios
+      .get(`${env}categories/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((data) => setRuCategory(data.data));
+  }, [token]);
+  const ruCategoryOptions = [{ key: "В ожидании", value: "" }];
+  ruCategory.map((item) =>
+    ruCategoryOptions.push({ key: item.category_ru, value: item.category_ru })
+  );
+  //Category options End
+
+  //enCategory options start
+  useEffect(() => {
+    axios
+      .get(`${env}categories/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((data) => setEnCategory(data.data));
+  }, [token]);
+  const enCategoryOptions = [{ key: "В ожидании", value: "" }];
+  enCategory.map((item) =>
+    enCategoryOptions.push({ key: item.category_en, value: item.category_en })
+  );
+  //enCategory options End
+
+  //enCategory options start
+  useEffect(() => {
+    axios
+      .get(`${env}categories/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((data) => setUzCategory(data.data));
+  }, [token]);
+  const uzCategoryOptions = [{ key: "В ожидании", value: "" }];
+  uzCategory.map((item) =>
+    uzCategoryOptions.push({ key: item.category_uz, value: item.category_uz })
+  );
+  //enCategory options End
+
   const initialValues = {
     ruName: "",
     ruProiz: "",
@@ -49,12 +202,6 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
     uzProduct: Yup.string().required("Required"),
     uzPriceNum: Yup.number().required("Required"),
   });
-  const dropdownOptions = [
-    { key: "В ожидании", value: "" },
-    { key: "Option1", value: "option 1" },
-    { key: "Option2", value: "option 2" },
-    { key: "Option3", value: "option 3" },
-  ];
   const dawnElClick = () => {
     setOpenDown(!openDown);
     setUzDrop(false);
@@ -71,36 +218,36 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
     setUzDrop(!uzDrop);
   };
   const onSubmit = (values, { resetForm }) => {
-    console.log(values.ruCountry);
+    // console.log(values);
     imagesPage(true);
     submitProduct(false);
     atributPage(false);
     setInfoForm([
       {
         ru: {
-          nameProduct: values.ruName,
-          whichCopany: values.number,
-          userInfo: values.ruText,
-          countryPro: values.ruCountryt,
-          categoryPro: values.ruProduct,
-          countPro: values.ruPriceNum,
+          ruNamePro: values.ruName,
+          ruWork: values.ruProiz,
+          ruTexrArea: values.ruText,
+          ruConutry: values.usCountry,
+          ruCategory: values.ruProduct,
+          ruPrice: values.ruPriceNum,
         },
-        // us: {
-        //   nameProduct: values.target[6].value,
-        //   whichCopany: values.target[7].value,
-        //   userInfo: values.target[8].value,
-        //   countryPro: values.target[9].value,
-        //   categoryPro: values.target[10].value,
-        //   countPro: values.target[11].value,
-        // },
-        // uz: {
-        //   nameProduct: values.target[12].value,
-        //   whichCopany: values.target[13].value,
-        //   userInfo: values.target[14].value,
-        //   countryPro: values.target[15].value,
-        //   categoryPro: values.target[16].value,
-        //   countPro: values.target[17].value,
-        // },
+        us: {
+          usNamePro: values.usName,
+          usWork: values.usProiz,
+          usTexrArea: values.usText,
+          usConutry: values.usCountry,
+          usCategory: values.usProduct,
+          usPrice: values.usPriceNum,
+        },
+        uz: {
+          uzNamePro: values.uzName,
+          uzWork: values.uzProiz,
+          uzTexrArea: values.uzText,
+          uzConutry: values.uzCountry,
+          uzCategory: values.uzProduct,
+          uzPrice: values.uzPriceNum,
+        },
       },
     ]);
     resetForm();
@@ -134,6 +281,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                 <div className="flex flex-col justify-between w-[65%]">
                   <div className="flex mb-6 justify-between">
                     <FormikControl
+                      className={"w-[346px]"}
                       control="input"
                       type="name"
                       id="name"
@@ -142,10 +290,11 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                       placeholder="Каркасный басейн Intex прямоуголь.."
                     />
                     <FormikControl
+                      className={"w-[346px]"}
                       control="select"
                       label="Призводства"
                       name="ruProiz"
-                      options={dropdownOptions}
+                      options={factoryNames}
                     />
                   </div>
                   <FormikControl
@@ -157,6 +306,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                 </div>
                 <div className="flex flex-col justify-between">
                   <FormikControl
+                    className={"w-[346px]"}
                     control="select"
                     label="Страна призводства"
                     name="ruCountry"
@@ -166,9 +316,10 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                     control="select"
                     label="Категория"
                     name="ruProduct"
-                    options={dropdownOptions}
+                    options={ruCategoryOptions}
                   />
                   <FormikControl
+                    className={"w-[346px]"}
                     control="input"
                     type="number"
                     id="name"
@@ -198,6 +349,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                 <div className="flex flex-col justify-between w-[65%]">
                   <div className="flex mb-6 justify-between">
                     <FormikControl
+                      className={"w-[346px]"}
                       control="input"
                       type="name"
                       id="name"
@@ -209,12 +361,12 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                       control="select"
                       label="Призводства"
                       name="usProiz"
-                      options={dropdownOptions}
+                      options={enfactoryNames}
                     />
                   </div>
                   <FormikControl
                     control="textarea"
-                    label="Description"
+                    label="Описание продукта "
                     name="usText"
                     placeholder="Введите Описание продукта"
                   />
@@ -224,21 +376,24 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                     control="select"
                     label="Страна призводства"
                     name="usCountry"
-                    options={dropdownOptions}
+                    options={enDropdownOptions}
                   />
                   <FormikControl
                     control="select"
                     label="Категория"
                     name="usProduct"
-                    options={dropdownOptions}
+                    options={enCategoryOptions}
                   />
                   <FormikControl
                     control="input"
+                    className={"w-[346px]"}
                     type="number"
                     id="name"
-                    label="Категория"
+                    label="Количество"
                     name="usPriceNum"
-                    placeholder="Введите количество продукта"
+                    placeholder="
+                    Введите количество продукта
+                    Enter the product quantity"
                   />
                 </div>
               </div>
@@ -263,6 +418,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                   <div className="flex mb-6 justify-between">
                     <FormikControl
                       control="input"
+                      className={"w-[346px]"}
                       type="name"
                       id="uzName"
                       label="Название продукта"
@@ -273,12 +429,12 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                       control="select"
                       label="Призводства"
                       name="uzProiz"
-                      options={dropdownOptions}
+                      options={uzfactoryNames}
                     />
                   </div>
                   <FormikControl
                     control="textarea"
-                    label="Description"
+                    label="Страна призводства"
                     name="uzText"
                     placeholder="Введите Описание продукта"
                   />
@@ -288,26 +444,40 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                     control="select"
                     label="Страна призводства"
                     name="uzCountry"
-                    options={dropdownOptions}
+                    options={uzDropdownOptions}
                   />
                   <FormikControl
                     control="select"
                     label="Категория"
                     name="uzProduct"
-                    options={dropdownOptions}
+                    options={uzCategoryOptions}
                   />
                   <FormikControl
                     control="input"
                     type="number"
+                    className={"w-[346px]"}
                     id="name"
-                    label="Категория"
+                    label="Количество"
                     name="uzPriceNum"
                     placeholder="Введите количество продукта"
                   />
                 </div>
               </div>
             </DropDown>
-            <button type="submit">Click</button>
+            <div className="flex mt-6 pb-8 items-center justify-center space-x-5">
+              <button
+                className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"
+                type="reset"
+              >
+                Отменить
+              </button>
+              <button
+                className="py-3 text-white rounded-2xl w-submitBtnsWidth bg-submitBtnBg font-bold text-lg"
+                type="submit"
+              >
+                Cледующий
+              </button>
+            </div>
           </Form>
         )}
       </Formik>
