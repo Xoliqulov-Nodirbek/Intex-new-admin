@@ -4,7 +4,7 @@ import MainProduct from "../../Assets/Images/ProductsImgs/main.png";
 export default function TableData({ children, image, styles }) {
   return (
     <td
-      className={`flex font-inter font-medium leading-6 pl-3 items-center ${
+      className={`flex font-medium leading-6 pl-3 items-center ${
         styles ? styles : ""
       }`}
     >

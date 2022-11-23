@@ -6,6 +6,7 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 
 const env = process.env.REACT_APP_ALL_API;
+
 const Products = () => {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
@@ -32,7 +33,7 @@ const Products = () => {
   }, [limit, page]);
 
   return (
-    <div className=" bg-white border-b rounded-xl mb-[100px]">
+    <div className="bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
         <input
           className="mr-3"

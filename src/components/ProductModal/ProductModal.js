@@ -1,8 +1,12 @@
 import React,{useState} from "react";
+import OrderPage from "../../Pages/Order/OrderPage";
+
+// Images
 import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
+import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
+import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 import Dublicate from '../../Assets/Images/ProductsImgs/duplicate.svg'
 import Trash from '../../Assets/Images/ProductsImgs/trash_1.svg'
-import OrderPage from "../../Pages/Order/OrderPage";
 
 export default function ProductModal({dataInfo}) {
   const [showModal, setShowMoadal] = useState(false);

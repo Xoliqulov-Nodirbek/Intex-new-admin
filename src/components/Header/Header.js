@@ -51,7 +51,7 @@ export default function Header() {
       <div className="flex items-center space-x-8">
         <div
           onClick={() => setDown(!down)}
-          className="flex z-50 items-center cursor-pointer bg-defaultBtnBg rounded-lg py-2.5 pl-2 pr-2 relative"
+          className="flex z-30 items-center cursor-pointer bg-defaultBtnBg rounded-lg py-2.5 pl-2 pr-2 relative"
         >
           <img src={flagImg} alt="ru" width="28" height="20" />
           <span className="ml-2.5">{langName}</span>
