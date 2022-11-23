@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg"
 import MButton from '../../BaseComponents/MButton/MButton'
+import ProductOrder from './ProductOrder'
 
 export default function Home() {
+ 
   return (
     <>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
@@ -16,7 +18,7 @@ export default function Home() {
         </Link>
       </div>
       <div className='pt-6 pb-8 px-homeContentPadding '>
-        <div>
+        <div className='mb-4'>
           <h2 className='text-navBarColor font-bold leading-8 text-2xl mb-4'>Заказы</h2>
           <div className='bg-white py-3 px-4 rounded-xl flex items-center justify-between'>
             <div className='flex items-center'>
@@ -31,11 +33,14 @@ export default function Home() {
                   <path d="M9 11L12 14L15 11" stroke="#04009A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <MButton BType='add bg-filterBg' type='button'>Добавить</MButton>
+              <button BType='add bg-filterBg'  className='add bg-filterBg' type='button'>Добавить</button>
             </div>
           </div>
         </div>
+        <ProductOrder/>
+      
       </div>
+      
     </>
   )
 }
