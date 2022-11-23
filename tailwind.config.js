@@ -15,6 +15,21 @@ module.exports = {
         buttonModalY: "13px",
         buttonModalX: "121px",
       },
+
+      width: {
+        logoWidth: "180px",
+        loginLogoWidth: "240px",
+        sitebarWidth: "253px",
+        supportWidth: "150px",
+        headerInputWidth: "260px",
+        homeInpWidth: "284px",
+        homeSortWidth: "170px",
+        addProductListWidth: "65%",
+        submitBtnsWidth: "331px",
+        730: "682px",
+        modalWidth: "730px",
+        productImgUploadWidth: "682px",
+
       width:{
         logoWidth:'180px',
         loginLogoWidth:'240px',
@@ -26,6 +41,7 @@ module.exports = {
         addProductListWidth:'65%',
         submitBtnsWidth:'331px',
         orderModal:"730px",
+
 
       },
       height:{
@@ -78,8 +94,8 @@ module.exports = {
         bottom: "60px",
       },
       boxShadow: {
-        editProduct: '0px 12px 23px rgba(150, 150, 150, 0.1)'
-      }
+        editProduct: "0px 12px 23px rgba(150, 150, 150, 0.1)",
+      },
     },
   },
   plugins: [],
