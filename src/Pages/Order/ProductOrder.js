@@ -2,9 +2,9 @@ import React from "react";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
-import axios from "axios";
 import TableRow2 from "../../components/TableRow/TableRow2";
 import OrderPage from "./OrderPage";
+import axios from "axios";
 
 const env = process.env.REACT_APP_ALL_API;
 
@@ -39,9 +39,6 @@ export default function ProductOrder() {
         setTotalpage(res.data?.total_count.count);
       });
   }, [limit, page, token]);
-
-  console.log(page);
-  console.log(data.result);
 
   return (
     <>
