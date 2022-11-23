@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg"
 import MButton from '../../BaseComponents/MButton/MButton'
-import OrderPage from './OrderPage'
 import ProductOrder from './ProductOrder'
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { FormikConsumer, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
@@ -83,8 +83,8 @@ const validationSchema = Yup.object({
     .max(20, "Maximum 20 characters"),
 });
 
-function OrderPage({ isVisible, onClose, data }) {
-  
+function OrderPage({ isVisible, onClose, datas }) {
+  // eslint-disable-next-line no-unused-vars
   const [numberOrder, setNumberOrder] = useState("12345")
     const formik = useFormik({
     initialValues,

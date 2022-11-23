@@ -4,7 +4,7 @@ import Dublicate from '../../Assets/Images/ProductsImgs/duplicate.svg'
 import Trash from '../../Assets/Images/ProductsImgs/trash_1.svg'
 import OrderPage from "../../Pages/Order/OrderPage";
 
-export default function ProductModal() {
+export default function ProductModal({dataInfo}) {
   const [showModal, setShowMoadal] = useState(false);
   return (
     <>
@@ -22,7 +22,7 @@ export default function ProductModal() {
         <span>Изменить</span>
       </li>
     </ul>
-    <OrderPage isVisible={showModal} onClose={()=>{ setShowMoadal(false)}}/>
+    <OrderPage isVisible={showModal} onClose={()=>{ setShowMoadal(false)}} datas = {dataInfo}/>
     </>
   );
 }

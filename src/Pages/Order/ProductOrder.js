@@ -6,13 +6,17 @@ import axios from "axios";
 import TableRow2 from "../../components/TableRow/TableRow2";
 import OrderPage from "./OrderPage";
 
+const env = process.env.REACT_APP_ALL_API;
+
 export default function ProductOrder() {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
-  const [totalPage, setTotalpage] = React.useState(0)
+  const [totalPage, setTotalpage] = React.useState(0);
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -24,27 +28,24 @@ export default function ProductOrder() {
 
   React.useEffect(() => {
     axios
-      .get(
-        `https://intex-shop-production.up.railway.app/api/orders?page=0&limit=10`,{
-          headers:{
-            'Authorization': ' Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5vZGlyYmVrIiwicm9sZXMiOiJhZG1pbiIsImlhdCI6MTY2OTEzNDAyMSwiZXhwIjoxNjY5MTQxMjIxfQ.PgCvPd_RMb4VqlmtkhnZcsCJtRqhVTIMG2R8TTolAaI'
-
-          }
-        }
-      )
+      .get(`${env}orders?page=${page}&limit=${limit}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setData(res?.data);
-        
+
         setTotalpage(res.data?.total_count.count);
       });
-  }, [limit, page]);
+  }, [limit, page, token]);
 
   console.log(page);
   console.log(data.result);
 
   return (
     <>
-      <div className=" bg-white border-b rounded-xl mb-[100px]">
+      <div className="bg-white border-b rounded-xl mb-[100px]">
         <div className="flex py-3 px-4 items-center">
           <input
             className="mr-3"
@@ -65,13 +66,15 @@ export default function ProductOrder() {
                   ID
                 </TableHeader>
                 <TableHeader styles="w-[132px]" sortIcon={true}>
-                Номер заказа
+                  Номер заказа
                 </TableHeader>
-                <TableHeader styles="w-[132px]" sortIcon={true}>Имя клиента</TableHeader>
-                <TableHeader styles="w-[162px]" sortIcon={true}>Номер телефона</TableHeader>
-                <TableHeader styles="w-[254px]">
-                Адрес
+                <TableHeader styles="w-[132px]" sortIcon={true}>
+                  Имя клиента
                 </TableHeader>
+                <TableHeader styles="w-[162px]" sortIcon={true}>
+                  Номер телефона
+                </TableHeader>
+                <TableHeader styles="w-[254px]">Адрес</TableHeader>
                 <TableHeader styles="w-[178px]">Кол-во продуктов</TableHeader>
                 <TableHeader styles="w-[153px]">Обшая цена</TableHeader>
                 <TableHeader styles="w-[153px]">Цена со скидкой</TableHeader>
@@ -93,7 +96,7 @@ export default function ProductOrder() {
                       data={item}
                       key={item.id}
                       isChecked={isChecked}
-                      handleChange={handleChange}
+                      handleChanges={handleChange}
                     ></TableRow2>
                   );
                 })
@@ -126,7 +129,6 @@ export default function ProductOrder() {
               value={page}
               onChange={(evt) => setPage(evt.target.value)}
               maxLength={1}
-
             />
             <span className="mr-3.5 text-sm text-paginationButtonColor">
               из {totalPage / limit} страниц
@@ -138,7 +140,7 @@ export default function ProductOrder() {
           </div>
         </div>
       </div>
-      <OrderPage data={data.result}/>
+      <OrderPage data={data.result} />
     </>
   );
 }
