@@ -26,6 +26,7 @@ module.exports = {
         730: "682px",
         modalWidth: "730px",
         productImgUploadWidth: "682px",
+        orderModal:"730px",
       },
       maxWidth: {
         login_content: "450px",

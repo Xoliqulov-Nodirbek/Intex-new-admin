@@ -5,8 +5,6 @@ import OrderPage from "../../Pages/Order/OrderPage";
 import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
 import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
-import Dublicate from '../../Assets/Images/ProductsImgs/duplicate.svg'
-import Trash from '../../Assets/Images/ProductsImgs/trash_1.svg'
 
 export default function ProductModal({dataInfo}) {
   const [showModal, setShowMoadal] = useState(false);
