@@ -31,7 +31,7 @@ export default function TableRow({
       ) : (
         <>
           <TableData styles="w-11 pr-3 justify-center">
-            <input className="" type="checkbox" onChange={handleChange} />
+            
             <input
               className="inputs"
               type="checkbox"
