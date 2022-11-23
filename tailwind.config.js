@@ -25,6 +25,7 @@ module.exports = {
         submitBtnsWidth: "331px",
         730: "682px",
         modalWidth: "730px",
+        productImgUploadWidth: "682px",
       },
       maxWidth: {
         login_content: "450px",
@@ -86,8 +87,8 @@ module.exports = {
         bottom: "60px",
       },
       boxShadow: {
-        editProduct: '0px 12px 23px rgba(150, 150, 150, 0.1)'
-      }
+        editProduct: "0px 12px 23px rgba(150, 150, 150, 0.1)",
+      },
     },
   },
   plugins: [],
