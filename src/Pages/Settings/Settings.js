@@ -1,38 +1,47 @@
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 import React, { useEffect, useState } from "react";
 import { Modal } from "../../components/Modal/Modal";
-import { toast, Toaster } from "react-hot-toast";
-import axios from "axios";
 // Images
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import EditImg from "../../Assets/Images/SettingsImg/edit.svg";
 import Close from "../../Assets/Images/SettingsImg/close.svg";
 import Flag from "../../Assets/Images/SettingsImg/flag.svg";
+import Add from "../../Assets/Images/SettingsImg/add.svg";
 
 const env = process.env.REACT_APP_ALL_API;
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
   const [subLoading, setSubLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  // --- Datas
   const [data, setData] = useState({});
   const [address, setAddress] = useState({});
   const [links, setLinks] = useState([]);
+  const [createLinkTitle, setCreateLinkTitle] = useState("");
+  const [createLinkText, setCreateLinkText] = useState("");
 
   const token = JSON.parse(window.localStorage.getItem("token"));
 
-  // Контактная информация get
+  // --- Контактная информация get
   useEffect(() => {
+    setLoading(true);
+
     axios
       .get(`${env}sites`)
       .then((res) => {
         setData(res.data[0]);
         setAddress(res.data[0]);
+        setLoading(false);
       })
       .catch((err) => console.error(err));
   }, [token]);
 
-  // Cоциальные сети get
+  // --- Cоциальные сети get
   useEffect(() => {
     axios
       .get(`${env}social-networks`)
@@ -42,7 +51,7 @@ export default function Home() {
       .catch((err) => console.error(err));
   }, [token]);
 
-  // First informatios put
+  // --- First informatios put
   const putData = (e) => {
     e.preventDefault();
 
@@ -89,7 +98,7 @@ export default function Home() {
       });
   };
 
-  // Cоциальные сети put
+  // --- Cоциальные сети put
   const putDataLink = (e) => {
     e.preventDefault();
 
@@ -121,21 +130,105 @@ export default function Home() {
       });
   };
 
+  // --- Delete Link
+  const linkDelete = (id, e) => {
+    e.preventDefault();
+
+    axios
+      .delete(`${env}social-networks/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          console.log(res);
+          axios.get(`${env}social-networks`).then((data) => {
+            console.log(data);
+            setLinks(data?.data);
+          });
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  // --- Add Link
+  const AddLink = (e) => {
+    e.preventDefault();
+
+    setSubLoading(true);
+    axios
+      .post(
+        `${env}social-networks/create`,
+        {
+          name: createLinkTitle,
+          link: createLinkText,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res?.status === 201) {
+          axios
+            .get(`${env}social-networks`)
+            .then((res) => {
+              setLinks(res.data);
+            })
+            .catch((err) => console.error(err));
+          toast.success("Создать ссылку!");
+        }
+      })
+      .catch((err) => {
+        if (err?.response?.status === 400) {
+          toast.error("Вы ввели неверную ссылку!");
+        } else if (err?.message === "Network Error") {
+          toast.error("Сетевая ошибка!");
+        }
+      })
+      .finally(() => {
+        setShowModal2(false);
+        setSubLoading(false);
+        setCreateLinkTitle("");
+        setCreateLinkText("");
+      });
+  };
+
+  // --- Loaders
   const loader = (
     <svg
-      role="status"
-      className="inline mr-3 w-6 h-6 text-white animate-spin"
+      aria-hidden="true"
+      className="mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-400 fill-blue-600"
       viewBox="0 0 100 101"
-      fill="#fff"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-        fill="#fff"
+        fill="currentColor"
       />
       <path
         d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-        fill="#fff"
+        fill="currentFill"
+      />
+    </svg>
+  );
+  const loaderButton = (
+    <svg
+      className="inline mr-2 w-6 h-6 text-text-white animate-spin dark:text-white fill-gray-400 dark:fill-gray-400"
+      viewBox="0 0 100 101"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+        fill="currentColor"
+      />
+      <path
+        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+        fill="currentFill"
       />
     </svg>
   );
@@ -179,13 +272,17 @@ export default function Home() {
                   <h3 className="font-bold text-base text-supportColor mb-2">
                     Адрес
                   </h3>
-                  <p className="text-sm text-navBarColor">{data.address_ru}</p>
+                  <p className="text-sm text-navBarColor">
+                    {loading ? loader : data.address_ru}
+                  </p>
                 </div>
                 <div className="mt-6">
                   <h3 className="font-bold text-base text-supportColor mb-2">
                     Номер телефона
                   </h3>
-                  <p className="text-sm text-navBarColor">{data.phone}</p>
+                  <p className="text-sm text-navBarColor">
+                    {loading ? loader : data.phone}
+                  </p>
                 </div>
               </div>
               <div>
@@ -193,51 +290,66 @@ export default function Home() {
                   <h3 className="font-bold text-base text-supportColor mb-2">
                     E-mail
                   </h3>
-                  <p className="text-sm text-navBarColor">{data.email}</p>
+                  <p className="text-sm text-navBarColor">
+                    {loading ? loader : data.email}
+                  </p>
                 </div>
                 <div className="mt-6">
                   <h3 className="font-bold text-base text-supportColor mb-2">
                     График работы
                   </h3>
-                  <p className="text-sm text-navBarColor">{data.work_ru}</p>
+                  <p className="text-sm text-navBarColor">
+                    {loading ? loader : data.work_ru}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-
+          {/* ------- */}
           <span className="flex w-full h-[2px] bg-lineColor mt-11 mb-6"></span>
-
+          {/* ------- */}
           <div>
             <div className="flex justify-between items-center">
               <h2 className="text-lg text-navBarColor font-bold">
                 Cоциальные сети
               </h2>
-              <button
-                onClick={() => setShowModal1(true)}
-                className="p-1"
-                type="button"
-              >
-                <img src={EditImg} alt="edit" />
-              </button>
+              <div className="flex items-center">
+                <button
+                  onClick={() => setShowModal2(true)}
+                  className="p-1 mr-2 block"
+                  type="button"
+                >
+                  <img className="w-8 h-8" src={Add} alt="edit" />
+                </button>
+                <button
+                  onClick={() => setShowModal1(true)}
+                  className="p-1"
+                  type="button"
+                >
+                  <img src={EditImg} alt="edit" />
+                </button>
+              </div>
             </div>
             <div className="w-[80%] grid grid-cols-2  mt-6 ">
-              {links.length > 0 &&
-                links?.map((data) => (
-                  <div className="mb-8" key={data.id}>
-                    <h3 className="font-bold text-base text-supportColor mb-2">
-                      {data.name}
-                    </h3>
-                    <a href={data.link} className="text-sm text-navBarColor">
-                      {data.link}
-                    </a>
-                  </div>
-                ))}
+              {loading
+                ? loader
+                : links.length > 0 &&
+                  links?.map((data) => (
+                    <div className="mb-8" key={data.id}>
+                      <h3 className="font-bold text-base text-supportColor mb-2">
+                        {data.name}
+                      </h3>
+                      <a href={data.link} className="text-sm text-navBarColor">
+                        {data.link}
+                      </a>
+                    </div>
+                  ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* --- Modal-1 --- */}
+      {/* --- Edit_1 --- */}
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
         <div className="w-730">
           <div className="flex items-center justify-between">
@@ -335,7 +447,7 @@ export default function Home() {
                   type="submit"
                   className="bg-russuanColor w-80 py-3 rounded-xl text-[#fff] font-medium text-lg"
                 >
-                  {subLoading ? loader : "Сохранить"}
+                  {subLoading ? loaderButton : "Сохранить"}
                 </button>
               </div>
             </form>
@@ -343,13 +455,13 @@ export default function Home() {
         </div>
       </Modal>
 
-      {/* --- Modal-2 --- */}
+      {/* --- Edit_2 --- */}
       <Modal
         isVisible={showModal1}
         onClose={() => setShowModal1(false)}
         className="overflow-y-scroll h-[95vh]"
       >
-        <div className="w-730 ">
+        <div className="w-730">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl text-addProductColor font-bold">
               Изменить информацию
@@ -359,7 +471,11 @@ export default function Home() {
             </button>
           </div>
           <div className="mt-6">
-            <form className="space-y-6" onSubmit={putDataLink}>
+            <form
+              className="space-y-6"
+              onSubmit={putDataLink}
+              autoComplete="off"
+            >
               {links.length > 0 &&
                 links.map((item) => (
                   <label
@@ -387,6 +503,7 @@ export default function Home() {
                       }
                     />
                     <button
+                      onClick={(e) => linkDelete(item.id, e)}
                       type="button"
                       className="w-fit text-start text-base text-red-deleteColor mt-2"
                     >
@@ -394,6 +511,9 @@ export default function Home() {
                     </button>
                   </label>
                 ))}
+              {/* ----- */}
+              {/* <span className="flex w-full h-[2px] bg-lineColor mt-11 mb-6"></span> */}
+              {/* ----- */}
               <div className="flex justify-between mt-6">
                 <button
                   type="button"
@@ -406,12 +526,60 @@ export default function Home() {
                   type="submit"
                   className="bg-russuanColor w-80 py-3 rounded-xl text-[#fff] font-medium text-lg"
                 >
-                  {subLoading ? loader : "Сохранить"}
+                  {subLoading ? loaderButton : "Сохранить"}
                 </button>
               </div>
             </form>
           </div>
         </div>
+      </Modal>
+
+      {/* --- Add Links --- */}
+      <Modal isVisible={showModal2} onClose={() => setShowModal2(false)}>
+        <h2 className="text-2xl text-addProductColor font-bold">
+          Добавить социальную сеть
+        </h2>
+        <form className="mt-6" autoComplete="off" onSubmit={AddLink}>
+          <label className="flex flex-col text-base text-addProductColor font-medium w-1/2  ">
+            Тип социальный сеть
+            <input
+              className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-3"
+              name="address"
+              type="text"
+              placeholder="Выберите тип социальной сети..."
+              value={createLinkTitle}
+              onChange={(e) => setCreateLinkTitle(e.target.value.trim())}
+              required
+            />
+          </label>
+          <label className="flex flex-col text-base text-addProductColor font-medium mt-3">
+            Линк
+            <input
+              className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-3"
+              name="address"
+              type="text"
+              placeholder="Введите ссылку на  социальную сеть..."
+              value={createLinkText}
+              onChange={(e) => setCreateLinkText(e.target.value.trim())}
+              required
+            />
+          </label>
+          <div className="flex justify-between mt-6">
+            <button
+              type="button"
+              onClick={() => setShowModal2(false)}
+              className="bg-[#F2F2F2] w-72 py-3 rounded-xl text-russuanColor font-medium text-lg"
+            >
+              Отменить
+            </button>
+            <button
+              type="submit"
+              className="bg-russuanColor w-72 py-3 ml-8 rounded-xl text-[#fff] font-medium text-lg"
+            >
+              {subLoading ? loaderButton : "Сохранить"}
+            </button>
+          </div>
+        </form>
       </Modal>
     </div>
   );
