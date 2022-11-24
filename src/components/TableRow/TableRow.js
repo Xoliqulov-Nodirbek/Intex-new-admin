@@ -28,7 +28,7 @@ export default function TableRow({ children, styles, data, isChecked }) {
         <>
           <TableData styles="w-11 pr-3 justify-center">
             <input
-              className="inputs"
+              className="inputs w-4 h-4"
               type="checkbox"
               checked={
                 checker === true && isChecked === false
