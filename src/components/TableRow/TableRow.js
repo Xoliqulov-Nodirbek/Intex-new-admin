@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import TableData from "../TableData/TableData";
 import MLabel from "../../BaseComponents/MLabel/MLabel";
-import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import ProductModal from "../ProductModal/ProductModal";
 
-export default function TableRow({
-  children,
-  styles,
-  data,
-  handleChange,
-  isChecked,
-}) {
+// Images
+import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
+
+export default function TableRow({ children, styles, data, isChecked }) {
   const [checker, setChecker] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -25,15 +21,14 @@ export default function TableRow({
   };
 
   return (
-    <tr className={`flex  items-center border-b ${styles}`}>
+    <tr className={`flex items-center border-b ${styles}`}>
       {children ? (
         children
       ) : (
         <>
           <TableData styles="w-11 pr-3 justify-center">
-            <input className="" type="checkbox" onChange={handleChange} />
             <input
-              className="inputs"
+              className="inputs w-4 h-4"
               type="checkbox"
               checked={
                 checker === true && isChecked === false

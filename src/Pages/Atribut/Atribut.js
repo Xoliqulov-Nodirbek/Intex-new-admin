@@ -43,6 +43,9 @@ export default function Home() {
                   <path d="M9 11L12 14L15 11" stroke="#04009A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
+
+              <button  className='add bg-filterBg' type='button'>Добавить</button>
+
               <Link to="/addAtribut" className="add bg-filterBg" type="button">
                 Добавить
               </Link>
@@ -51,6 +54,7 @@ export default function Home() {
         </div>
        <AtributeProducts />
       </div>
+      
     </>
   );
 }

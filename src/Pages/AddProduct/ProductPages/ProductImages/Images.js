@@ -18,6 +18,10 @@ export default function Images({
     };
     setImg([...img, newImg]);
   };
+  const delteImgOwn = (id) => {
+    let newTodo = [...img].filter((item) => item.id !== id);
+    setImg(newTodo);
+  };
   const handlImgSubmit = (evt) => {
     evt.preventDefault();
     atrPage(true);
@@ -50,12 +54,17 @@ export default function Images({
           </p>
         </div>
       </label>
-      <div className="flex ">
+      <div className="flex mb-16">
         {img.map((item) => (
-          <div key={item.id} className="relative inline-block w-40 h-28">
+          <div
+            id={item.id}
+            key={item.id}
+            className="relative inline-block w-40 h-28"
+          >
             <div className="absolute flex items-center space-x-1 top-1 right-1 cursor-pointer">
               <img src={uploadImg} alt="Upload" width={32} height={32} />
               <img
+                onClick={() => delteImgOwn(item.id)}
                 id={item.id}
                 src={delterImg}
                 alt="Delete img"
@@ -64,7 +73,7 @@ export default function Images({
               />
             </div>
             <img
-              className="h-full"
+              className="h-full rounded-xl shadow object-cover"
               src={item.img}
               alt="Choose img"
               width="100%"
