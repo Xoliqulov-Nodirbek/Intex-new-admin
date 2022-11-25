@@ -8,6 +8,7 @@ import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
 export default function ProductModal({ dataInfo, delEdit, handlDelteUnik }) {
   const [showModal, setShowMoadal] = useState(false);
+
   return (
     <>
       <ul className="flex flex-col cursor-pointer gap-y-2.5 absolute p-3 bg-white rounded-sm shadow-editProduct">
