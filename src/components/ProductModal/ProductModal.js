@@ -6,12 +6,12 @@ import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
 import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
-export default function ProductModal({ dataInfo }) {
+export default function ProductModal({ dataInfo, delEdit, handlDelteUnik }) {
   const [showModal, setShowMoadal] = useState(false);
   return (
     <>
-      <ul className="flex flex-col gap-y-2.5 absolute p-3 bg-white rounded-sm shadow-editProduct">
-        <li onClick={() => setShowMoadal(true)} className="flex">
+      <ul className="flex flex-col cursor-pointer gap-y-2.5 absolute p-3 bg-white rounded-sm shadow-editProduct">
+        <li onClick={() => setShowMoadal(true)} className={`flex ${delEdit}`}>
           <img className="mr-2" src={Edit} alt="just a icon to edit" />
           <span>Изменить</span>
         </li>
@@ -23,7 +23,7 @@ export default function ProductModal({ dataInfo }) {
           />
           <span>Дублировать</span>
         </li>
-        <li className="flex">
+        <li onClick={handlDelteUnik} className="flex">
           <img className="mr-2" src={Trash} alt="just a icon to edit" />
           <span>Удалить</span>
         </li>

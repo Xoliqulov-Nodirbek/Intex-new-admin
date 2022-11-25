@@ -15,7 +15,6 @@ const ProductsCategory = () => {
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [totalPage, setTotalpage] = React.useState(0);
-
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -27,14 +26,14 @@ const ProductsCategory = () => {
   React.useEffect(() => {
     setLoader(true);
     axios
-      .get(`${env}products/getAll?page=${page}&limit=${limit}`)
+      .get(`${env}categories/getAll?page=${page}&limit=${limit}`)
       .then((res) => {
         setData(res?.data);
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       });
   }, [limit, page]);
-
+  //   console.log(data);
   // --- Loader
   const loaders = (
     <svg
@@ -73,16 +72,16 @@ const ProductsCategory = () => {
               <TableHeader styles="w-11 pr-3 justify-center">
                 <input className="" type="checkbox" readOnly checked={false} />
               </TableHeader>
-              <TableHeader styles="w-[66px]" sortIcon={true}>
+              <TableHeader styles="w-[80px]" sortIcon={true}>
                 ID
               </TableHeader>
               <TableHeader styles="w-[227px]" sortIcon={true}>
                 Категория продукта
               </TableHeader>
-              <TableHeader styles="w-[200px]" sortIcon={true}>
+              <TableHeader styles="w-[250px]" sortIcon={true}>
                 Кол-во под категория
               </TableHeader>
-              <TableHeader styles="w-[475px]" sortIcon={true}>
+              <TableHeader styles="min-w-[474px] " sortIcon={true}>
                 Под категории
               </TableHeader>
               <TableHeader styles="w-[95px] pr-3 justify-center">
