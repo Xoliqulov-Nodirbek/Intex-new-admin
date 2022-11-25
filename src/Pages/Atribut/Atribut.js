@@ -9,7 +9,7 @@ import AtributeProducts from "./AtributeTable";
 
 export default function Home() {
   return (
-    <>
+    <div>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
         <Link className="flex items-center" to={"/"}>
           <img src={HomeImg} alt="Home Img" width="16" height="16" />
@@ -19,7 +19,7 @@ export default function Home() {
           <h2 className="font-normal text-navSubColor text-xs ml-2.5">Атрибуты</h2>
         </Link>
       </div>
-      <div className="pt-6 pb-8 px-homeContentPadding ">
+      <div className="pt-6 pb-8 px-homeContentPadding h-[100vh] overflow-auto">
         <div>
           <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">Атрибуты</h2>
           <div className="bg-white py-3 px-4 rounded-xl flex items-center justify-between">
@@ -44,7 +44,6 @@ export default function Home() {
                 </svg>
               </div>
 
-              <button  className='add bg-filterBg' type='button'>Добавить</button>
 
               <Link to="/addAtribut" className="add bg-filterBg" type="button">
                 Добавить
@@ -55,6 +54,6 @@ export default function Home() {
        <AtributeProducts />
       </div>
       
-    </>
+    </div>
   );
 }

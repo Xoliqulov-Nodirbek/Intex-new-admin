@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+  import React, { useState } from 'react'
 import TableData from '../TableData/TableData'
 import MLabel from '../../BaseComponents/MLabel/MLabel'
 import ThreeDotsSvg from '../../Assets/Images/ProductsImgs/threedots.svg'
@@ -9,13 +9,7 @@ export default function AttributeTable({ children, styles, data, isChecked }) {
   const [checker, setChecker] = useState(false)
   const [isClicked, setIsClicked] = useState(false)
 
-  // console.log(JSON.stringify(data));
   const attribute = data.ru
-  // console.log(attribute);
-  // for(let i =0 ;data.ru.length;i++){
-  //   console.log(data.ru[i]);
-  // }
-
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true)
@@ -52,7 +46,7 @@ export default function AttributeTable({ children, styles, data, isChecked }) {
           <TableData styles="w-[80px]">{data.id}</TableData>
           <TableData styles="w-[300px] truncate">{data.attribute_ru}</TableData>
           <TableData styles="w-[190px]">{data.view}</TableData>
-          <TableData styles="w-[400px]">
+          <TableData styles="min-w-[400px]">
             {attribute.map((item, index) => (
               <MFilter className="mx-1" key={index}>{item}</MFilter>
             ))}
@@ -65,7 +59,7 @@ export default function AttributeTable({ children, styles, data, isChecked }) {
             >
               <img src={ThreeDotsSvg} alt="three dots icon" />
             </button>
-            {isClicked ? <ProductModal /> : ''}
+            {isClicked ? <ProductModal delEdit={"hidden"} /> : ''}
           </TableData>
         </>
       )}
