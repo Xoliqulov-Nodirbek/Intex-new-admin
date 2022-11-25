@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { Modal } from "../Modal/Modal";
 import TableData from "../TableData/TableData";
+import axios from "axios";
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Close from "../../Assets/Images/SettingsImg/close.svg";
 import Flag from "../../Assets/Images/SettingsImg/flag.svg";
-import ProductModal from "../ProductModal/ProductModal";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
+import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
+import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
+import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
+
+const env = process.env.REACT_APP_ALL_API;
 
 export default function TableCat({ children, styles, data, isChecked }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [date, setDate] = useState("");
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
   const categoryResult = data?.ru;
+
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true);
@@ -23,8 +32,16 @@ export default function TableCat({ children, styles, data, isChecked }) {
       e.target.checked = false;
     }
   };
-  const deleteAddedRow = (evt) => {
-    console.log("Salom");
+
+  const handlDelteUnik = (id) => {
+    axios
+      .delete(`${env}categories/deleteCategory/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -74,10 +91,16 @@ export default function TableCat({ children, styles, data, isChecked }) {
                 <img src={ThreeDotsSvg} alt="three dots icon" />
               </button>
               {isClicked ? (
-                <ProductModal
-                  handlDelteUnik={deleteAddedRow}
-                  delEdit={"hidden"}
-                />
+                <ul className="flex flex-col cursor-pointer gap-y-2.5 absolute p-3 bg-white rounded-sm shadow-editProduct">
+                  <li onClick={() => handlDelteUnik(data.id)} className="flex">
+                    <img
+                      className="mr-2"
+                      src={Trash}
+                      alt="just a icon to edit"
+                    />
+                    <span>Удалить</span>
+                  </li>
+                </ul>
               ) : (
                 ""
               )}

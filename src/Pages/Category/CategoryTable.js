@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableCat from "../../components/TableRow/CategoryTable";
@@ -11,6 +11,7 @@ const ProductsCategory = () => {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
@@ -32,7 +33,7 @@ const ProductsCategory = () => {
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       });
-  }, [limit, page]);
+  }, [limit, page, refresh]);
   //   console.log(data);
   // --- Loader
   const loaders = (
@@ -105,6 +106,7 @@ const ProductsCategory = () => {
                     key={item.id}
                     isChecked={isChecked}
                     handleChange={handleChange}
+                    refresh={() => setRefresh(!refresh)}
                   ></TableCat>
                 );
               })
