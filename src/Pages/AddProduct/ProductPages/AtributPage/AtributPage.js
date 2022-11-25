@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Plas from "../../../../Assets/Images/HomeContentImg/plas-icon.svg";
 import { Modal } from "../../../../components/Modal/Modal";
 import DelteModal from "../../../../Assets/Images/HomeContentImg/deleteModal.svg";
-import FormikControl from "../../../../BaseComponents/FormInput/FormikControl";
-import * as Yup from "yup";
-import { Formik, Form } from "formik";
 import DropDown from "../../../../BaseComponents/DropDown/DropDown";
 import DropImg from "../../../../Assets/Images/HomeContentImg/Drop.svg";
 import axios from "axios";
@@ -21,13 +18,13 @@ export default function AtributPage({
   const [openAtributes, setOpenAtributes] = useState(true);
   const [enOpenAtributes, setEnOpenAtributes] = useState(false);
   const [uzOpenAtributes, setUzOpenAtributes] = useState(false);
-  const [ruType, setRuType] = useState([]);
-  const [enType, setEnType] = useState([]);
-  const [uzType, setUzType] = useState([]);
-  const [ruStatus, setRuStatus] = useState([]);
-  const [enStatus, setEnStatus] = useState([]);
-  const [uzStatus, setUzStatus] = useState([]);
+  // get states
+
+  const [ruTypeProduct, setRuTypeProduct] = useState([]);
+  const [status, setStatus] = useState([]);
   const [addAtribut, setAddAtribut] = useState([]);
+
+  // get states
   const token = JSON.parse(window.localStorage.getItem("token"));
   const atributClicked = () => {
     setOpenAtributes(!openAtributes);
@@ -44,48 +41,10 @@ export default function AtributPage({
     setOpenAtributes(false);
     setEnOpenAtributes(false);
   };
-  const initialValues = {
-    ruPriceAtribut: "",
-    ruPriceSale: "",
-    ruTypeAtribut: "",
-    ruColor: "",
-    ruStatus: "",
-    usPriceAtribut: "",
-    usPriceSale: "",
-    usTypeAtribut: "",
-    usColor: "",
-    usStatus: "",
-    uzPriceAtribut: "",
-    uzPriceSale: "",
-    uzTypeAtribut: "",
-    uzColor: "",
-    uzStatus: "",
-    ruNewAddedSize: "",
-    ruNewAddedColor: "",
-    ruNewAddedMaterial: "",
-  };
-  const validationSchema = Yup.object({
-    ruPriceAtribut: Yup.number().required("Required"),
-    ruPriceSale: Yup.number().required("Required"),
-    ruTypeAtribut: Yup.string().required("Required"),
-    ruColor: Yup.string().required("Required"),
-    ruStatus: Yup.string().required("Required"),
-    usPriceAtribut: Yup.number().required("Required"),
-    usPriceSale: Yup.number().required("Required"),
-    usTypeAtribut: Yup.string().required("Required"),
-    usColor: Yup.string().required("Required"),
-    usStatus: Yup.string().required("Required"),
-    uzPriceAtribut: Yup.number().required("Required"),
-    uzPriceSale: Yup.number().required("Required"),
-    uzTypeAtribut: Yup.string().required("Required"),
-    uzColor: Yup.string().required("Required"),
-    uzStatus: Yup.string().required("Required"),
-    ruNewAddedSize: Yup.string().required("Required"),
-    ruNewAddedColor: Yup.string().required("Required"),
-    ruNewAddedMaterial: Yup.string().required("Required"),
-  });
 
-  const onSubmit = (values, { resetForm }) => {
+  const onSubmit = (evt) => {
+    console.log(evt);
+    evt.preventDefault();
     resultSubmit(true);
     atributPage(true);
     imaPage(false);
@@ -95,32 +54,28 @@ export default function AtributPage({
       {
         atributInfos: {
           ru: {
-            ruAtrPrice: values.ruPriceAtribut,
-            ruAtrPriceSale: values.ruPriceSale,
-            ruAtrType: values.ruTypeAtribut,
-            ruColor: values.ruColor,
-            ruStatus: values.ruStatus,
+            ruAtrPrice: evt.target[0].value,
+            ruAtrPriceSale: evt.target[1].value,
+            ruAtrType: evt.target[2].value,
+            ruStatus: evt.target[3].value,
           },
           us: {
-            usAtrPrice: values.usPriceAtribut,
-            usAtrPriceSale: values.usPriceSale,
-            usAtrType: values.usTypeAtribut,
-            usColor: values.usColor,
-            usStatus: values.usStatus,
+            usAtrPrice: evt.target[4].value,
+            usAtrPriceSale: evt.target[5].value,
+            usAtrType: evt.target[6].value,
+            usColor: evt.target[7].value,
+            usStatus: evt.target[8].value,
           },
           uz: {
-            uzAtrPrice: values.uzPriceAtribut,
-            uzAtrPriceSale: values.uzPriceSale,
-            uzAtrType: values.uzTypeAtribut,
-            uzColor: values.uzColor,
-            uzStatus: values.uzStatus,
+            uzAtrPrice: evt.target[9].value,
+            uzAtrPriceSale: evt.target[10].value,
+            uzAtrType: evt.target[11].value,
           },
         },
       },
     ]);
-    resetForm();
   };
-  // ruCategory start
+  //type product get start
   useEffect(() => {
     axios
       .get(`${env}categories/categories`, {
@@ -128,50 +83,11 @@ export default function AtributPage({
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((data) => setRuType(data.data));
+      .then((data) => setRuTypeProduct(data.data));
   }, [token]);
+  //type product get end
 
-  const dropdownOptions = [{ key: "В ожидании", value: "" }];
-  ruType.map((item) =>
-    dropdownOptions.push({ key: item.category_ru, value: item.category_ru })
-  );
-  // ruCategory end
-
-  // enCategory start
-  useEffect(() => {
-    axios
-      .get(`${env}categories/categories`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((data) => setEnType(data.data));
-  }, [token]);
-
-  const enCategoryOptions = [{ key: "В ожидании", value: "" }];
-  enType.map((item) =>
-    enCategoryOptions.push({ key: item.category_en, value: item.category_en })
-  );
-  // enCategory end
-
-  // uzCategory start
-  useEffect(() => {
-    axios
-      .get(`${env}categories/categories`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((data) => setUzType(data.data));
-  }, [token]);
-
-  const uzCategoryOptions = [{ key: "В ожидании", value: "" }];
-  uzType.map((item) =>
-    uzCategoryOptions.push({ key: item.category_uz, value: item.category_uz })
-  );
-  // uzCategory end
-
-  // ruStatus start
+  //status get start
   useEffect(() => {
     axios
       .get(`${env}status-products/getAll`, {
@@ -179,49 +95,11 @@ export default function AtributPage({
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((data) => setRuStatus(data.data));
+      .then((data) => setStatus(data.data));
   }, [token]);
+  //status get end
 
-  const ruStatusOptions = [{ key: "В ожидании", value: "" }];
-  ruStatus.map((item) =>
-    ruStatusOptions.push({ key: item.status_ru, value: item.status_ru })
-  );
-  // ruStatus end
-
-  // enStatus start
-  useEffect(() => {
-    axios
-      .get(`${env}status-products/getAll`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((data) => setEnStatus(data.data));
-  }, [token]);
-
-  const enStatusOptions = [{ key: "В ожидании", value: "" }];
-  enStatus.map((item) =>
-    enStatusOptions.push({ key: item.status_en, value: item.status_en })
-  );
-  // enStatus end
-
-  // uzStatus start
-  useEffect(() => {
-    axios
-      .get(`${env}status-products/getAll`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((data) => setUzStatus(data.data));
-  }, [token]);
-
-  const uzStatusOptions = [{ key: "В ожидании", value: "" }];
-  uzStatus.map((item) =>
-    uzStatusOptions.push({ key: item.status_uz, value: item.status_uz })
-  );
-  // uzStatus end
-  // Add atibut start
+  //addAtribut get start
   useEffect(() => {
     axios
       .get(`${env}attributes/attributes`, {
@@ -231,57 +109,64 @@ export default function AtributPage({
       })
       .then((data) => setAddAtribut(data.data));
   }, [token]);
-  // Add atibut start
-  const ruColorOptions = [
-    { key: "В ожидании", value: "" },
-    { key: "intex", value: "intex" },
-  ];
-  const ruAddMatrialOptions = [
-    { key: "В ожидании", value: "" },
-    { key: "intex", value: "intex" },
-  ];
 
-  const selectVal = useRef();
-  const [modalInformations, setModalInformations] = useState([]);
-
-  function modalGetValues(evt) {
+  //matrial get end
+  const [addedMaterial, setAddedMaterial] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${env}categories/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((data) => setAddedMaterial(data.data));
+  }, [token]);
+  // create Atribbut submit form start
+  const addAtributSelect = useRef();
+  const [sizeInp, setSizeInp] = useState([]);
+  const [selectAtribut, setSelectAtribut] = useState([]);
+  const [catchValue, setCatchValue] = useState("");
+  function handleCatch(evt) {
+    setCatchValue(evt.target.value);
+  }
+  const createArtibut = (evt) => {
     evt.preventDefault();
-    console.log("salom");
     setShowModal(false);
-    if (selectVal.current.value === "Размер") {
-      setModalInformations([
+    if (addAtributSelect.current.value === "Размер") {
+      setSizeInp([
+        ...sizeInp,
         {
-          control: "input",
-          type: "number",
-          label: "Размер",
-          name: "ruNewAddedSize",
-          placeholder: "0",
+          ru: {
+            labelName: "Размер",
+            inpType: "number",
+            placeholder: "0",
+          },
         },
       ]);
-    } else if (selectVal.current.value === "Цвет") {
-      setModalInformations([
-        ...modalInformations,
+    } //id berib qoyish esingdan chiqmasin Nurillo
+    else if (addAtributSelect.current.value === "Цвет") {
+      setSizeInp([
+        ...sizeInp,
         {
-          control: "input",
-          type: "text",
-          label: "Цвет",
-          name: "ruNewAddedColor",
-          placeholder: "В ожидании",
+          ru: {
+            labelName: "Цвет",
+            inpType: "text",
+            placeholder: "Выберите цвет",
+          },
         },
       ]);
-    } else if (selectVal.current.value === "Материал") {
-      setModalInformations([
-        ...modalInformations,
+    } else if (addAtributSelect.current.value === "Материал") {
+      setSelectAtribut([
+        ...selectAtribut,
         {
-          control: "select",
-          type: "",
-          label: "Материал",
-          name: "ruNewAddedMaterial",
-          options: ruAddMatrialOptions,
+          ru: {
+            labelName: "Материал",
+          },
         },
       ]);
     }
-  }
+  };
+  // create Atribbut submit form end
   return (
     <div className="relative">
       <span
@@ -297,226 +182,303 @@ export default function AtributPage({
         />
         Добавить атрибуть
       </span>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        {(formik) => (
-          <Form>
-            <DropDown
-              downClick={atributClicked}
-              dropName={"Русский"}
-              wDrop={12}
-              hdrop={9}
-              imgURL={DropImg}
-              imgAlt={"Drop img"}
-              rotateDelete={
+      <div>
+        <form onSubmit={onSubmit}>
+          <DropDown
+            downClick={atributClicked}
+            dropName={"Русский"}
+            wDrop={12}
+            hdrop={9}
+            imgURL={DropImg}
+            imgAlt={"Drop img"}
+            rotateDelete={
+              openAtributes
+                ? "-rotate-180 duration-300"
+                : "-rotate-0 duration-300"
+            }
+          >
+            <div
+              className={`${
                 openAtributes
-                  ? "-rotate-180 duration-300"
-                  : "-rotate-0 duration-300"
-              }
+                  ? "h-auto overflow-auto pb-2"
+                  : "h-0 overflow-hidden"
+              } duration-300`}
             >
-              <div
-                className={`${
-                  openAtributes ? "h-auto overflow-auto" : "h-0 overflow-hidden"
-                } duration-300`}
-              >
-                <div className="flex mb-6 justify-between">
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="input"
-                    type="number"
-                    id="ruAtributprice"
-                    label="Цена"
-                    name="ruPriceAtribut"
+              <div className="flex items-center justify-between flex-wrap">
+                <label className="flex flex-col w-[32%]">
+                  Цена
+                  <input
+                    className="outline-none inline-block mt-3 pl-4 rounded-lg border h-12  "
                     placeholder="0"
-                  />
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="input"
                     type="number"
-                    id="ruAtributSale"
-                    label="Цена со скидкой"
-                    name="ruPriceSale"
+                  />
+                </label>
+                <label className="flex flex-col  w-[32%]">
+                  Цена со скидкой
+                  <input
+                    className="outline-none inline-block mt-3 pl-4 rounded-lg border h-12 "
                     placeholder="0"
+                    type="text"
                   />
-                  <FormikControl
-                    control="select"
-                    label="Тип продукта"
-                    name="ruTypeAtribut"
-                    options={dropdownOptions}
-                  />
-                </div>
-                <div className="flex flex-wrap items-center justify-between">
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="select"
-                    label="Статус"
-                    name="ruStatus"
-                    options={ruStatusOptions}
-                  />
-                  {modalInformations.map((item) => (
-                    <FormikControl
-                      className={"w-[346px]"}
-                      control={item.control}
-                      type={item.type}
-                      id="addedAtribut"
-                      label={item.label}
-                      name={item.name}
-                      placeholder={item.placeholder}
-                      options={item.options}
-                    />
+                </label>
+                <label className="flex flex-col w-[32%]">
+                  Тип продукта
+                  <select
+                    defaultValue={"default"}
+                    className="outline-none mt-3 pl-4 rounded-lg border h-12 "
+                  >
+                    <option
+                      value="default"
+                      className="text-slate-500"
+                      disable="true"
+                    >
+                      Введите Форму продукта
+                    </option>
+                    {ruTypeProduct.length &&
+                      ruTypeProduct.map((item) => (
+                        <option key={item.id}>{item.category_ru}</option>
+                      ))}
+                  </select>
+                </label>
+                <label className="flex flex-col w-[32%] mt-6">
+                  Статус
+                  <select
+                    defaultValue={"default"}
+                    className="outline-none mt-3 pl-4 rounded-lg border h-12 "
+                  >
+                    <option disable="true" value="default">
+                      Выберите статус продукта
+                    </option>
+                    {status.length &&
+                      status.map((item) => (
+                        <option key={item.id}>{item.status_ru}</option>
+                      ))}
+                  </select>
+                </label>
+                {sizeInp.length > 0 &&
+                  sizeInp.map((item) => (
+                    <label className="flex flex-col w-[32%] mt-6">
+                      {item.ru.labelName}
+                      <input
+                        className="outline-none mt-3 pl-4 rounded-lg border h-12"
+                        type={item.ru.inpType}
+                        placeholder={item.ru.placeholder}
+                      />
+                    </label>
                   ))}
-                </div>
+                {selectAtribut.length > 0 &&
+                  selectAtribut.map((item) => (
+                    <label className="w-[32%] h-12">
+                      {item.ru.labelName}
+                      <select
+                        onChange={handleCatch}
+                        className="outline-none mt-1.5 pl-4 w-full rounded-lg border h-12"
+                      >
+                        {addedMaterial.length > 0 &&
+                          addedMaterial.map((item) => (
+                            <option key={item.id}>{item.category_ru}</option>
+                          ))}
+                      </select>
+                    </label>
+                  ))}
               </div>
-            </DropDown>
-            <DropDown
-              downClick={usAtributClicked}
-              dropName={"Англиский"}
-              wDrop={12}
-              hdrop={9}
-              imgURL={DropImg}
-              imgAlt={"Drop img"}
-              rotateDelete={
-                enOpenAtributes
-                  ? "-rotate-180 duration-300"
-                  : "-rotate-0 duration-300"
-              }
-            >
-              <div
-                className={`${
-                  enOpenAtributes
-                    ? "h-auto overflow-auto"
-                    : "h-0 overflow-hidden"
-                } duration-300`}
-              >
-                <div className="flex mb-6 justify-between">
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="input"
-                    type="number"
-                    id="usAtributprice"
-                    label="Цена"
-                    name="usPriceAtribut"
-                    placeholder="0"
-                  />
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="input"
-                    type="number"
-                    id="usAtributSale"
-                    label="Цена со скидкой"
-                    name="usPriceSale"
-                    placeholder="0"
-                  />
-                  <FormikControl
-                    control="select"
-                    label="Тип продукта"
-                    name="usTypeAtribut"
-                    options={enCategoryOptions}
-                  />
-                </div>
-                <div className="space-y-6">
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="select"
-                    label="Цвет"
-                    name="usColor"
-                    options={ruColorOptions}
-                  />
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="select"
-                    label="Статус"
-                    name="usStatus"
-                    options={enStatusOptions}
-                  />
-                </div>
-              </div>
-            </DropDown>
-            <DropDown
-              downClick={uzAtributClicked}
-              dropName={"Узбекский"}
-              wDrop={12}
-              hdrop={9}
-              imgURL={DropImg}
-              imgAlt={"Drop img"}
-              rotateDelete={
-                uzOpenAtributes
-                  ? "-rotate-180 duration-300"
-                  : "-rotate-0 duration-300"
-              }
-            >
-              <div
-                className={`${
-                  uzOpenAtributes
-                    ? "h-auto overflow-auto"
-                    : "h-0 overflow-hidden"
-                } duration-300`}
-              >
-                <div className="flex mb-6 justify-between">
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="input"
-                    type="number"
-                    id="uzAtributprice"
-                    label="Цена"
-                    name="uzPriceAtribut"
-                    placeholder="0"
-                  />
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="input"
-                    type="number"
-                    id="uzAtributSale"
-                    label="Цена со скидкой"
-                    name="uzPriceSale"
-                    placeholder="0"
-                  />
-                  <FormikControl
-                    control="select"
-                    label="Тип продукта"
-                    name="uzTypeAtribut"
-                    options={uzCategoryOptions}
-                  />
-                </div>
-                <div className="space-y-6">
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="select"
-                    label="Цвет"
-                    name="uzColor"
-                    options={ruColorOptions}
-                  />
-                  <FormikControl
-                    className={"w-[346px]"}
-                    control="select"
-                    label="Статус"
-                    name="uzStatus"
-                    options={uzStatusOptions}
-                  />
-                </div>
-              </div>
-            </DropDown>
-
-            <div className="flex mt-6 pb-8 items-center justify-center space-x-5">
-              <button
-                className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"
-                type="reset"
-              >
-                Отменить
-              </button>
-              <button
-                className="py-3 text-white rounded-2xl w-submitBtnsWidth bg-submitBtnBg font-bold text-lg"
-                type="submit"
-              >
-                Cледующий
-              </button>
             </div>
-          </Form>
-        )}
-      </Formik>
+          </DropDown>
+          <DropDown
+            downClick={usAtributClicked}
+            dropName={"Англиский"}
+            wDrop={12}
+            hdrop={9}
+            imgURL={DropImg}
+            imgAlt={"Drop img"}
+            rotateDelete={
+              enOpenAtributes
+                ? "-rotate-180 duration-300"
+                : "-rotate-0 duration-300"
+            }
+          >
+            <div
+              className={`${
+                enOpenAtributes ? "h-auto overflow-auto" : "h-0 overflow-hidden"
+              } duration-300`}
+            >
+              <div className="flex items-center justify-between flex-wrap">
+                <label className="flex flex-col w-[32%]">
+                  Цена
+                  <input
+                    className="outline-none inline-block mt-3 pl-4 rounded-lg border h-12  "
+                    placeholder="0"
+                    type="text"
+                  />
+                </label>
+                <label className="flex flex-col  w-[32%]">
+                  Цена со скидкой
+                  <input
+                    className="outline-none inline-block mt-3 pl-4 rounded-lg border h-12 "
+                    placeholder="0"
+                    type="text"
+                  />
+                </label>
+                <label className="flex flex-col w-[32%]">
+                  Тип продукта
+                  <select
+                    defaultValue={"default"}
+                    className="outline-none mt-3 pl-4 rounded-lg border h-12 "
+                  >
+                    <option disable="true" value="default">
+                      Введите Форму продуктаs
+                    </option>
+                    {ruTypeProduct.length &&
+                      ruTypeProduct.map((item) => (
+                        <option key={item.id}>{item.category_en}</option>
+                      ))}
+                  </select>
+                </label>
+                <label className="flex flex-col w-[32%] mt-6">
+                  Статус
+                  <select
+                    defaultValue={"default"}
+                    className="outline-none mt-3 pl-4 rounded-lg border h-12 "
+                  >
+                    <option disable="true" value="default">
+                      Выберите статус продукта
+                    </option>
+                    {status.length &&
+                      status.map((item) => (
+                        <option key={item.id}>{item.status_en}</option>
+                      ))}
+                  </select>
+                </label>
+                {sizeInp.length > 0 &&
+                  sizeInp.map((item) => (
+                    <label className="flex flex-col w-[32%] mt-6">
+                      {item.ru.labelName}
+                      <input
+                        className="outline-none mt-3 pl-4 rounded-lg border h-12"
+                        type={item.ru.inpType}
+                        placeholder={item.ru.placeholder}
+                      />
+                    </label>
+                  ))}
+                {selectAtribut.length > 0 &&
+                  selectAtribut.map((item) => (
+                    <label className="w-[32%] h-12">
+                      {item.ru.labelName}
+                      <select className="outline-none mt-1.5 pl-4 w-full rounded-lg border h-12">
+                        {addedMaterial.length > 0 &&
+                          addedMaterial.map((item) => (
+                            <option key={item.id}>{item.category_en}</option>
+                          ))}
+                      </select>
+                    </label>
+                  ))}
+              </div>
+            </div>
+          </DropDown>
+          <DropDown
+            downClick={uzAtributClicked}
+            dropName={"Узбекский"}
+            wDrop={12}
+            hdrop={9}
+            imgURL={DropImg}
+            imgAlt={"Drop img"}
+            rotateDelete={
+              uzOpenAtributes
+                ? "-rotate-180 duration-300"
+                : "-rotate-0 duration-300"
+            }
+          >
+            <div
+              className={`${
+                uzOpenAtributes ? "h-auto overflow-auto" : "h-0 overflow-hidden"
+              } duration-300`}
+            >
+              <div className="flex items-center justify-between flex-wrap">
+                <label className="flex flex-col w-[32%]">
+                  Цена
+                  <input
+                    className="outline-none inline-block mt-3 pl-4 rounded-lg border h-12  "
+                    placeholder="0"
+                    type="text"
+                  />
+                </label>
+                <label className="flex flex-col  w-[32%]">
+                  Цена со скидкой
+                  <input
+                    className="outline-none inline-block mt-3 pl-4 rounded-lg border h-12 "
+                    placeholder="0"
+                    type="text"
+                  />
+                </label>
+                <label className="flex flex-col w-[32%]">
+                  Тип продукта
+                  <select
+                    defaultValue={"default"}
+                    className="outline-none mt-3 pl-4 rounded-lg border h-12 "
+                  >
+                    <option value="default">Введите Форму продуктаs</option>
+                    {ruTypeProduct.length &&
+                      ruTypeProduct.map((item) => (
+                        <option key={item.id}>{item.category_uz}</option>
+                      ))}
+                  </select>
+                </label>
+                <label className="flex flex-col w-[32%] mt-6">
+                  Статус
+                  <select
+                    defaultValue={"default"}
+                    className="outline-none mt-3 pl-4 rounded-lg border h-12 "
+                  >
+                    <option value="default">Выберите статус продукта</option>
+                    {status.length &&
+                      status.map((item) => (
+                        <option key={item.id}>{item.status_uz}</option>
+                      ))}
+                  </select>
+                </label>
+                {sizeInp.length > 0 &&
+                  sizeInp.map((item) => (
+                    <label className="flex flex-col w-[32%] mt-6">
+                      {item.ru.labelName}
+                      <input
+                        className="outline-none mt-3 pl-4 rounded-lg border h-12"
+                        type={item.ru.inpType}
+                        placeholder={item.ru.placeholder}
+                      />
+                    </label>
+                  ))}
+                {selectAtribut.length > 0 &&
+                  selectAtribut.map((item) => (
+                    <label className="w-[32%] h-12">
+                      {item.ru.labelName}
+                      <select className="outline-none mt-1.5 pl-4 w-full rounded-lg border h-12">
+                        {addedMaterial.length > 0 &&
+                          addedMaterial.map((item) => (
+                            <option key={item.id}>{item.category_uz}</option>
+                          ))}
+                      </select>
+                    </label>
+                  ))}
+              </div>
+            </div>
+          </DropDown>
+
+          <div className="flex mt-6 pb-8 items-center justify-center space-x-5">
+            <button
+              className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"
+              type="reset"
+            >
+              Отменить
+            </button>
+            <button
+              className="py-3 text-white rounded-2xl w-submitBtnsWidth bg-submitBtnBg font-bold text-lg"
+              type="submit"
+            >
+              Cледующий
+            </button>
+          </div>
+        </form>
+      </div>
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
         <div className="w-modalWidth ">
           <div className="flex items-center justify-between mb-6">
@@ -530,15 +492,27 @@ export default function AtributPage({
               height={32}
             />
           </div>
-          <form onSubmit={modalGetValues}>
+          <form onSubmit={createArtibut}>
             <label className="flex flex-col w-[48%]">
               Тип атрибуты
-              <select ref={selectVal} className="p-4 border-2 rounded-lg mt-3">
-                {addAtribut.map((item) => (
-                  <option key={item.id}>{item.attribute_ru}</option>
-                ))}
+              <select
+                onChange={(evt) => console.log(evt.target)}
+                ref={addAtributSelect}
+                className="p-4 border-2 rounded-lg mt-3"
+              >
+                {addAtribut.length &&
+                  addAtribut.map((item) => (
+                    <option
+                      value={item.attribute_ru}
+                      id={item.id}
+                      key={item.id}
+                    >
+                      {item.attribute_ru}
+                    </option>
+                  ))}
               </select>
             </label>
+
             <div className="flex mt-6 items-center justify-center space-x-5">
               <button
                 className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"

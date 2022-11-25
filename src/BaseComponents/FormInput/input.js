@@ -15,7 +15,7 @@ function Input(props) {
         name={name}
         autoComplete="off"
         {...rest}
-        className="w-full p-3 rounded-lg outline-none border border-gray-200 focus-visible:border-gray-300 text-base"
+        className={`${className}w-full p-3 rounded-lg outline-none border border-gray-200 focus-visible:border-gray-300 text-base`}
       />
       <ErrorMessage name={name} component={TextError} />
     </div>

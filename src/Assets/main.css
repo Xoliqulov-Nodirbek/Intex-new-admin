@@ -154,6 +154,20 @@ body{
 }
 
 input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button{
+      -webkit-appearance: none;
+        margin: 0;
+} 
+
+.rti--container {
+    --rti-bg: "red",
+    --rti-border: "red",
+    --rti-main: "red",
+    --rti-radius: "50px",
+    --rti-s: "50px", /* spacing */
+    --rti-tag: "red",
+    --rti-tag-remove: "red",
+  }
 input[type=number]::-webkit-outer-spin-button{
   -webkit-appearance: none;
   margin: 0;

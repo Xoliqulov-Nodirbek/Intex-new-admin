@@ -5,8 +5,8 @@ import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 export default function ProductModal() {
   return (
     <>
-      <ul className="flex flex-col gap-y-2.5 absolute bg-white p-3 w-[160px] top-0 right-16 z-50 border rounded-lg shadow-lg">
-        <button type="button" className="flex">
+      <ul className="flex flex-col cursor-pointer gap-y-2.5 absolute p-3 bg-white rounded-sm shadow-editProduct">
+        <li onClick={() => setShowMoadal(true)} className={`flex ${delEdit}`}>
           <img className="mr-2" src={Edit} alt="just a icon to edit" />
           <span>Изменить</span>
         </button>
@@ -19,6 +19,8 @@ export default function ProductModal() {
           <span>Дублировать</span>
         </button>
         <button type="button" className="flex">
+        </li>
+        <li onClick={handlDelteUnik} className="flex">
           <img className="mr-2" src={Trash} alt="just a icon to edit" />
           <span>Удалить</span>
         </button>
