@@ -20,6 +20,7 @@ module.exports = {
         supportWidth: "150px",
         headerInputWidth: "260px",
         homeInpWidth: "284px",
+        mainInputWidth: "346px",
         homeSortWidth: "170px",
         addProductListWidth: "65%",
         submitBtnsWidth: "331px",

@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import MButton from "../../BaseComponents/MButton/MButton";
 import "../../BaseComponents/MButton/MButton.css";
+import AttributeTable from "../../components/TableRow/AttributeTable";
+import TableRow from "../../components/TableRow/TableRow";
+import AtributeProducts from "./AtributeTable";
 
 export default function Home() {
   return (
@@ -49,6 +52,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+       <AtributeProducts />
       </div>
       
     </>
