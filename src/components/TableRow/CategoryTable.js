@@ -6,13 +6,14 @@ import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Close from "../../Assets/Images/SettingsImg/close.svg";
 import Flag from "../../Assets/Images/SettingsImg/flag.svg";
 import ProductModal from "../ProductModal/ProductModal";
+import MFilter from "../../BaseComponents/MFilter/MFilter";
 
 export default function TableCat({ children, styles, data, isChecked }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [date, setDate] = useState("");
-
+  const categoryResult = data?.ru;
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true);
@@ -22,10 +23,13 @@ export default function TableCat({ children, styles, data, isChecked }) {
       e.target.checked = false;
     }
   };
+  const deleteAddedRow = (evt) => {
+    console.log("Salom");
+  };
 
   return (
     <>
-      <tr className={`flex justify-between items-center border-b ${styles}`}>
+      <tr className={`flex items-center border-b ${styles}`}>
         {children ? (
           children
         ) : (
@@ -49,11 +53,17 @@ export default function TableCat({ children, styles, data, isChecked }) {
               />
             </TableData>
             <TableData styles="w-[80px]">{data.id}</TableData>
-            <TableData styles="w-[393px] truncate" image={false}>
-              {data.name}
+            <TableData styles="w-[227px] truncate" image={false}>
+              {data.category_ru}
             </TableData>
-            <TableData styles="w-[250px]">{data.phone}</TableData>
-            <TableData styles="w-[258px]">{data.created_at}</TableData>
+            <TableData styles="w-[250px]">{data.category_ru.length}</TableData>
+            <TableData styles="min-w-[474px]">
+              {categoryResult.map((item, index) => (
+                <MFilter key={index} className="mx-1">
+                  {item}
+                </MFilter>
+              ))}
+            </TableData>
             <TableData styles="w-[95px] relative pl-0">
               <button
                 className="mx-auto px-8 py-2"
@@ -63,7 +73,14 @@ export default function TableCat({ children, styles, data, isChecked }) {
               >
                 <img src={ThreeDotsSvg} alt="three dots icon" />
               </button>
-              {isClicked ? <ProductModal /> : ""}
+              {isClicked ? (
+                <ProductModal
+                  handlDelteUnik={deleteAddedRow}
+                  delEdit={"hidden"}
+                />
+              ) : (
+                ""
+              )}
             </TableData>
           </>
         )}
