@@ -59,7 +59,7 @@ export default function AttributeTable({ children, styles, data, isChecked }) {
             >
               <img src={ThreeDotsSvg} alt="three dots icon" />
             </button>
-            {isClicked ? <ProductModal delEdit={"hidden"} /> : ''}
+            {isClicked ? <ProductModal delEdit={"hidden"}  /> : ''}
           </TableData>
         </>
       )}
