@@ -3,7 +3,7 @@ import { Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
 
 function Select(props) {
-  const { label, name, options, ...rest } = props;
+  const { label, id, name, options, ...rest } = props;
   return (
     <div className="w-[346px]">
       <label htmlFor={name}>{label}</label>
@@ -16,7 +16,7 @@ function Select(props) {
       >
         {options.map((option) => {
           return (
-            <option key={option.value} value={option.value}>
+            <option id={id} key={option.value} value={option.value}>
               {option.key}
             </option>
           );
