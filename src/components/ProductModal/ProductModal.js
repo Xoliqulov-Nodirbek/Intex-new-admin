@@ -15,7 +15,7 @@ export default function ProductModal({ dataInfo, delEdit, handlDelteUnik }) {
           <img className="mr-2" src={Edit} alt="just a icon to edit" />
           <span>Изменить</span>
         </li>
-        <li className="flex">
+        <li className={`flex ${delEdit}`}>
           <img
             className="mr-2"
             src={Dublicate}
