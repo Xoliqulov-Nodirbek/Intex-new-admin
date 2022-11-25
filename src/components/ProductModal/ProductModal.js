@@ -6,7 +6,7 @@ import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
 import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
-export default function ProductModal({ dataInfo, delEdit, handlDelteUnik }) {
+export default function ProductModal({ dataInfo, delEdit }) {
   const [showModal, setShowMoadal] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ export default function ProductModal({ dataInfo, delEdit, handlDelteUnik }) {
           />
           <span>Дублировать</span>
         </li>
-        <li onClick={handlDelteUnik} className="flex">
+        <li className="flex">
           <img className="mr-2" src={Trash} alt="just a icon to edit" />
           <span>Удалить</span>
         </li>
