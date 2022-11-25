@@ -59,7 +59,7 @@ const AtributeProducts = () => {
                 Название товара
               </TableHeader>
               <TableHeader styles="w-[190px]" sortIcon={true}>Вид формы</TableHeader>
-              <TableHeader styles="w-[400px]" sortIcon={true}>
+              <TableHeader styles="min-w-[400px]" sortIcon={true}>
               Значение атрибута
               </TableHeader>
               <TableHeader styles="w-[95px] pr-3 justify-center">
