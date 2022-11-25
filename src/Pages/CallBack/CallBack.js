@@ -60,9 +60,6 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              {/* <MButton BType="add bg-filterBg" type="button">
-                Добавить
-              </MButton> */}
             </div>
           </div>
         </div>
