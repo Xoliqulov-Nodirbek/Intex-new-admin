@@ -12,6 +12,7 @@ const env = process.env.REACT_APP_ALL_API;
 export default function TableContactRow() {
   const [isChecked, setIsChecked] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [checkedCount, setCheckedCount] = useState(0);
   const [totalPage, setTotalpage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -35,7 +36,7 @@ export default function TableContactRow() {
     setLoader(true);
 
     axios
-      .get(`${env}orders?page=${page}&limit=${limit}`, {
+      .get(`${env}consultations?page=${page}&limit=${limit}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +49,7 @@ export default function TableContactRow() {
       .finally(() => {
         setLoader(false);
       });
-  }, [limit, page, token]);
+  }, [limit, page, token, refresh]);
 
   // --- Loader
   const loaders = (
@@ -120,7 +121,8 @@ export default function TableContactRow() {
                       key={item.id}
                       isChecked={isChecked}
                       handleChanges={handleChange}
-                    ></ContactTable>
+                      refresh={() => setRefresh(!refresh)}
+                    />
                   );
                 })
               )}

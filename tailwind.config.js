@@ -26,7 +26,7 @@ module.exports = {
         730: "682px",
         modalWidth: "730px",
         productImgUploadWidth: "682px",
-        orderModal:"730px",
+        orderModal: "730px",
       },
       maxWidth: {
         login_content: "450px",
@@ -89,6 +89,7 @@ module.exports = {
       },
       boxShadow: {
         editProduct: "0px 12px 23px rgba(150, 150, 150, 0.1)",
+        tableModal: "0px -1px 0px #EDF2F7",
       },
     },
   },
