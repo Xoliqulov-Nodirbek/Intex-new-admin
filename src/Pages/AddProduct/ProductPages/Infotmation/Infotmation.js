@@ -72,10 +72,10 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
     factoryNames.push({
       key: item.manufacturer_ru,
       value: item.manufacturer_ru,
+      id: item.id,
     })
   );
   // Призводства options end
-
   // enПризводства options start
   useEffect(() => {
     axios
@@ -218,7 +218,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
     setUzDrop(!uzDrop);
   };
   const onSubmit = (values, { resetForm }) => {
-    // console.log(values);
+    console.log(values);
     imagesPage(true);
     submitProduct(false);
     atributPage(false);
@@ -294,6 +294,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
                       control="select"
                       label="Призводства"
                       name="ruProiz"
+                      id={factoryNames.id}
                       options={factoryNames}
                     />
                   </div>

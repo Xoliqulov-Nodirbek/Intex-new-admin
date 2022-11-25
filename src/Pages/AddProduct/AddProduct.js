@@ -5,9 +5,9 @@ import AtributPage from "./ProductPages/AtributPage/AtributPage";
 import Line from "./../../BaseComponents/Line/Line";
 
 export default function AddProduct() {
-  const [info, setInfo] = useState(false);
+  const [info, setInfo] = useState(true);
   const [img, setImg] = useState(false);
-  const [atr, setAtr] = useState(true);
+  const [atr, setAtr] = useState(false);
   const [result, setResult] = useState(false);
   const [formInfo, setFormInfo] = useState([
     {
@@ -44,6 +44,7 @@ export default function AddProduct() {
   if (result) {
     console.log(formInfo);
   }
+
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
