@@ -23,6 +23,7 @@ export default function TableRow2({
       e.target.checked = false;
     }
   };
+  
   return (
     <tr className={`flex  items-center border-b ${styles}`}>
       {children ? (
