@@ -5,44 +5,30 @@ import AtributPage from "./ProductPages/AtributPage/AtributPage";
 import Line from "./../../BaseComponents/Line/Line";
 
 export default function AddProduct() {
-  const [info, setInfo] = useState(true);
+  const [info, setInfo] = useState(false);
   const [img, setImg] = useState(false);
-  const [atr, setAtr] = useState(false);
+  const [atr, setAtr] = useState(true);
   const [result, setResult] = useState(false);
-  const [formInfo, setFormInfo] = useState([
-    {
-      ru: {
-        ruNamePro: "",
-        ruWork: "",
-        ruTexrArea: "",
-        ruConutry: "",
-        ruCategory: "",
-        ruPrice: "",
-      },
-    },
-    {
-      us: {
-        usNamePro: "",
-        usWork: "",
-        usTexrArea: "",
-        usConutry: "",
-        usCategory: "",
-        usPrice: "",
-      },
-    },
-    {
-      uz: {
-        uzNamePro: "",
-        uzWork: "",
-        uzTexrArea: "",
-        uzConutry: "",
-        uzCategory: "",
-        uzPrice: "",
-      },
-    },
-  ]);
+  let formData = new FormData();
+  const [formInfo, setFormInfo] = useState([]);
   if (result) {
     console.log(formInfo);
+    formData.append("name_uz", "");
+    formData.append("name_ru", "");
+    formData.append("name_en", "");
+    formData.append("discount_price");
+    formData.append("price");
+    formData.append("count");
+    formData.append("about_uz", "");
+    formData.append("about_ru", "");
+    formData.append("about_en", "");
+    formData.append("image", []);
+    formData.append("category_id");
+    formData.append("country_id");
+    formData.append("country_id");
+    formData.append("status_id");
+    formData.append("manufacturer_id");
+    formData.append("attribute_id");
   }
 
   return (
