@@ -8,7 +8,6 @@ export default function TableRow2({
   children,
   styles,
   data,
-  handleChanges,
   isChecked,
 }) {
   const [isClick, setIsClick] = useState(false);
