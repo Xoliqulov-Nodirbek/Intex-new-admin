@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
-import MButton from "../../BaseComponents/MButton/MButton";
-import "../../BaseComponents/MButton/MButton.css";
-import AttributeTable from "../../components/TableRow/AttributeTable";
-import TableRow from "../../components/TableRow/TableRow";
 import AtributeProducts from "./AtributeTable";
+import MButton from "../../BaseComponents/MButton/MButton";
+// Styles
+import "../../BaseComponents/MButton/MButton.css";
+// Images
+import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 
 export default function Home() {
   return (
@@ -16,12 +16,16 @@ export default function Home() {
         </Link>
         <span className="ml-2.5 text-navSubColor ">/</span>
         <Link to="/atribut">
-          <h2 className="font-normal text-navSubColor text-xs ml-2.5">Атрибуты</h2>
+          <h2 className="font-normal text-navSubColor text-xs ml-2.5">
+            Атрибуты
+          </h2>
         </Link>
       </div>
       <div className="pt-6 pb-8 px-homeContentPadding h-[100vh] overflow-auto">
         <div>
-          <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">Атрибуты</h2>
+          <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">
+            Атрибуты
+          </h2>
           <div className="bg-white py-3 px-4 rounded-xl flex items-center justify-between">
             <div className="flex items-center">
               <MButton BType="filter bg-filterBg" type="button">
@@ -36,24 +40,37 @@ export default function Home() {
               />
             </div>
             <div className="flex items-center">
-              <strong className="font-semibold text-base text-homeColor mr-2.5">Сортировка</strong>
+              <strong className="font-semibold text-base text-homeColor mr-2.5">
+                Сортировка
+              </strong>
               <div className="w-homeSortWidth cursor-pointer mr-6 flex items-center justify-between bg-headerInpBg p-3 rounded-xl">
-                <span className="font-medium text-sm text-homeSortWrap">По А-Я</span>
-                <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 11L12 14L15 11" stroke="#04009A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <span className="font-medium text-sm text-homeSortWrap">
+                  По А-Я
+                </span>
+                <svg
+                  width="24"
+                  height="22"
+                  viewBox="0 0 24 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 11L12 14L15 11"
+                    stroke="#04009A"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
-
-
               <Link to="/addAtribut" className="add bg-filterBg" type="button">
                 Добавить
               </Link>
             </div>
           </div>
         </div>
-       <AtributeProducts />
+        <AtributeProducts />
       </div>
-      
     </div>
   );
 }

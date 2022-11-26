@@ -1,12 +1,12 @@
-import axios from 'axios'
-import { useState } from 'react'
-import TableData from '../TableData/TableData'
-import MFilter from '../../BaseComponents/MFilter/MFilter'
+import axios from "axios";
+import { useState } from "react";
+import TableData from "../TableData/TableData";
+import MFilter from "../../BaseComponents/MFilter/MFilter";
 // Images
-import ThreeDotsSvg from '../../Assets/Images/ProductsImgs/threedots.svg'
-import Trash from '../../Assets/Images/ProductsImgs/trash_1.svg'
+import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
+import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
-const env = process.env.REACT_APP_ALL_API
+const env = process.env.REACT_APP_ALL_API;
 
 export default function AttributeTable({
   children,
@@ -15,20 +15,21 @@ export default function AttributeTable({
   refresh,
   isChecked,
 }) {
-  const [checker, setChecker] = useState(false)
-  const [isClicked, setIsClicked] = useState(false)
-  const attribute = data.ru
-  const token = JSON.parse(window.localStorage.getItem('token'))
+  const [checker, setChecker] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const attribute = data.ru;
+  
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   const handleCheck = (e) => {
     if (e.target.checked) {
-      setChecker(true)
-      e.target.checked = true
+      setChecker(true);
+      e.target.checked = true;
     } else {
-      setChecker(false)
-      e.target.checked = false
+      setChecker(false);
+      e.target.checked = false;
     }
-  }
+  };
 
   // --- Delete Row
   const DeleteRow = (id) => {
@@ -39,10 +40,10 @@ export default function AttributeTable({
         },
       })
       .then(() => {
-        refresh()
+        refresh();
       })
-      .catch((err) => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   // --- Close Icon
   const close = (
@@ -57,7 +58,7 @@ export default function AttributeTable({
       <line x1="1" y1="15" x2="15" y2="1" stroke="black" strokeWidth="2" />
       <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
     </svg>
-  )
+  );
 
   return (
     <tr className={`flex  items-center border-b ${styles}`}>
@@ -125,5 +126,5 @@ export default function AttributeTable({
         </>
       )}
     </tr>
-  )
+  );
 }

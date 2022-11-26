@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import ContactTable from "../../components/TableRow/ContactTable";
-
 // --- Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
@@ -10,9 +9,9 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 const env = process.env.REACT_APP_ALL_API;
 
 export default function TableContactRow() {
-  const [isChecked, setIsChecked] = useState(false);
   const [loader, setLoader] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [checkedCount, setCheckedCount] = useState(0);
   const [totalPage, setTotalpage] = useState(0);
   const [limit, setLimit] = useState(5);

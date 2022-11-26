@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
-import MButton from "../../BaseComponents/MButton/MButton";
-import "../../BaseComponents/MButton/MButton.css";
 import ProductsCategory from "./CategoryTable";
+import MButton from "../../BaseComponents/MButton/MButton";
+// Images
+import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
+// Style
+import "../../BaseComponents/MButton/MButton.css";
 
 export default function Home() {
   return (

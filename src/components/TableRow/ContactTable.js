@@ -29,6 +29,7 @@ export default function ContactTable({
     }
   };
 
+  // --- Delete Row
   const DeleteItems = (id) => {
     axios
       .delete(`${env}consultations/delete/${id}`, {
@@ -44,6 +45,7 @@ export default function ContactTable({
       });
   };
 
+  // --- Colse
   const close = (
     <svg
       className="flex items-center justify-center object-fill"

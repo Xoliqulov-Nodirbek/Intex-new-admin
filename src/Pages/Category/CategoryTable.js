@@ -8,14 +8,15 @@ import axios from "axios";
 const env = process.env.REACT_APP_ALL_API;
 
 const ProductsCategory = () => {
-  const [data, setData] = React.useState([]);
-  const [isChecked, setIsChecked] = React.useState(false);
-  const [loader, setLoader] = React.useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [loader, setLoader] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
+  const [totalPage, setTotalpage] = React.useState(0);
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
-  const [totalPage, setTotalpage] = React.useState(0);
+  const [data, setData] = React.useState([]);
+
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -24,6 +25,7 @@ const ProductsCategory = () => {
     }
   };
 
+  // --- Get Product
   React.useEffect(() => {
     setLoader(true);
     axios
@@ -34,7 +36,7 @@ const ProductsCategory = () => {
         setLoader(false);
       });
   }, [limit, page, refresh]);
-  //   console.log(data);
+
   // --- Loader
   const loaders = (
     <svg
