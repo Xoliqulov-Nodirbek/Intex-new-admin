@@ -4,7 +4,6 @@ import TableData from "../TableData/TableData";
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
-import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
 
 const env = process.env.REACT_APP_ALL_API;
 
