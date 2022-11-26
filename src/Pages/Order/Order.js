@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import MButton from "../../BaseComponents/MButton/MButton";
 import ProductOrder from "./ProductOrder";
-// Images
-import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
-
+// import moment from 'moment';
 export default function Home() {
   return (
-    <div className="overflow-y-scroll h-[100vh] mb-14">
+    <div className="">
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
         <Link className="flex items-center" to={"/"}>
           <img src={HomeImg} alt="Home Img" width="16" height="16" />
@@ -19,7 +18,7 @@ export default function Home() {
           </h2>
         </Link>
       </div>
-      <div className="pt-6 pb-8 px-homeContentPadding ">
+      <div className="pt-6 pb-8 px-homeContentPadding overflow-scroll h-[100vh] ">
         <div className="mb-4">
           <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">
             Заказы
@@ -61,16 +60,10 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <button
-                BType="add bg-filterBg"
-                className="add bg-filterBg"
-                type="button"
-              >
-                Добавить
-              </button>
             </div>
           </div>
         </div>
+
         <ProductOrder />
       </div>
     </div>

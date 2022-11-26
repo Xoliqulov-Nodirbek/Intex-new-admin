@@ -2,8 +2,7 @@ import React from "react";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
-import TableRow2 from "../../components/TableRow/TableRow2";
-import OrderPage from "./OrderPage";
+import TableRow2 from "../../components/TableRow/orderTable";
 import axios from "axios";
 
 const env = process.env.REACT_APP_ALL_API;
@@ -15,6 +14,7 @@ export default function ProductOrder() {
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [totalPage, setTotalpage] = React.useState(0);
+  const [refresh, setRefresh] = React.useState(false);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
 
@@ -38,11 +38,11 @@ export default function ProductOrder() {
 
         setTotalpage(res.data?.total_count.count);
       });
-  }, [limit, page, token]);
+  }, [limit, page, token, refresh]);
 
   return (
     <>
-      <div className="bg-white border-b rounded-xl mb-[100px]">
+      <div className="bg-white border-b rounded-xl mb-[100px] z-30">
         <div className="flex py-3 px-4 items-center">
           <input
             className="mr-3 w-4 h-4"
@@ -57,18 +57,23 @@ export default function ProductOrder() {
             <thead className="bg-[#f2f2f2]">
               <TableRow2 styles="py-[13px]">
                 <TableHeader styles="w-11 pr-3 justify-center">
-                  <input className="w-4 h-4" type="checkbox" />
+                  <input
+                    className="w-4 h-4"
+                    type="checkbox"
+                    readOnly
+                    checked={false}
+                  />
                 </TableHeader>
-                <TableHeader styles="w-[66px]" sortIcon={true}>
+                <TableHeader styles="w-[80px]" sortIcon={true}>
                   ID
                 </TableHeader>
-                <TableHeader styles="w-[132px]" sortIcon={true}>
+                <TableHeader styles="w-[148px]" sortIcon={true}>
                   Номер заказа
                 </TableHeader>
-                <TableHeader styles="w-[132px]" sortIcon={true}>
+                <TableHeader styles="w-[148px]" sortIcon={true}>
                   Имя клиента
                 </TableHeader>
-                <TableHeader styles="w-[162px]" sortIcon={true}>
+                <TableHeader styles="w-[178px]" sortIcon={true}>
                   Номер телефона
                 </TableHeader>
                 <TableHeader styles="w-[254px]">Адрес</TableHeader>
@@ -91,6 +96,7 @@ export default function ProductOrder() {
                     <TableRow2
                       styles="py-1.5"
                       data={item}
+                      refresh={() => setRefresh(!refresh)}
                       key={item.id}
                       isChecked={isChecked}
                       handleChanges={handleChange}
@@ -137,7 +143,6 @@ export default function ProductOrder() {
           </div>
         </div>
       </div>
-      <OrderPage data={data.result} />
     </>
   );
 }

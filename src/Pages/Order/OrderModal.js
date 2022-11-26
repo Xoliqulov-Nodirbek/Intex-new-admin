@@ -1,41 +1,40 @@
-// import axios from "axios";
+import axios from "axios";
 import CloseSvg from "../../Assets/Images/NavbarImgs/close.svg";
 import uzbFlag from "../../Assets/Images/HeaderImgs/uzb-flag.svg";
 import addressLogo from "../../Assets/Images/NavbarImgs/addresLogo.svg";
 import { useState } from "react";
-import axios from "axios";
+import Calendar from "../../Assets/Images/NavbarImgs/date.svg";
 
-const env = process.env.REACT_APP_ALL_API;
+const env = process.env.REACT_APP_ALL_API
 
-function OrderPage({ isVisible, onClose, datas }) {
-  const [editData, setEditData] = useState({});
+function OrderModal({ isShown, onClosed, items, refreshed }) {
+  // eslint-disable-next-line no-unused-vars
+  const [updateOrder, setUpdateOrder] = useState({});
 
+  if (!isShown) return null;
   const token = JSON.parse(window.localStorage.getItem("token"));
 
-  const submitData = (e) => {
-    e.preventDefault();
+  console.log(token);
 
+  const handleUpdate = (e) => {
     axios
       .patch(
         `${env}orders/update`,
         {
-          id: editData.id,
+          id: items.id,
           order: {
-            name: editData.name,
-            phone: editData.phone,
-            address: editData.address,
-            location: null,
-            order_number: editData.order_number,
-            status_id: null,
-          },
-          bascet: [
-            {
-              count: editData.count,
-              product_id: 0,
-              order_id: 0,
+            name: updateOrder.name ? updateOrder.name : items.name,
+            phone: updateOrder.phone ? updateOrder.phone : items.phone,
+            address: updateOrder.address ? updateOrder.address : items.address,
+            location: {
+              x: 49.9,
+              y: 62.2,
             },
-          ],
-          bascet_id: 1,
+            order_number: updateOrder.order_number
+              ? updateOrder.order_number
+              : items.order_number,
+            status_id: 3,
+          },
         },
         {
           headers: {
@@ -43,66 +42,77 @@ function OrderPage({ isVisible, onClose, datas }) {
           },
         }
       )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(() => {
+        console.log("Submitted");
+        refreshed();
+      })
+      .catch(() => {
+        console.log("Internal error");
+      });
+    e.preventDefault();
+    onClosed();
   };
 
-  console.log(editData);
-  if (!isVisible) return null;
+  const handleClose = (e) => {
+    e.preventDefault();
+    onClosed();
+  };
 
   const handleClick = (e) => {
-    if (e.target.id === "wrapper") onClose();
+    if (e.target.id === "wrapper") onClosed();
   };
-
-  // const date = new Date(datas.created_at);
 
   return (
     <div
       onClick={handleClick}
       id="wrapper"
-      className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center overflow-y-scroll h-[100vh] z-50 "
     >
-      <div className=" bg-white rounded-xl w-orderModal z-50 mt-10">
-        <form onSubmit={submitData} className="flex flex-col overflow-y-scroll h-[100vh]">
+      <div className=" bg-white rounded-xl w-orderModal z-50">
+        <form className=" flex flex-col">
           <div className="flex flex-row pt-7 pb-6 px-6 items-center justify-between">
             <h1 className="font-bold text-2xl	text-addProductColor">Изменить</h1>
-            <img onClick={onClose} src={CloseSvg} alt="x" />
+            <img onClick={handleClose} src={CloseSvg} alt="x" />
           </div>
 
           <div className=" flex flex-wrap  px-6 justify-between">
-            <label className="relative">
+            <div className="relative">
               <p className="text-base font-medium mb-3">Номер заказа</p>
               <input
+                defaultValue={items.order_number}
+                onChange={(e) =>
+                  setUpdateOrder({
+                    ...updateOrder,
+                    order_number: e.target.value,
+                  })
+                }
                 type="number"
+                name="orders"
+                id="orders"
                 className="bg-white w-submitBtnsWidth outline-0 h-12 rounded-lg border border-solid  border-borderColor text-addProductColor p-4"
                 minLength="3"
                 maxLength="25"
-                value={datas.order_number}
-                onChange={(e) =>
-                  setEditData({
-                    ...datas,
-                    order_number: e.target.value.trim(),
-                  })
-                }
               />
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium  mb-3">Имя</p>
               <input
+                defaultValue={items.name}
+                onChange={(e) =>
+                  setUpdateOrder({
+                    ...updateOrder,
+                    name: e.target.value,
+                  })
+                }
                 type="text"
+                name="name"
+                id="name"
                 className="bg-white w-submitBtnsWidth outline-0 h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4"
                 minLength="3"
                 maxLength="25"
-                value={datas.name}
-                onChange={(e) =>
-                  setEditData({
-                    ...datas,
-                    name: e.target.value.trim(),
-                  })
-                }
               />
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Номер телефона</p>
               <div className="bg-white w-submitBtnsWidth flex items-center h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
                 <img
@@ -114,34 +124,40 @@ function OrderPage({ isVisible, onClose, datas }) {
                 />
                 <span className="text-base inline text-black ml-1">+998</span>
                 <input
-                  type="number"
-                  className=" outline-none w-full ml-1 h-full p-2"
-                  value={datas.phone}
+                  defaultValue={items.phone}
                   onChange={(e) =>
-                    setEditData({
-                      ...datas,
-                      phone: e.target.value.trim(),
+                    setUpdateOrder({
+                      ...updateOrder,
+                      phone: e.target.value,
                     })
                   }
+                  type="number"
+                  name="number"
+                  id="number"
+                  placeholder="(90) 123 45 67"
+                  className=" outline-none w-full sm:ml-4 h-full p-2 "
                 />
               </div>
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Адрес</p>
               <div className="bg-white w-submitBtnsWidth flex items-center justify-between h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
                 <input
+                  defaultValue={items.address}
+                  onChange={(e) =>
+                    setUpdateOrder({
+                      ...updateOrder,
+                      address: e.target.value,
+                    })
+                  }
                   type="text"
+                  name="address"
+                  id="address"
                   className="outline-0"
                   minLength="3"
                   maxLength="25"
-                  value={datas.address}
-                  onChange={(e) =>
-                    setEditData({
-                      ...datas,
-                      address: e.target.value.trim(),
-                    })
-                  }
                 />
+
                 <img
                   src={addressLogo}
                   className="w-4 h-5"
@@ -150,65 +166,55 @@ function OrderPage({ isVisible, onClose, datas }) {
                   alt="site_logo"
                 />
               </div>
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium  mb-3 mt-8">
                 Кол-во продуктов
               </p>
               <input
+                value={items.count}
                 type="text"
+                name="numberproduct"
+                id="numberproduct"
                 className="bg-white w-submitBtnsWidth outline-0 h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4"
                 minLength="1"
                 maxLength="10"
-                value={datas.count}
-                onChange={(e) =>
-                  setEditData({
-                    ...datas,
-                    count: e.target.value.trim(),
-                  })
-                }
               />
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Обшая цена</p>
               <div className="bg-white w-submitBtnsWidth flex items-center justify-between h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
                 <input
+                  value={items.summa}
                   type="text"
+                  name="sumproduct"
+                  id="sumproduct"
                   className="outline-0"
                   minLength="3"
                   maxLength="25"
-                  value={datas.summa}
-                  onChange={(e) =>
-                    setEditData({
-                      ...datas,
-                      summa: e.target.value.trim(),
-                    })
-                  }
+                  placeholder="1 500 000"
                 />
                 <p className="text-base font-normal">Сум</p>
               </div>
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium text-addProductColor mb-3 mt-8">
                 Цена со скидкой
               </p>
               <div className="bg-white w-submitBtnsWidth flex items-center justify-between h-12 rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
                 <input
+                  value={items.discount_summa}
                   type="text"
+                  name="discount"
+                  id="discount"
                   className="outline-0"
                   minLength="3"
-                  value={datas.discount_summa}
-                  onChange={(e) =>
-                    setEditData({
-                      ...datas,
-                      discount_summa: e.target.value.trim(),
-                    })
-                  }
+                  maxLength="25"
                 />
                 <p className="text-base font-normal">Сум</p>
               </div>
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Статус</p>
               <select
                 defaultValue={"check"}
@@ -222,35 +228,29 @@ function OrderPage({ isVisible, onClose, datas }) {
                   В ожидании
                 </option>
               </select>
-            </label>
-            <label className="relative">
+            </div>
+            <div className="relative">
               <p className="text-base font-medium  mb-3 mt-8">Время заказа</p>
-              <input
-                type="text"
-                className="bg-white w-submitBtnsWidth  h-12 outline-0 rounded-lg border border-solid  border-borderColor text-addProductColor  p-4"
-                minLength="3"
-                maxLength="25"
-                value={datas.created_at}
-                onChange={(e) =>
-                  setEditData({
-                    ...datas,
-                    created_at: e.target.value.trim(),
-                  })
-                }
-              />
-            </label>
+              <div className="flex flex-row justify-between items-center bg-white w-submitBtnsWidth  h-12 outline-0 rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
+                <p className="">
+                  {items.created_at.slice(0, 10)}{" "}
+                  <span className="pl-2">{items.created_at.slice(11, 16)}</span>
+                </p>
+                <img src={Calendar} alt="logo" className="h-6 w-6" />
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-row px-6 pt-8 pb-7 justify-between">
             <button
-              onClick={onClose}
-              className="py-3 px-[120px] text-[#2B3D91] font-medium border border-solid bg-languageBg rounded-lg "
+              onClick={handleClose}
+              className="py-3 px-[121px] text-[#2B3D91] font-medium border border-solid bg-languageBg rounded-lg "
             >
               Отменить
             </button>
             <button
-              type="submit"
-              className="py-3 px-[120px] text-white font-medium border border-solid bg-loginBtn rounded-lg "
+              onClick={handleUpdate}
+              className="py-3 px-[121px] text-white font-medium border border-solid bg-loginBtn rounded-lg "
             >
               Сохранить
             </button>
@@ -261,4 +261,4 @@ function OrderPage({ isVisible, onClose, datas }) {
   );
 }
 
-export default OrderPage;
+export default OrderModal;
