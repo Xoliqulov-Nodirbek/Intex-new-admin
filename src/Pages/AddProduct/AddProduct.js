@@ -8,28 +8,6 @@ export default function AddProduct() {
   const [info, setInfo] = useState(false);
   const [img, setImg] = useState(false);
   const [atr, setAtr] = useState(true);
-  const [result, setResult] = useState(false);
-  let formData = new FormData();
-  const [formInfo, setFormInfo] = useState([]);
-  if (result) {
-    console.log(formInfo);
-    formData.append("name_uz", "");
-    formData.append("name_ru", "");
-    formData.append("name_en", "");
-    formData.append("discount_price");
-    formData.append("price");
-    formData.append("count");
-    formData.append("about_uz", "");
-    formData.append("about_ru", "");
-    formData.append("about_en", "");
-    formData.append("image", []);
-    formData.append("category_id");
-    formData.append("country_id");
-    formData.append("country_id");
-    formData.append("status_id");
-    formData.append("manufacturer_id");
-    formData.append("attribute_id");
-  }
 
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
@@ -58,39 +36,9 @@ export default function AddProduct() {
           </li>
         </ul>
         <div>
-          {info ? (
-            <Information
-              setInfoForm={setFormInfo}
-              submitProduct={setInfo}
-              imagesPage={setImg}
-              atributPage={setAtr}
-            />
-          ) : (
-            ""
-          )}
-          {img ? (
-            <ProductImgs
-              imgInfo={formInfo}
-              setImgInfo={setFormInfo}
-              atrPage={setAtr}
-              imagePage={setImg}
-              productPage={setInfo}
-            />
-          ) : (
-            ""
-          )}
-          {atr ? (
-            <AtributPage
-              resultSubmit={setResult}
-              atributPage={setAtr}
-              imaPage={setImg}
-              productBasic={setInfo}
-              atributInfo={formInfo}
-              setAtributInfo={setFormInfo}
-            />
-          ) : (
-            ""
-          )}
+          {info ? <Information /> : ""}
+          {img ? <ProductImgs /> : ""}
+          {atr ? <AtributPage /> : ""}
         </div>
       </div>
     </div>
