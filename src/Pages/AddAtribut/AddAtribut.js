@@ -1,76 +1,76 @@
-import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import toast, { Toaster } from 'react-hot-toast'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
-import FormikControl from '../../BaseComponents/FormInput/FormikControl'
-import MButton from '../../BaseComponents/MButton/MButton'
-import MLabel from '../../BaseComponents/MLabel/MLabel'
-import DropDown from '../../BaseComponents/DropDown/DropDown'
-import MFilter from '../../BaseComponents/MFilter/MFilter'
+import axios from "axios";
+import * as Yup from "yup";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { Formik, Form } from "formik";
+import FormikControl from "../../BaseComponents/FormInput/FormikControl";
+import DropDown from "../../BaseComponents/DropDown/DropDown";
+import MButton from "../../BaseComponents/MButton/MButton";
+
 import {
   TagsInputEng,
   TagsInputRu,
   TagsInputUz,
-} from '../../BaseComponents/TagsInput/TagsInput'
+} from "../../BaseComponents/TagsInput/TagsInput";
 // --- Images
-import HomeImg from '../../Assets/Images/HeaderImgs/HomeImg.svg'
-import DropImg from '../../Assets/Images/HomeContentImg/Drop.svg'
-import { useNavigate } from 'react-router-dom'
-const env = process.env.REACT_APP_ALL_API
+import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
+import DropImg from "../../Assets/Images/HomeContentImg/Drop.svg";
+import { useNavigate } from "react-router-dom";
+const env = process.env.REACT_APP_ALL_API;
 
 export default function AddAtribut() {
-  const [navBarDrop, setNavBarDrop] = useState(false)
-  const [navBarDrop1, setNavBarDrop1] = useState(false)
-  const [navBarDrop2, setNavBarDrop2] = useState(false)
-  const [info, setInfo] = useState([])
-  const [tags_ru, setTags_ru] = useState([])
-  const [tags_uz, setTags_uz] = useState([])
-  const [tags_en, setTags_en] = useState([])
-  const [state, setState] = useState(false)
-  const navigate = useNavigate()
+  const [navBarDrop, setNavBarDrop] = useState(false);
+  const [navBarDrop1, setNavBarDrop1] = useState(false);
+  const [navBarDrop2, setNavBarDrop2] = useState(false);
+  const [info, setInfo] = useState([]);
+  const [tags_ru, setTags_ru] = useState([]);
+  const [tags_uz, setTags_uz] = useState([]);
+  const [tags_en, setTags_en] = useState([]);
 
-  const token = JSON.parse(window.localStorage.getItem('token'))
+  const navigate = useNavigate();
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   const dropdownOptions = [
-    { key: 'Выберите тип ввода', value: '' },
-    { key: 'dropdown', value: 'dropdown' },
-    { key: 'radio button', value: 'radio button' },
-    { key: 'checkbox', value: 'checkbox' },
-  ]
+    { key: "Выберите тип ввода", value: "" },
+    { key: "dropdown", value: "dropdown" },
+    { key: "radio button", value: "radio button" },
+    { key: "checkbox", value: "checkbox" },
+  ];
 
   const initialValues = {
-    name_ru: '',
-    selectOptions: '',
-    name_eng: '',
-    name_uz: '',
-  }
+    name_ru: "",
+    selectOptions: "",
+    name_eng: "",
+    name_uz: "",
+  };
 
   const validationSchema = Yup.object({
-    name_ru: Yup.string().required('Required'),
-    selectOptions: Yup.string().required('Required'),
-    name_eng: Yup.string().required('Required'),
-    name_uz: Yup.string().required('Required'),
-  })
+    name_ru: Yup.string().required("Required"),
+    selectOptions: Yup.string().required("Required"),
+    name_eng: Yup.string().required("Required"),
+    name_uz: Yup.string().required("Required"),
+  });
+
   const onSubmit = (values, { resetForm }) => {
-    let arr = []
+    let arr = [];
     arr.push({
       attribute_ru: values.name_ru,
       attribute_uz: values.name_uz,
       attribute_en: values.name_eng,
       view: values.selectOptions,
       attribute_id: null,
-    })
+    });
     if (tags_en.length === 0 || tags_ru.length === 0 || tags_uz.length === 0) {
-      return
+      return;
     }
 
     if (
       tags_en.length !== tags_ru.length ||
       tags_en.length !== tags_uz.length
     ) {
-      return
+      return;
     }
     if (
       tags_en.length === tags_ru.length &&
@@ -83,11 +83,11 @@ export default function AddAtribut() {
           attribute_en: tags_en[i],
           view: values.selectOptions,
           attribute_id: null,
-        })
+        });
       }
-      setInfo([arr])
+      setInfo([arr]);
     } else {
-      toast.error(' Network Error! ')
+      toast.error(" Network Error! ");
     }
 
     axios
@@ -98,32 +98,33 @@ export default function AddAtribut() {
       })
       .then((res) => {
         if (res.status === 201) {
-          toast.success('Successfully attribute reated!')
+          toast.success("Successfully attribute reated!");
           setTimeout(() => {
-            navigate('/atribut')
-          }, 1000)
-          console.log(res)
+            navigate("/atribut");
+          }, 1000);
+          console.log(res);
         }
       })
       .catch((err) => {
-        toast.error('Internal Error')
+        toast.error("Internal Error");
         setTimeout(() => {
-          navigate('/atribut')
-        }, 1000)
-      })
+          navigate("/atribut");
+        }, 1000);
+      });
 
-    resetForm()
-    setTags_en(tags_en.length === 0)
-    setTags_uz(tags_uz.length === 0)
-    setTags_ru(tags_ru.length === 0)
-  }
+    resetForm();
+    setTags_en(tags_en.length === 0);
+    setTags_uz(tags_uz.length === 0);
+    setTags_ru(tags_ru.length === 0);
+  };
+  
   // let type = 'click'
-  useEffect(() => {}, [info, setInfo])
+  useEffect(() => {}, [info, setInfo]);
 
   return (
     <>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
-        <Link className="flex items-center" to={'/'}>
+        <Link className="flex items-center" to={"/"}>
           <img src={HomeImg} alt="Home Img" width="16" height="16" />
         </Link>
         <span className="ml-2.5 text-navSubColor ">/</span>
@@ -160,13 +161,13 @@ export default function AddAtribut() {
                   hdrop="9"
                   downClick={() => setNavBarDrop(!navBarDrop)}
                   imgURL={DropImg}
-                  rotateDelete={navBarDrop ? '-rotate-180' : '-rotate-0'}
+                  rotateDelete={navBarDrop ? "-rotate-180" : "-rotate-0"}
                 >
                   <div
                     className={
                       navBarDrop
-                        ? 'h-auto overflow-auto'
-                        : 'h-0 overflow-hidden'
+                        ? "h-auto overflow-auto"
+                        : "h-0 overflow-hidden"
                     }
                   >
                     <div className="flex mb-6">
@@ -201,13 +202,13 @@ export default function AddAtribut() {
                     setNavBarDrop1(!navBarDrop1) && setNavBarDrop(false)
                   }
                   imgURL={DropImg}
-                  rotateDelete={navBarDrop1 ? '-rotate-180' : '-rotate-0'}
+                  rotateDelete={navBarDrop1 ? "-rotate-180" : "-rotate-0"}
                 >
                   <div
                     className={
                       navBarDrop1
-                        ? 'h-auto overflow-auto'
-                        : 'h-0 overflow-hidden'
+                        ? "h-auto overflow-auto"
+                        : "h-0 overflow-hidden"
                     }
                   >
                     <div className="flex mb-6">
@@ -240,13 +241,13 @@ export default function AddAtribut() {
                   hdrop="9"
                   downClick={() => setNavBarDrop2(!navBarDrop2)}
                   imgURL={DropImg}
-                  rotateDelete={navBarDrop2 ? '-rotate-180' : '-rotate-0'}
+                  rotateDelete={navBarDrop2 ? "-rotate-180" : "-rotate-0"}
                 >
                   <div
                     className={
                       navBarDrop2
-                        ? 'h-auto overflow-auto'
-                        : 'h-0 overflow-hidden'
+                        ? "h-auto overflow-auto"
+                        : "h-0 overflow-hidden"
                     }
                   >
                     <div className="flex mb-6">
@@ -287,5 +288,5 @@ export default function AddAtribut() {
         </div>
       </div>
     </>
-  )
+  );
 }

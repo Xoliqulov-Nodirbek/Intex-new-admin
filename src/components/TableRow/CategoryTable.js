@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-import { Modal } from "../Modal/Modal";
-import TableData from "../TableData/TableData";
 import axios from "axios";
+import React, { useState } from "react";
+import TableData from "../TableData/TableData";
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
-import Close from "../../Assets/Images/SettingsImg/close.svg";
-import Flag from "../../Assets/Images/SettingsImg/flag.svg";
-import MFilter from "../../BaseComponents/MFilter/MFilter";
-import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
-import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
+import MFilter from "../../BaseComponents/MFilter/MFilter";
 
 const env = process.env.REACT_APP_ALL_API;
 
@@ -21,9 +16,7 @@ export default function TableCat({
   refresh,
 }) {
   const [checker, setChecker] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [date, setDate] = useState("");
 
   const token = JSON.parse(window.localStorage.getItem("token"));
 
@@ -39,6 +32,7 @@ export default function TableCat({
     }
   };
 
+  // --- Delete Row
   const handlDelteUnik = (id) => {
     axios
       .delete(`${env}categories/deleteCategory/${id}`, {
@@ -49,6 +43,8 @@ export default function TableCat({
       .then((res) => refresh())
       .catch((err) => console.log(err));
   };
+
+  // --- Close
   const close = (
     <svg
       className="flex items-center justify-center object-fill"
@@ -62,6 +58,7 @@ export default function TableCat({
       <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
     </svg>
   );
+
   return (
     <>
       <tr className={`flex items-center border-b ${styles}`}>

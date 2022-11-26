@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import TableData from "../TableData/TableData";
 import MLabel from "../../BaseComponents/MLabel/MLabel";
 import ProductModal from "../ProductModal/ProductModal";
-
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 

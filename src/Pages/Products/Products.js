@@ -24,6 +24,7 @@ const Products = () => {
     }
   };
 
+  // --- Get Product
   React.useEffect(() => {
     setLoader(true);
     axios
