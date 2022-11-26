@@ -17,7 +17,7 @@ import {
 // --- Images
 import HomeImg from '../../Assets/Images/HeaderImgs/HomeImg.svg'
 import DropImg from '../../Assets/Images/HomeContentImg/Drop.svg'
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from 'react-router-dom'
 const env = process.env.REACT_APP_ALL_API
 
 export default function AddAtribut() {
@@ -29,8 +29,7 @@ export default function AddAtribut() {
   const [tags_uz, setTags_uz] = useState([])
   const [tags_en, setTags_en] = useState([])
   const [state, setState] = useState(false)
-  const navigate = useNavigate();
-
+  const navigate = useNavigate()
 
   const token = JSON.parse(window.localStorage.getItem('token'))
 
@@ -55,7 +54,7 @@ export default function AddAtribut() {
     name_uz: Yup.string().required('Required'),
   })
   const onSubmit = (values, { resetForm }) => {
-    let arr = [] 
+    let arr = []
     arr.push({
       attribute_ru: values.name_ru,
       attribute_uz: values.name_uz,
@@ -71,7 +70,7 @@ export default function AddAtribut() {
       tags_en.length !== tags_ru.length ||
       tags_en.length !== tags_uz.length
     ) {
-      return  
+      return
     }
     if (
       tags_en.length === tags_ru.length &&
@@ -100,11 +99,16 @@ export default function AddAtribut() {
       .then((res) => {
         if (res.status === 201) {
           toast.success('Successfully attribute reated!')
-          navigate("/atribut")
+          navigate('/atribut')
           console.log(res)
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        toast.error('Internal Error')
+        setTimeout(() => {
+          navigate('/atribut')
+        }, 1000)
+      })
 
     resetForm()
     setTags_en(tags_en.length === 0)
@@ -112,8 +116,7 @@ export default function AddAtribut() {
     setTags_ru(tags_ru.length === 0)
   }
   // let type = 'click'
-  useEffect(() => {
-  }, [info, setInfo])
+  useEffect(() => {}, [info, setInfo])
 
   return (
     <>

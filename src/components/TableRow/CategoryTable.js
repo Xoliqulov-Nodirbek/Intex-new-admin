@@ -1,19 +1,34 @@
 import React, { useState } from "react";
 import { Modal } from "../Modal/Modal";
 import TableData from "../TableData/TableData";
+import axios from "axios";
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Close from "../../Assets/Images/SettingsImg/close.svg";
 import Flag from "../../Assets/Images/SettingsImg/flag.svg";
-import ProductModal from "../ProductModal/ProductModal";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
+import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
+import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
+import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
-export default function TableCat({ children, styles, data, isChecked }) {
+const env = process.env.REACT_APP_ALL_API;
+
+export default function TableCat({
+  children,
+  styles,
+  data,
+  isChecked,
+  refresh,
+}) {
   const [checker, setChecker] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [date, setDate] = useState("");
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
   const categoryResult = data?.ru;
+
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true);
@@ -23,10 +38,30 @@ export default function TableCat({ children, styles, data, isChecked }) {
       e.target.checked = false;
     }
   };
-  const deleteAddedRow = (evt) => {
-    console.log("Salom");
-  };
 
+  const handlDelteUnik = (id) => {
+    axios
+      .delete(`${env}categories/deleteCategory/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => refresh())
+      .catch((err) => console.log(err));
+  };
+  const close = (
+    <svg
+      className="flex items-center justify-center object-fill"
+      width={20}
+      height={20}
+      viewPort="0 0 12 12"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line x1="1" y1="15" x2="15" y2="1" stroke="black" strokeWidth="2" />
+      <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
+    </svg>
+  );
   return (
     <>
       <tr className={`flex items-center border-b ${styles}`}>
@@ -74,101 +109,33 @@ export default function TableCat({ children, styles, data, isChecked }) {
                 <img src={ThreeDotsSvg} alt="three dots icon" />
               </button>
               {isClicked ? (
-                <ProductModal
-                  handlDelteUnik={deleteAddedRow}
-                  delEdit={"hidden"}
-                />
-              ) : (
-                ""
-              )}
+                <ul className="bg-white w-[160px] absolute border rounded-lg shadow-lg space-y-2 z-40 -right-10">
+                  <div className="relative">
+                    <button
+                      onClick={() => handlDelteUnik(data.id)}
+                      type="button"
+                      className="flex items-center relative px-2 py-[10px]"
+                    >
+                      <img
+                        className="mr-2"
+                        src={Trash}
+                        alt="just a icon to edit"
+                      />
+                      <span className="block">Удалить</span>
+                    </button>
+                    <span
+                      onClick={() => setIsClicked(false)}
+                      className="ml-6 absolute top-[6px] cursor-pointer right-0 px-3 py-2"
+                    >
+                      {close}
+                    </span>
+                  </div>
+                </ul>
+              ) : null}
             </TableData>
           </>
         )}
       </tr>
-      {/* --- Modal --- */}
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-        <div className="w-730">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl text-addProductColor font-bold">
-              Изменить информацию
-            </h2>
-            <button onClick={() => setShowModal(false)} className="rounded-md">
-              <img src={Close} width={25} height={25} alt={"close_image"} />
-            </button>
-          </div>
-          <div className="mt-6">
-            <form>
-              <div className="grid grid-cols-2 gap-5 mt-5">
-                <label className="flex flex-col text-base text-addProductColor font-medium">
-                  Имя
-                  <input
-                    className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-3"
-                    type="text"
-                    // value={address.address_ru}
-                    // onChange={(e) =>
-                    //   setAddress({
-                    //     ...address,
-                    //     address_ru: e.target.value,
-                    //   })
-                    // }
-                  />
-                </label>
-                <label className="relative text-base font-medium text-addProductColor">
-                  Номер телефона
-                  <div className="bg-white w-submitBtnsWidth flex items-center h-11 rounded-lg border border-solid  border-borderColor text-addProductColor p-4 mt-2">
-                    <img
-                      src={Flag}
-                      className="w-6 h-4"
-                      width={22}
-                      height={15}
-                      alt="site_logo"
-                    />
-                    <input
-                      type="text"
-                      placeholder="(90) 123 45 67"
-                      className="font-normal outline-none w-full ml-1 h-full p-2"
-                      // value={address.phone}
-                      // onChange={(e) =>
-                      //   setAddress({
-                      //     ...address,
-                      //     phone: e.target.value,
-                      //   })
-                      // }
-                    />
-                  </div>
-                </label>
-              </div>
-              <div className="grid grid-cols-2 gap-5 mt-5">
-                <label className="flex flex-col text-base text-addProductColor font-medium">
-                  Время заявки
-                  <input
-                    className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-3"
-                    name="address"
-                    type="date"
-                    // value={address.work_ru}
-                    onChange={(e) => setDate(e.target.value.trim())}
-                  />
-                </label>
-              </div>
-              <div className="flex justify-between mt-6">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="bg-[#F2F2F2] w-80 py-3 rounded-xl text-russuanColor font-medium text-lg"
-                >
-                  Отменить
-                </button>
-                <button
-                  type="submit"
-                  className="bg-russuanColor w-80 py-3 rounded-xl text-[#fff] font-medium text-lg"
-                >
-                  {/* {subLoading ? loaderButton : "Сохранить"} */}Сохранить
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </Modal>
     </>
   );
 }
