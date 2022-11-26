@@ -99,7 +99,9 @@ export default function AddAtribut() {
       .then((res) => {
         if (res.status === 201) {
           toast.success('Successfully attribute reated!')
-          navigate('/atribut')
+          setTimeout(() => {
+            navigate('/atribut')
+          }, 1000)
           console.log(res)
         }
       })
