@@ -225,7 +225,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
     setInfoForm([
       {
         ru: {
-          ruNamePro: values.ruName,
+          name_ru: values.ruName,
           ruWork: values.ruProiz,
           ruTexrArea: values.ruText,
           ruConutry: values.usCountry,
@@ -233,7 +233,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
           ruPrice: values.ruPriceNum,
         },
         us: {
-          usNamePro: values.usName,
+          name_en: values.usName,
           usWork: values.usProiz,
           usTexrArea: values.usText,
           usConutry: values.usCountry,
@@ -241,7 +241,7 @@ function Infotmation({ submitProduct, imagesPage, atributPage, setInfoForm }) {
           usPrice: values.usPriceNum,
         },
         uz: {
-          uzNamePro: values.uzName,
+          name_uz: values.uzName,
           uzWork: values.uzProiz,
           uzTexrArea: values.uzText,
           uzConutry: values.uzCountry,
