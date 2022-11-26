@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import OrderPage from "../../Pages/Order/OrderPage";
-
 // Images
 import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
 import Dublicate from "../../Assets/Images/ProductsImgs/duplicate.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
-export default function ProductModal({ dataInfo, delEdit, handlDelteUnik }) {
-  const [showModal, setShowMoadal] = useState(false);
+export default function ProductModal() {
   return (
     <>
       <ul className="flex flex-col gap-y-2.5 absolute bg-white p-3 w-[160px] top-9 -right-8 z-50 border rounded-lg shadow-lg">
         <button type="button relative" className="flex">
           <img className="mr-2" src={Edit} alt="just a icon to edit" />
           <span>Изменить</span>
-        </li>
-        <li className="flex">
+        </button>
+        <button className="flex">
           <img
             className="mr-2"
             src={Dublicate}
@@ -23,20 +19,12 @@ export default function ProductModal({ dataInfo, delEdit, handlDelteUnik }) {
           />
           <span>Дублировать</span>
         </button>
-        <button type="button" className="flex">
-        </li>
-        <li onClick={handlDelteUnik} className="flex">
+        <button type="button" className="flex"></button>
+        <button className="flex">
           <img className="mr-2" src={Trash} alt="just a icon to edit" />
           <span>Удалить</span>
-        </li>
+        </button>
       </ul>
-      <OrderPage
-        isVisible={showModal}
-        onClose={() => {
-          setShowMoadal(false);
-        }}
-        datas={dataInfo}
-      />
     </>
   );
 }
