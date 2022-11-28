@@ -53,6 +53,7 @@ module.exports = {
         resetBtn: "#F2F2F2",
         submitBtnBg: "#2B3D91",
         modalBg: " rgba(0, 0, 0, 0.15)",
+        bgUpload: "#FBFBFC",
       },
       colors: {
         addProductColor: "#24283A",
@@ -91,6 +92,7 @@ module.exports = {
       boxShadow: {
         editProduct: "0px 12px 23px rgba(150, 150, 150, 0.1)",
         tableModal: "0px -1px 0px #EDF2F7",
+        shadowAddImgs: " 0px 12px 24px rgba(104, 104, 104, 0.1)",
       },
     },
   },
