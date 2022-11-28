@@ -593,6 +593,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
               onClick={() => setShowModal(false)}
               className="bg-[#F2F2F2] w-72 py-3 rounded-xl text-russuanColor font-medium text-lg"
             >
+              
               Отменить
             </button>
             <button
