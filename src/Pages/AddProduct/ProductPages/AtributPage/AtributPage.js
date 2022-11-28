@@ -1,47 +1,133 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import DropDown from '../../../../BaseComponents/DropDown/DropDown'
 import DropImg from '../../../../Assets/Images/HomeContentImg/Drop.svg'
 import * as Yup from 'yup'
 import { toast, Toaster } from 'react-hot-toast'
-import axios from 'axios'
+import axios, { Axios } from 'axios'
 import { FormikConsumer, useFormik } from 'formik'
 import MButton from '../../../../BaseComponents/MButton/MButton'
 import { AtributeRu } from '../../../../BaseComponents/TagsInput/AddAtribut'
+import MFilter from '../../../../BaseComponents/MFilter/MFilter'
+import { Modal } from '../../../../components/Modal/Modal'
+import Close from '../../../../Assets/Images/SettingsImg/close.svg'
 
-const initialValues = {
-  price: '',
-  salePrice: '',
-  type: '',
-  status: '',
-}
-
-const onSubmit = (values, { resetForm }) => {
-  console.log(values)
-  resetForm()
-}
-
-const validationSchema = Yup.object({
-  price: Yup.number().required('Price value is required'),
-  salePrice: Yup.number().required(
-    'Saleprice value is required',
-  ),
-  type: Yup.string().required('Type option is required'),
-  status: Yup.string().required('Status option is required'),
-})
-
-export default function AtributPage() {
+export default function AtributPage({ showModal, setShowModal }) {
+  const env = process.env.REACT_APP_ALL_API
   const [navBarDrop, setNavBarDrop] = useState(false)
   const [navBarDrop1, setNavBarDrop1] = useState(false)
   const [navBarDrop2, setNavBarDrop2] = useState(false)
-  const [Atribute_ru, setAtribute_ru] = useState([])
+  const [subLoading, setSubLoading] = useState(false)
+  const [data, setData] = useState([])
+const [categories, setCategories] = useState([])
+const [status, setStatus] = useState([])
 
+  const initialValues = {
+    price: '',
+    salePrice: '',
+    type: '',
+    type_eng: '',
+    type_uz: '',
+    status: '',
+    status_eng: '',
+    status_uz: '',
+  }
+  const onSubmit = (values, { resetForm }) => {
+    let arr = []
+    arr.push({
+      price: values.price,
+      salePrice: values.salePrice,
+      type: values.type,
+      type_eng: values.type_eng,
+      type_uz: values.type_uz,
+      status: values.status,
+      status_eng: values.status_eng,
+      status_uz: values.status_eng,
+     
+    })
+
+    resetForm()
+    // console.log(1111, arr)
+  }
+
+  const validationSchema = Yup.object({
+    price: Yup.number().required('Price value is required'),
+    salePrice: Yup.number().required('Saleprice value is required'),
+    type: Yup.string().required('Type option is required'),
+    type_eng: Yup.string().required('Type option is required'),
+    type_uz: Yup.string().required('Type option is required'),
+    status: Yup.string().required('Status option is required'),
+    status_eng: Yup.string().required('Status option is required'),
+    status_uz: Yup.string().required('Status option is required'),
+  })
+
+
+
+  const removeTags = () => {}
   const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
   })
+
+  const loaderButton = (
+    <svg
+      className="inline mr-2 w-6 h-6 text-text-white animate-spin dark:text-white fill-gray-400 dark:fill-gray-400"
+      viewBox="0 0 100 101"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+        fill="currentColor"
+      />
+      <path
+        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+        fill="currentFill"
+      />
+    </svg>
+  )
+  const selectOnce = useRef()
+  useEffect(() => {
+    axios
+      .get(`${env}attributes?page=0&limit=10`)
+      .then((res) => {
+        setData(res?.data.result)
+      })
+      .catch((err) => console.error(err))
+  }, [])
+
+  useEffect(() => {
+    axios
+      .get(`${env}categories/categories`)
+      .then((res) => {
+        setCategories(res?.data)
+      })
+      .catch((err) => console.error(err))
+  }, [])
+
+  useEffect(() => {
+    axios
+      .get(`${env}status-products/getAll`)
+      .then((res) => {
+        setStatus(res?.data)
+      })
+      .catch((err) => console.error(err))
+  }, [])
+
+
+
+  const [addedDate, setAddedDate] = useState([])
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    let result = data.find((e) => e.attribute_ru === selectOnce.current.value)
+    // setAddedDate(result);
+
+    setShowModal(false)
+    setAddedDate([...addedDate, result])
+  }
+  // console.log(addedDate)
   return (
-    <div>
+    <div className="pb-16">
       <form
         onSubmit={(e) => {
           formik.handleSubmit(e)
@@ -112,7 +198,6 @@ export default function AtributPage() {
                 ) : null}
                 <span className="absolute top-9 left-[295px]">Сум</span>
               </div>
-
               <div className="relative">
                 <label className="text-base flex flex-col">Тип продукта</label>
                 <select
@@ -125,8 +210,9 @@ export default function AtributPage() {
                   }
                   {...formik.getFieldProps('type')}
                 >
-                  <option>salom</option>
-                  <option>bor</option>
+               {categories.length && categories.map(el => (
+                <option key={el.id}>{el.category_ru}</option>
+               ))}
                 </select>
                 {formik.touched.type && formik.errors.type ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -135,8 +221,35 @@ export default function AtributPage() {
                 ) : null}
               </div>
             </div>
-            <AtributeRu Atribute_ru={Atribute_ru} setAtribute_ru={setAtribute_ru} /> 
-            <div className="relative">
+            {addedDate.length > 0 &&
+              addedDate.map((el) => {
+                return (
+                  <div key={el.id}>
+                    <label>{el.attribute_ru}</label>
+                    <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
+                      <ul className="flex flex-wrap gap-2  ">
+                        {el.ru &&
+                          el?.ru.map((item) => (
+                            <li key={Math.random}>
+                              <MFilter>
+                                {item}
+                                <span
+                                  className="ml-2 cursor-pointer"
+                                  onClick={() => removeTags()}
+                                >
+                                  X
+                                </span>
+                              </MFilter>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  </div>
+                )
+              })}
+
+            <div>
+              <div className="relative mt-5">
                 <label className="text-base flex flex-col">Статус</label>
                 <select
                   name="status"
@@ -147,10 +260,12 @@ export default function AtributPage() {
                       : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
                   }
                   {...formik.getFieldProps('status')}
-                >
-                  <option>Рекомендуем</option>
-                  <option>В ожидании</option>
-                  <option>В проссесе</option>
+                > 
+                  {
+                    status.length && status.map((el) => (
+                      <option key={el.id} id={el.id} value={el.id}>{el.status_ru}</option>
+                    ))
+                  }
                 </select>
                 {formik.touched.status && formik.errors.status ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -158,6 +273,7 @@ export default function AtributPage() {
                   </span>
                 ) : null}
               </div>
+            </div>
           </div>
         </DropDown>
         <DropDown
@@ -171,10 +287,130 @@ export default function AtributPage() {
         >
           <div
             className={
-              navBarDrop1 ? 'h-auto overflow-auto' : 'h-0 overflow-hidden'
+              navBarDrop1 ? 'h-auto overflow-auto pr-5' : 'h-0 overflow-hidden'
             }
           >
-            <h1>asdf</h1>
+            <div className="flex justify-between ">
+              <div className="relative">
+                <label className="text-base flex flex-col">Price</label>
+                <input
+                  type="number"
+                  name="price"
+                  id="price"
+                  placeholder="1 290 000"
+                  className={
+                    formik.touched.price && formik.errors.price
+                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
+                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                  }
+                  minLength="3"
+                  maxLength="25"
+                  {...formik.getFieldProps('price')}
+                />
+                {formik.touched.price && formik.errors.price ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.price}
+                  </span>
+                ) : null}
+                <span className="absolute top-9 left-[295px]">Sum</span>
+              </div>
+              <div className="relative">
+                <label className="text-base flex flex-col">Sale price</label>
+                <input
+                  type="number"
+                  name="salePrice"
+                  id="salePrice"
+                  placeholder="1 290 000"
+                  className={
+                    formik.touched.salePrice && formik.errors.salePrice
+                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
+                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                  }
+                  minLength="3"
+                  maxLength="25"
+                  {...formik.getFieldProps('salePrice')}
+                />
+                {formik.touched.salePrice && formik.errors.salePrice ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.salePrice}
+                  </span>
+                ) : null}
+                <span className="absolute top-9 left-[295px]">Sum</span>
+              </div>
+
+              <div className="relative">
+                <label className="text-base flex flex-col">Type product</label>
+                <select
+                  name="type_eng"
+                  id="type_eng"
+                  className={
+                    formik.touched.type_eng && formik.errors.type_eng
+                      ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
+                      : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                  }
+                  {...formik.getFieldProps('type_eng')}
+                >
+                  <option>Type</option>
+                  <option>First</option>
+                  <option>Second</option>
+                </select>
+                {formik.touched.type_eng && formik.errors.type_eng ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.type_eng}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+            {addedDate.length > 0 &&
+              addedDate.map((el) => {
+                return (
+                  <div key={el.id}>
+                    <label>{el.attribute_en}</label>
+                    <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
+                      <ul className="flex flex-wrap gap-2  ">
+                        {el.en &&
+                          el?.en.map((item) => (
+                            <li key={Math.random}>
+                              <MFilter>
+                                {item}
+                                <span
+                                  className="ml-2 cursor-pointer"
+                                  // onClick={() => removeTags()}
+                                >
+                                  X
+                                </span>
+                              </MFilter>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  </div>
+                )
+              })}
+
+            <div className="relative mt-5">
+              <label className="text-base flex flex-col">Status</label>
+              <select
+                onChange={() => console.log("Sa")}
+                name="status_eng"
+                id="status_eng"
+                className={
+                  formik.touched.status_eng && formik.errors.status_eng
+                    ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
+                    : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                }
+                {...formik.getFieldProps('status_eng')}
+              >
+                <option>Recommended</option>
+                <option>Pending</option>
+                <option>recommended</option>
+              </select>
+              {formik.touched.status_eng && formik.errors.status_eng ? (
+                <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                  {formik.errors.status_eng}
+                </span>
+              ) : null}
+            </div>
           </div>
         </DropDown>
         <DropDown
@@ -188,17 +424,184 @@ export default function AtributPage() {
         >
           <div
             className={
-              navBarDrop2 ? 'h-auto overflow-auto' : 'h-0 overflow-hidden'
+              navBarDrop2 ? 'h-auto overflow-auto pr-5' : 'h-0 overflow-hidden'
             }
           >
-            <h1>asdf</h1>
+            <div className="flex justify-between ">
+              <div className="relative">
+                <label className="text-base flex flex-col">Narx</label>
+                <input
+                  type="number"
+                  name="price"
+                  id="price"
+                  placeholder="1 290 000"
+                  className={
+                    formik.touched.price && formik.errors.price
+                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
+                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                  }
+                  minLength="3"
+                  maxLength="25"
+                  {...formik.getFieldProps('price')}
+                />
+                {formik.touched.price && formik.errors.price ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.price}
+                  </span>
+                ) : null}
+                <span className="absolute top-9 left-[295px]">So'm</span>
+              </div>
+              <div className="relative">
+                <label className="text-base flex flex-col">Chegirma narx</label>
+                <input
+                  type="number"
+                  name="salePrice"
+                  id="salePrice"
+                  placeholder="1 290 000"
+                  className={
+                    formik.touched.salePrice && formik.errors.salePrice
+                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
+                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                  }
+                  minLength="3"
+                  maxLength="25"
+                  {...formik.getFieldProps('salePrice')}
+                />
+                {formik.touched.salePrice && formik.errors.salePrice ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.salePrice}
+                  </span>
+                ) : null}
+                <span className="absolute top-9 left-[295px]">So'm</span>
+              </div>
+
+              <div className="relative">
+                <label className="text-base flex flex-col">Mahsulot turi</label>
+                <select
+                  name="type_uz"
+                  id="type_uz"
+                  className={
+                    formik.touched.type_uz && formik.errors.type_uz
+                      ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
+                      : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                  }
+                  {...formik.getFieldProps('type_uz')}
+                >
+                  <option>Turi</option>
+                  <option>Ramkali</option>
+                  <option>Shishirilgan</option>
+                </select>
+                {formik.touched.type_uz && formik.errors.type_uz ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.type_uz}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+            {addedDate.length > 0 &&
+              addedDate.map((el) => {
+                return (
+                  <div key={el.id}>
+                    <label>{el.attribute_uz}</label>
+                    <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
+                      <ul className="flex flex-wrap gap-2  ">
+                        {el.uz &&
+                          el?.uz.map((item) => (
+                            <li key={Math.random}>
+                              <MFilter>
+                                {item}
+                                <span
+                                  className="ml-2 cursor-pointer"
+                                  // onClick={() => removeTags()}
+                                >
+                                  X
+                                </span>
+                              </MFilter>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  </div>
+                )
+              })}
+
+            <div className="relative mt-5">
+              <label className="text-base flex flex-col">Status</label>
+              <select
+                name="status_uz"
+                id="status_uz"
+                className={
+                  formik.touched.status_uz && formik.errors.status_uz
+                    ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
+                    : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                }
+                {...formik.getFieldProps('status_uz')}
+              >
+                <option>Status</option>
+                <option>Jarayonda</option>
+                <option>Taklif qilingan</option>
+              </select>
+              {formik.touched.status_uz && formik.errors.status_uz ? (
+                <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                  {formik.errors.status_uz}
+                </span>
+              ) : null}
+            </div>
           </div>
         </DropDown>
 
-        <MButton BType="next" type="submit">
-          submit
-        </MButton>
+        <div className=' flex justify-center gap-8' >
+          <MButton BType="reject" type="button">
+            Отменить
+          </MButton>
+          <MButton BType="next" type="submit">
+            Добавить
+          </MButton>
+        </div>
       </form>
+
+      {/* Type modal */}
+
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+        <div className="flex justify-between">
+          <h2 className="text-2xl text-addProductColor font-bold">
+            Добавить атрибуть
+          </h2>
+          <button onClick={() => setShowModal(false)} className="rounded-md">
+            <img src={Close} width={25} height={25} alt={'close_image'} />
+          </button>
+        </div>
+        <form className="mt-6" autoComplete="off" onSubmit={handleSubmit}>
+          <label className="flex flex-col">
+            Тип атрибуты
+            <select
+              ref={selectOnce}
+              className="w-[330px] h-12 rounded-lg border border-gray-200 outline-none "
+            >
+              {data.map((datas) => (
+                <option value={datas.attribute_ru} id={datas.id} key={datas.id}>
+                  {datas.attribute_ru}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="flex justify-between mt-6">
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              className="bg-[#F2F2F2] w-72 py-3 rounded-xl text-russuanColor font-medium text-lg"
+            >
+              Отменить
+            </button>
+            <button
+              type="submit"
+              className="bg-russuanColor w-72 py-3 ml-8 rounded-xl text-[#fff] font-medium text-lg"
+            >
+              {subLoading ? loaderButton : 'Сохранить'}
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   )
 }
