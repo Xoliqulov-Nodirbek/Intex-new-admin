@@ -9,7 +9,7 @@ import Drop from "../../../../Assets/Images/HomeContentImg/Drop.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
 const env = process.env.REACT_APP_ALL_API;
 const token = JSON.parse(window.localStorage.getItem("token"));
-export default function AtributPage() {
+export default function AtributPage({ firsInfos }) {
   const [openRu, setOpenRu] = useState(false);
   const [openEn, setOpenEn] = useState(false);
   const [openUz, setOpenUz] = useState(false);
@@ -39,7 +39,7 @@ export default function AtributPage() {
   };
 
   const onSubmit = (values, { resetForm }) => {
-    console.log(values);
+    firsInfos(values);
   };
   // Manufactory get start
   useEffect(() => {
@@ -53,7 +53,6 @@ export default function AtributPage() {
         setData(res?.data);
       });
   }, []);
-  console.log(data);
   // Manufactory get end
   // Country get start
   useEffect(() => {

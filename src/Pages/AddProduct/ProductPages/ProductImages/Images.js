@@ -4,9 +4,10 @@ import addImgDoun from "../../../../Assets/Images/HomeContentImg/example.png";
 import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel.svg";
 import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
-export default function Images() {
+export default function Images({ imgInfoRes, imgInfo }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [getImg, setGetImg] = useState([]);
+
   const findNewImg = (evt) => {
     setGetImg([
       ...getImg,
@@ -25,15 +26,20 @@ export default function Images() {
       ]);
     }
   };
+  // imgInfoRes(imgUrl);'
+
   function handldelete(id) {
     let newTodo = getImg.filter((e) => e.id !== id);
     let newDelImg = imgUrl.filter((e) => e.id !== id);
     setGetImg(newTodo);
     setImgUrl(newDelImg);
-    console.log(imgUrl);
   }
+  const getResultInfo = (e) => {
+    e.preventDefault();
+    imgInfoRes(imgUrl);
+  };
   return (
-    <form>
+    <form onSubmit={getResultInfo}>
       <h2 className="font-medium text-base mt-6">Изображение</h2>
       <label className="inline-block mb-4   ">
         <input

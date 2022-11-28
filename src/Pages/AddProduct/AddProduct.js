@@ -9,6 +9,8 @@ export default function AddProduct() {
   const [img, setImg] = useState(false);
   const [atr, setAtr] = useState(false);
 
+  const [informationInfos, setInformationInfos] = useState();
+  const [imgInfos, setImgsInfos] = useState();
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
@@ -36,8 +38,12 @@ export default function AddProduct() {
           </li>
         </ul>
         <div>
-          {info ? <Information /> : ""}
-          {img ? <ProductImgs /> : ""}
+          {info ? <Information firsInfos={setInformationInfos} /> : ""}
+          {img ? (
+            <ProductImgs imgInfoRes={setImgsInfos} imgInfo={imgInfos} />
+          ) : (
+            ""
+          )}
           {atr ? <AtributPage /> : ""}
         </div>
       </div>
