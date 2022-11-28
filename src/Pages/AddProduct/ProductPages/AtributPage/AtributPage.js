@@ -11,7 +11,7 @@ import MFilter from '../../../../BaseComponents/MFilter/MFilter'
 import { Modal } from '../../../../components/Modal/Modal'
 import Close from '../../../../Assets/Images/SettingsImg/close.svg'
 
-export default function AtributPage({ showModal, setShowModal }) {
+export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
   const env = process.env.REACT_APP_ALL_API
   const [navBarDrop, setNavBarDrop] = useState(false)
   const [navBarDrop1, setNavBarDrop1] = useState(false)
@@ -32,11 +32,16 @@ export default function AtributPage({ showModal, setShowModal }) {
     // status_uz: '',
   }
   const onSubmit = (values, { resetForm }) => {
-    let arr = []
-    arr.push({
+    thirdinfos({
       price: values.price,
       discount_price : values.salePrice,
       category_id : Number(values.type),
+
+      status_id : Number( values.status),
+    })
+
+    resetForm()
+
       // type_eng: values.type_eng,
       // type_uz: values.type_uz,
       status_id : Number( values.status),
@@ -47,6 +52,7 @@ export default function AtributPage({ showModal, setShowModal }) {
     resetForm()
     // console.log(1111, values)
     console.log(arr);
+
   }
 
 
