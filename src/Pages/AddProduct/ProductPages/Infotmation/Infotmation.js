@@ -14,6 +14,8 @@ export default function AtributPage() {
   const [openEn, setOpenEn] = useState(false);
   const [openUz, setOpenUz] = useState(false);
   const [data, setData] = useState([]);
+  const [countryData, setCountryData] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const initialValues = {
     name: "",
@@ -29,7 +31,7 @@ export default function AtributPage() {
     enCategory: "",
     enQuantityy: "",
     uzName: "",
-    uzproductType: "",
+    uzProductType: "",
     uzCountry: "",
     uzUserInfo: "",
     uzCategory: "",
@@ -51,8 +53,34 @@ export default function AtributPage() {
         setData(res?.data);
       });
   }, []);
-  // Manufactory get end
   console.log(data);
+  // Manufactory get end
+  // Country get start
+  useEffect(() => {
+    axios
+      .get(`${env}countries/getAll`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setCountryData(res?.data);
+      });
+  }, []);
+  // Country get end
+  // Category get start
+  useEffect(() => {
+    axios
+      .get(`${env}categories/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setCategory(res?.data);
+      });
+  }, []);
+  // Category get end
   const validationSchema = Yup.object({
     name: Yup.string()
       .required("Username is required, at least 3 characters")
@@ -174,8 +202,12 @@ export default function AtributPage() {
                   }
                   {...formik.getFieldProps("ruCountry")}
                 >
-                  <option>salom</option>
-                  <option>salom</option>
+                  <option>Выберите призводству продукта</option>
+                  {countryData.map((item) => (
+                    <option id={item.id} key={item.id}>
+                      {item.country_ru}
+                    </option>
+                  ))}
                 </select>
                 {formik.touched.ruCountry && formik.errors.ruCountry ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -220,8 +252,12 @@ export default function AtributPage() {
                     }
                     {...formik.getFieldProps("ruCategory")}
                   >
-                    <option>salom</option>
-                    <option>salom</option>
+                    <option>Выберите призводству продукта</option>
+                    {category.map((item) => (
+                      <option id={item.id} key={item.id}>
+                        {item.category_ru}
+                      </option>
+                    ))}
                   </select>
                   {formik.touched.ruCategory && formik.errors.ruCategory ? (
                     <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -313,9 +349,9 @@ export default function AtributPage() {
                     </option>
                   ))}
                 </select>
-                {formik.touched.productType && formik.errors.productType ? (
+                {formik.touched.enProductType && formik.errors.enProductType ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
-                    {formik.errors.uzProductType}
+                    {formik.errors.enProductType}
                   </span>
                 ) : null}
               </label>
@@ -331,8 +367,12 @@ export default function AtributPage() {
                   }
                   {...formik.getFieldProps("enCountry")}
                 >
-                  <option>salom</option>
-                  <option>salom</option>
+                  <option>Выберите призводству продукта</option>
+                  {countryData.map((item) => (
+                    <option id={item.id} key={item.id}>
+                      {item.country_en}
+                    </option>
+                  ))}
                 </select>
                 {formik.touched.enCountry && formik.errors.enCountry ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -377,8 +417,11 @@ export default function AtributPage() {
                     }
                     {...formik.getFieldProps("enCategory")}
                   >
-                    <option>salom</option>
-                    <option>salom</option>
+                    {category.map((item) => (
+                      <option id={item.id} key={item.id}>
+                        {item.category_en}
+                      </option>
+                    ))}
                   </select>
                   {formik.touched.enCategory && formik.errors.enCategory ? (
                     <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -463,10 +506,14 @@ export default function AtributPage() {
                   }
                   {...formik.getFieldProps("uzProductType")}
                 >
-                  <option>salom</option>
-                  <option>salom</option>
+                  <option>Выберите призводству продукта</option>
+                  {data.map((item) => (
+                    <option key={item.id} id={item.id}>
+                      {item.manufacturer_uz}
+                    </option>
+                  ))}
                 </select>
-                {formik.touched.productType && formik.errors.productType ? (
+                {formik.touched.uzProductType && formik.errors.uzProductType ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
                     {formik.errors.uzProductType}
                   </span>
@@ -484,8 +531,12 @@ export default function AtributPage() {
                   }
                   {...formik.getFieldProps("uzCountry")}
                 >
-                  <option>salom</option>
-                  <option>salom</option>
+                  <option>Выберите призводству продукта</option>
+                  {countryData.map((item) => (
+                    <option id={item.id} key={item.id}>
+                      {item.country_uz}
+                    </option>
+                  ))}
                 </select>
                 {formik.touched.uzCountry && formik.errors.uzCountry ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -530,8 +581,11 @@ export default function AtributPage() {
                     }
                     {...formik.getFieldProps("uzCategory")}
                   >
-                    <option>salom</option>
-                    <option>salom</option>
+                    {category.map((item) => (
+                      <option id={item.id} key={item.id}>
+                        {item.category_uz}
+                      </option>
+                    ))}
                   </select>
                   {formik.touched.uzCategory && formik.errors.uzCategory ? (
                     <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -565,9 +619,14 @@ export default function AtributPage() {
             </div>
           </div>
         </DropDown>
-        <MButton BType="next" type="submit">
-          Submit
-        </MButton>
+        <div className="flex items-center justify-center space-x-5 mt-6 pb-6">
+          <MButton BType="reject" type="reset">
+            Отменить
+          </MButton>
+          <MButton BType="next" type="submit">
+            Submit
+          </MButton>
+        </div>
       </form>
     </div>
   );
