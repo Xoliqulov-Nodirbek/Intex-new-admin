@@ -18,7 +18,7 @@ export default function AttributeTable({
   const [checker, setChecker] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const attribute = data.ru;
-  
+
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const handleCheck = (e) => {
@@ -87,7 +87,7 @@ export default function AttributeTable({
           <TableData styles="w-[80px]">{data.id}</TableData>
           <TableData styles="w-[300px] truncate">{data.attribute_ru}</TableData>
           <TableData styles="w-[190px]">{data.view}</TableData>
-          <TableData styles="min-w-[400px]">
+          <TableData styles="w-[400px] flex flex-wrap space-y-1">
             {attribute.map((item, index) => (
               <MFilter className="mx-1" key={index}>
                 {item}

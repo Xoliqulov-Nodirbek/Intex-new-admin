@@ -1,13 +1,15 @@
+import axios from "axios";
 import React, { useState } from "react";
 import TableData from "../TableData/TableData";
 import MLabel from "../../BaseComponents/MLabel/MLabel";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
-import axios from "axios";
 
 // Image
 import Edit from "../../Assets/Images/ProductsImgs/edit.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 import OrderModal from "../../Pages/Order/OrderModal";
+
+const env = process.env.REACT_APP_ALL_API;
 
 export default function TableRow2({
   children,
@@ -22,16 +24,14 @@ export default function TableRow2({
 
   const token = JSON.parse(window.localStorage.getItem("token"));
 
+  // --- Delete Row
   const DeleteItems = () => {
     axios
-      .delete(
-        `https://intex-shop-production.up.railway.app/api/orders/delete/${data.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .delete(`${env}orders/delete/${data.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(() => {
         console.log("deleted");
         refresh();
@@ -50,6 +50,8 @@ export default function TableRow2({
       e.target.checked = false;
     }
   };
+
+  // --- Close
   const close = (
     <svg
       className="flex items-center justify-center object-fill"
@@ -63,6 +65,7 @@ export default function TableRow2({
       <line x1="1" y1="1" x2="15" y2="15" stroke="black" stroke-width="2" />
     </svg>
   );
+
   return (
     <div>
       <tbody>
@@ -105,9 +108,11 @@ export default function TableRow2({
               <TableData styles="w-[153px] text-sm">
                 {data.discount_summa ? data.discount_summa + " cум" : "-"}
               </TableData>
-              <TableData styles="w-[145px] text-sm flex flex-col">
-                <h4>{data.created_at.slice(0, 10)}</h4>
-                <h5 className="text-xs">{data.created_at.slice(11, 16)}</h5>
+              <TableData styles="w-[145px] text-sm grid grid-cols-1 !pl-3">
+                <h4 className="block">{data.created_at.slice(0, 10)}</h4>
+                <h5 className="text-xs block">
+                  {data.created_at.slice(11, 16)}
+                </h5>
               </TableData>
               <TableData styles="w-[145px]">
                 <MLabel type={`label_${data.name_en}`}>{data.name_ru}</MLabel>

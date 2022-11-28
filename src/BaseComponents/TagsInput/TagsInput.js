@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import MFilter from '../MFilter/MFilter'
+import React from "react";
+import MFilter from "../MFilter/MFilter";
 
-export  function TagsInputRu({ tags_ru, setTags_ru }) {
+export function TagsInputRu({ tags_ru, setTags_ru }) {
   const addTags_ru = (e) => {
-    if (e.key === 'Enter' && e.target.value !== '') {
-      setTags_ru([...tags_ru, e.target.value])
-      e.target.value = ''
+    if (e.key === "Enter" && e.target.value !== "") {
+      setTags_ru([...tags_ru, e.target.value]);
+      e.target.value = "";
     }
-  }
+  };
 
   const removeTags = (indexToRemov) => {
-    setTags_ru(tags_ru.filter((_, index) => index !== indexToRemov))
-  }
+    setTags_ru(tags_ru.filter((_, index) => index !== indexToRemov));
+  };
   return (
     <div className="w-full border rounded-lg border-gray-400 p-1 flex items-center flex-wrap ">
       <ul className="flex flex-wrap gap-2  ">
@@ -38,20 +38,20 @@ export  function TagsInputRu({ tags_ru, setTags_ru }) {
         onKeyUp={addTags_ru}
       />
     </div>
-  )
+  );
 }
 
-export  function TagsInputEng({ tags_en, setTags_en }) {
+export function TagsInputEng({ tags_en, setTags_en }) {
   const addTags_en = (e) => {
-    if (e.key === 'Enter' && e.target.value !== '') {
-      setTags_en([...tags_en, e.target.value])
-      e.target.value = ''
+    if (e.key === "Enter" && e.target.value !== "") {
+      setTags_en([...tags_en, e.target.value]);
+      e.target.value = "";
     }
-  }
+  };
 
   const removeTags = (indexToRemov) => {
-    setTags_en(tags_en.filter((_, index) => index !== indexToRemov))
-  }
+    setTags_en(tags_en.filter((_, index) => index !== indexToRemov));
+  };
   return (
     <div className="w-full border rounded-lg border-gray-400 p-1 flex items-center flex-wrap ">
       <ul className="flex flex-wrap gap-2  ">
@@ -78,20 +78,20 @@ export  function TagsInputEng({ tags_en, setTags_en }) {
         onKeyUp={addTags_en}
       />
     </div>
-  )
+  );
 }
 
-export  function TagsInputUz({ tags_uz, setTags_uz, setMouse_uz }) {
+export function TagsInputUz({ tags_uz, setTags_uz }) {
   const addTags_en = (e) => {
-    if (e.key === 'Enter' && e.target.value !== '') {
-      setTags_uz([...tags_uz, e.target.value])
-      e.target.value = ''
+    if (e.key === "Enter" && e.target.value !== "") {
+      setTags_uz([...tags_uz, e.target.value]);
+      e.target.value = "";
     }
-  }
+  };
 
   const removeTags = (indexToRemov) => {
-    setTags_uz(tags_uz.filter((_, index) => index !== indexToRemov))
-  }
+    setTags_uz(tags_uz.filter((_, index) => index !== indexToRemov));
+  };
   return (
     <div className="w-full border rounded-lg border-gray-400 p-1 flex items-center flex-wrap ">
       <ul className="flex flex-wrap gap-2  ">
@@ -118,5 +118,5 @@ export  function TagsInputUz({ tags_uz, setTags_uz, setMouse_uz }) {
         onKeyUp={addTags_en}
       />
     </div>
-  )
+  );
 }

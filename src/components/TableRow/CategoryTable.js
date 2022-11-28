@@ -40,7 +40,7 @@ export default function TableCat({
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => refresh())
+      .then(() => refresh())
       .catch((err) => console.log(err));
   };
 
@@ -89,7 +89,7 @@ export default function TableCat({
               {data.category_ru}
             </TableData>
             <TableData styles="w-[250px]">{data.category_ru.length}</TableData>
-            <TableData styles="min-w-[474px]">
+            <TableData styles="w-[474px] flex flex-wrap space-y-1">
               {categoryResult.map((item, index) => (
                 <MFilter key={index} className="mx-1">
                   {item}

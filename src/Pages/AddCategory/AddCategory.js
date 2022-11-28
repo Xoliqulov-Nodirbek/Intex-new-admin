@@ -4,7 +4,7 @@ import DropImg from "../../Assets/Images/HomeContentImg/Drop.svg";
 import FormikControl from "../../BaseComponents/FormInput/FormikControl";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { Formik, Form, setIn } from "formik";
+import { Formik, Form } from "formik";
 import {
   TagsInputEng,
   TagsInputRu,
@@ -115,7 +115,7 @@ export default function AddCategory() {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {(formik) => (
+          {() => (
             <Form>
               <DropDown
                 downClick={dawnElClick}
