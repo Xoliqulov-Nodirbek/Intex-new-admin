@@ -36,23 +36,10 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
       price: values.price,
       discount_price : values.salePrice,
       category_id : Number(values.type),
-
       status_id : Number( values.status),
     })
 
     resetForm()
-
-      // type_eng: values.type_eng,
-      // type_uz: values.type_uz,
-      status_id : Number( values.status),
-      // status_eng: values.status_eng,
-      // status_uz: values.status_eng,
-    })
-
-    resetForm()
-    // console.log(1111, values)
-    console.log(arr);
-
   }
 
 
