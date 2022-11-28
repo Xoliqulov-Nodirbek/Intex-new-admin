@@ -5,13 +5,20 @@ import AtributPage from './ProductPages/AtributPage/AtributPage'
 import Line from './../../BaseComponents/Line/Line'
 
 export default function AddProduct() {
-  const [info, setInfo] = useState(false)
+  const [info, setInfo] = useState(true)
   const [img, setImg] = useState(false)
-  const [atr, setAtr] = useState(true)
+  const [atr, setAtr] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   const [informationInfos, setInformationInfos] = useState();
   const [imgInfos, setImgsInfos] = useState();
+  const [atrInfos,setAtrInfos] = useState()
+
+  let results = {
+    ...informationInfos, ...imgInfos,...atrInfos
+  }
+console.log(results);
+  console.log(atrInfos);
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
@@ -52,14 +59,14 @@ export default function AddProduct() {
         </ul>
         <div>
 
-          {info ? <Information firsInfos={setInformationInfos} /> : ""}
+          {info ? <Information info={setInfo} setImg={setImg} firsInfos={setInformationInfos} /> : ""}
           {img ? (
-            <ProductImgs imgInfoRes={setImgsInfos} imgInfo={imgInfos} />
+            <ProductImgs img={setImg} atrbut={setAtr} imgInfoRes={setImgsInfos} imgInfo={imgInfos} />
           ) : (
             ""
           )}
           {atr ? (
-            <AtributPage showModal={showModal} setShowModal={setShowModal} />
+            <AtributPage thirdinfos={setAtrInfos} showModal={showModal} setShowModal={setShowModal} />
           ) : (
             ''
           )}

@@ -11,56 +11,50 @@ import MFilter from '../../../../BaseComponents/MFilter/MFilter'
 import { Modal } from '../../../../components/Modal/Modal'
 import Close from '../../../../Assets/Images/SettingsImg/close.svg'
 
-export default function AtributPage({ showModal, setShowModal }) {
+export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
   const env = process.env.REACT_APP_ALL_API
   const [navBarDrop, setNavBarDrop] = useState(false)
   const [navBarDrop1, setNavBarDrop1] = useState(false)
   const [navBarDrop2, setNavBarDrop2] = useState(false)
   const [subLoading, setSubLoading] = useState(false)
   const [data, setData] = useState([])
-const [categories, setCategories] = useState([])
-const [status, setStatus] = useState([])
+  const [categories, setCategories] = useState([])
+  const [status, setStatus] = useState([])
 
   const initialValues = {
     price: '',
     salePrice: '',
     type: '',
-    type_eng: '',
-    type_uz: '',
+    // type_eng: '',
+    // type_uz: '',
     status: '',
-    status_eng: '',
-    status_uz: '',
+    // status_eng: '',
+    // status_uz: '',
   }
   const onSubmit = (values, { resetForm }) => {
-    let arr = []
-    arr.push({
+    thirdinfos({
       price: values.price,
-      salePrice: values.salePrice,
-      type: values.type,
-      type_eng: values.type_eng,
-      type_uz: values.type_uz,
-      status: values.status,
-      status_eng: values.status_eng,
-      status_uz: values.status_eng,
-     
+      discount_price : values.salePrice,
+      category_id : Number(values.type),
+      status_id : Number( values.status),
     })
 
     resetForm()
-    console.log(1111, arr)
   }
+
+
+  
 
   const validationSchema = Yup.object({
     price: Yup.number().required('Price value is required'),
     salePrice: Yup.number().required('Saleprice value is required'),
-    type: Yup.string().required('Type option is required'),
-    type_eng: Yup.string().required('Type option is required'),
-    type_uz: Yup.string().required('Type option is required'),
-    status: Yup.string().required('Status option is required'),
-    status_eng: Yup.string().required('Status option is required'),
-    status_uz: Yup.string().required('Status option is required'),
+    // type: Yup.string().required('Type option is required'),
+    // type_eng: Yup.string().required('Type option is required'),
+    // type_uz: Yup.string().required('Type option is required'),
+    // status: Yup.string().required('Status option is required'),
+    // status_eng: Yup.string().required('Status option is required'),
+    // status_uz: Yup.string().required('Status option is required'),
   })
-
-
 
   const removeTags = () => {}
   const formik = useFormik({
@@ -113,8 +107,6 @@ const [status, setStatus] = useState([])
       })
       .catch((err) => console.error(err))
   }, [])
-
-
 
   const [addedDate, setAddedDate] = useState([])
   const handleSubmit = (e) => {
@@ -210,9 +202,10 @@ const [status, setStatus] = useState([])
                   }
                   {...formik.getFieldProps('type')}
                 >
-               {categories.length && categories.map(el => (
-                <option key={el.id}>{el.category_ru}</option>
-               ))}
+                  {categories.length &&
+                    categories.map((el) => (
+                      <option value={el.id} key={el.id}>{el.category_ru}</option>
+                    ))}
                 </select>
                 {formik.touched.type && formik.errors.type ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -260,12 +253,13 @@ const [status, setStatus] = useState([])
                       : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
                   }
                   {...formik.getFieldProps('status')}
-                > 
-                  {
-                    status.length && status.map((el) => (
-                      <option key={el.id} id={el.id} value={el.id}>{el.status_ru}</option>
-                    ))
-                  }
+                >
+                  {status.length &&
+                    status.map((el) => (
+                      <option key={el.id} id={el.id} value={el.id}>
+                        {el.status_ru}
+                      </option>
+                    ))}
                 </select>
                 {formik.touched.status && formik.errors.status ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -350,9 +344,10 @@ const [status, setStatus] = useState([])
                   }
                   {...formik.getFieldProps('type_eng')}
                 >
-                  <option>Type</option>
-                  <option>First</option>
-                  <option>Second</option>
+                  {categories.length &&
+                    categories.map((el) => (
+                      <option value={el.id} key={el.id}>{el.category_en}</option>
+                    ))}
                 </select>
                 {formik.touched.type_eng && formik.errors.type_eng ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -391,7 +386,7 @@ const [status, setStatus] = useState([])
             <div className="relative mt-5">
               <label className="text-base flex flex-col">Status</label>
               <select
-                onChange={() => console.log("Sa")}
+                onChange={() => console.log('Sa')}
                 name="status_eng"
                 id="status_eng"
                 className={
@@ -401,9 +396,12 @@ const [status, setStatus] = useState([])
                 }
                 {...formik.getFieldProps('status_eng')}
               >
-                <option>Recommended</option>
-                <option>Pending</option>
-                <option>recommended</option>
+                {status.length &&
+                  status.map((el) => (
+                    <option key={el.id} id={el.id} value={el.id}>
+                      {el.status_en}
+                    </option>
+                  ))}
               </select>
               {formik.touched.status_eng && formik.errors.status_eng ? (
                 <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -487,9 +485,10 @@ const [status, setStatus] = useState([])
                   }
                   {...formik.getFieldProps('type_uz')}
                 >
-                  <option>Turi</option>
-                  <option>Ramkali</option>
-                  <option>Shishirilgan</option>
+                  {categories.length &&
+                    categories.map((el) => (
+                      <option value={el.id} key={el.id}>{el.category_uz}</option>
+                    ))}
                 </select>
                 {formik.touched.type_uz && formik.errors.type_uz ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -537,9 +536,12 @@ const [status, setStatus] = useState([])
                 }
                 {...formik.getFieldProps('status_uz')}
               >
-                <option>Status</option>
-                <option>Jarayonda</option>
-                <option>Taklif qilingan</option>
+                {status.length &&
+                  status.map((el) => (
+                    <option key={el.id} id={el.id} value={el.id}>
+                      {el.status_uz}
+                    </option>
+                  ))}
               </select>
               {formik.touched.status_uz && formik.errors.status_uz ? (
                 <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -550,7 +552,7 @@ const [status, setStatus] = useState([])
           </div>
         </DropDown>
 
-        <div className=' flex justify-center gap-8' >
+        <div className=" flex justify-center gap-8">
           <MButton BType="reject" type="button">
             Отменить
           </MButton>
