@@ -10,6 +10,8 @@ export default function AddProduct() {
   const [atr, setAtr] = useState(true)
   const [showModal, setShowModal] = useState(false)
 
+  const [informationInfos, setInformationInfos] = useState();
+  const [imgInfos, setImgsInfos] = useState();
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
@@ -49,6 +51,15 @@ export default function AddProduct() {
           </div>
         </ul>
         <div>
+
+          {info ? <Information firsInfos={setInformationInfos} /> : ""}
+          {img ? (
+            <ProductImgs imgInfoRes={setImgsInfos} imgInfo={imgInfos} />
+          ) : (
+            ""
+          )}
+          {atr ? <AtributPage /> : ""}
+
           {info ? <Information /> : ''}
           {img ? <ProductImgs /> : ''}
           {atr ? (
@@ -56,6 +67,7 @@ export default function AddProduct() {
           ) : (
             ''
           )}
+
         </div>
       </div>
     </div>
