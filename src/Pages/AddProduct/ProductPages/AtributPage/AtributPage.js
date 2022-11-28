@@ -46,7 +46,7 @@ const [status, setStatus] = useState([])
     })
 
     resetForm()
-    // console.log(1111, arr)
+    console.log(1111, arr)
   }
 
   const validationSchema = Yup.object({

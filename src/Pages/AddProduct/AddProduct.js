@@ -58,10 +58,6 @@ export default function AddProduct() {
           ) : (
             ""
           )}
-          {atr ? <AtributPage /> : ""}
-
-          {info ? <Information /> : ''}
-          {img ? <ProductImgs /> : ''}
           {atr ? (
             <AtributPage showModal={showModal} setShowModal={setShowModal} />
           ) : (
