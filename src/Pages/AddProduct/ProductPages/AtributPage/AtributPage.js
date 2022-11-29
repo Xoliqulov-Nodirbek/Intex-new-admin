@@ -11,7 +11,12 @@ import MFilter from "../../../../BaseComponents/MFilter/MFilter";
 import { Modal } from "../../../../components/Modal/Modal";
 import Close from "../../../../Assets/Images/SettingsImg/close.svg";
 
-export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
+export default function AtributPage({
+  showModal,
+  setShowModal,
+  infoPageThis,
+  ownPage,
+}) {
   const env = process.env.REACT_APP_ALL_API;
   const [navBarDrop, setNavBarDrop] = useState(false);
   const [navBarDrop1, setNavBarDrop1] = useState(false);
@@ -25,24 +30,37 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
     price: "",
     salePrice: "",
     type: "",
-    // type_eng: '',
-    // type_uz: '',
     status: "",
-    // status_eng: '',
-    // status_uz: '',
   };
+  const infor = JSON.parse(window.localStorage.getItem("information"));
+  const image = JSON.parse(window.localStorage.getItem("image"));
+  const token = JSON.parse(window.localStorage.getItem("token"));
   const onSubmit = (values, { resetForm }) => {
-    thirdinfos({
+    let atributUInfo = {
       price: values.price,
       discount_price: values.salePrice,
       category_id: Number(values.type),
       status_id: Number(values.status),
       attribute_id: addedDate.map((mmm) => mmm.ids),
-    });
-
+    };
+    const data = {
+      ...infor,
+      image,
+      ...atributUInfo,
+    };
+    console.log(data);
+    ownPage(false);
+    infoPageThis(true);
     resetForm();
+    axios
+      .post("https://web-production-5638.up.railway.app/api/products", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
-
   const validationSchema = Yup.object({
     price: Yup.number().required("Price value is required"),
     salePrice: Yup.number().required("Saleprice value is required"),

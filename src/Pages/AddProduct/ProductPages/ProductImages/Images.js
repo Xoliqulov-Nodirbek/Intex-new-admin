@@ -4,10 +4,12 @@ import addImgDoun from "../../../../Assets/Images/HomeContentImg/example.png";
 import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel.svg";
 import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
-export default function Images({ imgInfoRes, img, atrbut }) {
+import axios from "axios";
+export default function Images({ img, atrbut }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [getImg, setGetImg] = useState([]);
-
+  const arr = [imgUrl[0]?.url];
+  const token = window.localStorage.getItem("token");
   const findNewImg = (evt) => {
     setGetImg([
       ...getImg,
@@ -26,7 +28,6 @@ export default function Images({ imgInfoRes, img, atrbut }) {
       ]);
     }
   };
-  // imgInfoRes(imgUrl);'
 
   function handldelete(id) {
     let newTodo = getImg.filter((e) => e.id !== id);
@@ -34,14 +35,32 @@ export default function Images({ imgInfoRes, img, atrbut }) {
     setGetImg(newTodo);
     setImgUrl(newDelImg);
   }
-  const [state, setState] = useState([]);
-  const arr = [imgUrl[0]?.url];
-
+  let formdata = new FormData();
   const getResultInfo = (e) => {
     e.preventDefault();
-    imgInfoRes(arr);
+    formdata.append("image", arr[0]);
     img(false);
     atrbut(true);
+
+    axios
+      .post(
+        `https://web-production-5638.up.railway.app/api/media/create`,
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          window.localStorage.setItem(
+            "image",
+            JSON.stringify(res.data.image[0])
+          );
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <form onSubmit={getResultInfo}>
