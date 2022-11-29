@@ -5,10 +5,17 @@ import AtributPage from "./ProductPages/AtributPage/AtributPage";
 import Line from "./../../BaseComponents/Line/Line";
 
 export default function AddProduct() {
+
+  const [info, setInfo] = useState(false)
+  const [img, setImg] = useState(false)
+  const [atr, setAtr] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+
   const [info, setInfo] = useState(true);
   const [img, setImg] = useState(false);
   const [atr, setAtr] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
 
   const [informationInfos, setInformationInfos] = useState();
   const [imgInfos, setImgsInfos] = useState();

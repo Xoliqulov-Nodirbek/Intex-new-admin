@@ -38,10 +38,18 @@ export default function AtributPage({
     infoPageThis(true);
     thirdinfos({
       price: values.price,
+
+      discount_price : values.salePrice,
+      category_id : Number(values.type),
+      status_id : Number( values.status),
+      attribute_id: addedDate.map((mmm) => mmm.ids)
+    })
+
       discount_price: values.salePrice,
       category_id: Number(values.type),
       status_id: Number(values.status),
     });
+
 
     resetForm();
   };
@@ -115,10 +123,17 @@ export default function AtributPage({
     let result = data.find((e) => e.attribute_ru === selectOnce.current.value);
     // setAddedDate(result);
 
+
+    setShowModal(false)
+    setAddedDate([...addedDate, result])
+  }
+
+
     setShowModal(false);
     setAddedDate([...addedDate, result]);
   };
   // console.log(addedDate)
+
   return (
     <div className="pb-16">
       <form
@@ -225,8 +240,8 @@ export default function AtributPage({
                     <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
                       <ul className="flex flex-wrap gap-2  ">
                         {el.ru &&
-                          el?.ru.map((item) => (
-                            <li key={Math.random}>
+                          el?.ru.map((item, index) => (
+                            <li key={index}>
                               <MFilter>
                                 {item}
                                 <span
@@ -369,8 +384,8 @@ export default function AtributPage({
                     <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
                       <ul className="flex flex-wrap gap-2  ">
                         {el.en &&
-                          el?.en.map((item) => (
-                            <li key={Math.random}>
+                          el?.en.map((item,index) => (
+                            <li key={index}>
                               <MFilter>
                                 {item}
                                 <span
@@ -512,8 +527,8 @@ export default function AtributPage({
                     <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
                       <ul className="flex flex-wrap gap-2  ">
                         {el.uz &&
-                          el?.uz.map((item) => (
-                            <li key={Math.random}>
+                          el?.uz.map((item,index) => (
+                            <li key={index}>
                               <MFilter>
                                 {item}
                                 <span
