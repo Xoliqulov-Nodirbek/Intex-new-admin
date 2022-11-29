@@ -9,7 +9,7 @@ import Drop from "../../../../Assets/Images/HomeContentImg/Drop.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
 const env = process.env.REACT_APP_ALL_API;
 const token = JSON.parse(window.localStorage.getItem("token"));
-export default function AtributPage({ firsInfos, setImg, info }) {
+export default function AtributPage({ setImg, info }) {
   const [openRu, setOpenRu] = useState(false);
   const [openEn, setOpenEn] = useState(false);
   const [openUz, setOpenUz] = useState(false);
@@ -31,7 +31,8 @@ export default function AtributPage({ firsInfos, setImg, info }) {
   const onSubmit = (values, { resetForm }) => {
     info(false);
     setImg(true);
-    firsInfos({
+    resetForm();
+    const informationResult = {
       name_uz: values.uzName,
       name_ru: values.name,
       name_en: values.enName,
@@ -41,8 +42,11 @@ export default function AtributPage({ firsInfos, setImg, info }) {
       about_en: values.enUserInfo,
       country_id: Number(values.ruCountry),
       manufacturer_id: Number(values.productType),
-    });
-    resetForm();
+    };
+    window.localStorage.setItem(
+      "information",
+      JSON.stringify(informationResult)
+    );
   };
 
   // Manufactory get start

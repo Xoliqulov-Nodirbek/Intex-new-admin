@@ -3,6 +3,7 @@ import Information from "./ProductPages/Infotmation/Infotmation";
 import ProductImgs from "./ProductPages/ProductImages/Images";
 import AtributPage from "./ProductPages/AtributPage/AtributPage";
 import Line from "./../../BaseComponents/Line/Line";
+import axios from "axios";
 
 export default function AddProduct() {
   const [info, setInfo] = useState(false);
@@ -10,9 +11,7 @@ export default function AddProduct() {
   const [atr, setAtr] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  const [informationInfos, setInformationInfos] = useState();
-  const [imgInfos, setImgsInfos] = useState();
-  const [atrInfos, setAtrInfos] = useState();
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
@@ -53,27 +52,10 @@ export default function AddProduct() {
           </div>
         </ul>
         <div>
-          {info ? (
-            <Information
-              info={setInfo}
-              setImg={setImg}
-              firsInfos={setInformationInfos}
-            />
-          ) : (
-            ""
-          )}
-          {img ? (
-            <ProductImgs
-              img={setImg}
-              atrbut={setAtr}
-              imgInfoRes={setImgsInfos}
-            />
-          ) : (
-            ""
-          )}
+          {info ? <Information info={setInfo} setImg={setImg} /> : ""}
+          {img ? <ProductImgs img={setImg} atrbut={setAtr} /> : ""}
           {atr ? (
             <AtributPage
-              thirdinfos={setAtrInfos}
               showModal={showModal}
               setShowModal={setShowModal}
               ownPage={setAtr}
