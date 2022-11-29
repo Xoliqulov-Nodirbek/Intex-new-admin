@@ -11,13 +11,7 @@ import MFilter from "../../../../BaseComponents/MFilter/MFilter";
 import { Modal } from "../../../../components/Modal/Modal";
 import Close from "../../../../Assets/Images/SettingsImg/close.svg";
 
-export default function AtributPage({
-  showModal,
-  setShowModal,
-  thirdinfos,
-  ownPage,
-  infoPageThis,
-}) {
+export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
   const env = process.env.REACT_APP_ALL_API;
   const [navBarDrop, setNavBarDrop] = useState(false);
   const [navBarDrop1, setNavBarDrop1] = useState(false);
@@ -31,25 +25,20 @@ export default function AtributPage({
     price: "",
     salePrice: "",
     type: "",
+    // type_eng: '',
+    // type_uz: '',
     status: "",
+    // status_eng: '',
+    // status_uz: '',
   };
   const onSubmit = (values, { resetForm }) => {
-    ownPage(false);
-    infoPageThis(true);
     thirdinfos({
       price: values.price,
-
-      discount_price : values.salePrice,
-      category_id : Number(values.type),
-      status_id : Number( values.status),
-      attribute_id: addedDate.map((mmm) => mmm.ids)
-    })
-
       discount_price: values.salePrice,
       category_id: Number(values.type),
       status_id: Number(values.status),
+      attribute_id: addedDate.map((mmm) => mmm.ids),
     });
-
 
     resetForm();
   };
@@ -123,16 +112,9 @@ export default function AtributPage({
     let result = data.find((e) => e.attribute_ru === selectOnce.current.value);
     // setAddedDate(result);
 
-
-    setShowModal(false)
-    setAddedDate([...addedDate, result])
-  }
-
-
     setShowModal(false);
     setAddedDate([...addedDate, result]);
   };
-  // console.log(addedDate)
 
   return (
     <div className="pb-16">
@@ -384,7 +366,7 @@ export default function AtributPage({
                     <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
                       <ul className="flex flex-wrap gap-2  ">
                         {el.en &&
-                          el?.en.map((item,index) => (
+                          el?.en.map((item, index) => (
                             <li key={index}>
                               <MFilter>
                                 {item}
@@ -527,7 +509,7 @@ export default function AtributPage({
                     <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
                       <ul className="flex flex-wrap gap-2  ">
                         {el.uz &&
-                          el?.uz.map((item,index) => (
+                          el?.uz.map((item, index) => (
                             <li key={index}>
                               <MFilter>
                                 {item}
