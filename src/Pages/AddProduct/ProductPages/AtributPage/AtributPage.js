@@ -1,67 +1,68 @@
-import { useEffect, useRef, useState } from 'react'
-import DropDown from '../../../../BaseComponents/DropDown/DropDown'
-import DropImg from '../../../../Assets/Images/HomeContentImg/Drop.svg'
-import * as Yup from 'yup'
-import { toast, Toaster } from 'react-hot-toast'
-import axios, { Axios } from 'axios'
-import { FormikConsumer, useFormik } from 'formik'
-import MButton from '../../../../BaseComponents/MButton/MButton'
-import { AtributeRu } from '../../../../BaseComponents/TagsInput/AddAtribut'
-import MFilter from '../../../../BaseComponents/MFilter/MFilter'
-import { Modal } from '../../../../components/Modal/Modal'
-import Close from '../../../../Assets/Images/SettingsImg/close.svg'
+import { useEffect, useRef, useState } from "react";
+import DropDown from "../../../../BaseComponents/DropDown/DropDown";
+import DropImg from "../../../../Assets/Images/HomeContentImg/Drop.svg";
+import * as Yup from "yup";
+import { toast, Toaster } from "react-hot-toast";
+import axios, { Axios } from "axios";
+import { FormikConsumer, useFormik } from "formik";
+import MButton from "../../../../BaseComponents/MButton/MButton";
+import { AtributeRu } from "../../../../BaseComponents/TagsInput/AddAtribut";
+import MFilter from "../../../../BaseComponents/MFilter/MFilter";
+import { Modal } from "../../../../components/Modal/Modal";
+import Close from "../../../../Assets/Images/SettingsImg/close.svg";
 
-export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
-  const env = process.env.REACT_APP_ALL_API
-  const [navBarDrop, setNavBarDrop] = useState(false)
-  const [navBarDrop1, setNavBarDrop1] = useState(false)
-  const [navBarDrop2, setNavBarDrop2] = useState(false)
-  const [subLoading, setSubLoading] = useState(false)
-  const [data, setData] = useState([])
-  const [categories, setCategories] = useState([])
-  const [status, setStatus] = useState([])
+export default function AtributPage({
+  showModal,
+  setShowModal,
+  thirdinfos,
+  ownPage,
+  infoPageThis,
+}) {
+  const env = process.env.REACT_APP_ALL_API;
+  const [navBarDrop, setNavBarDrop] = useState(false);
+  const [navBarDrop1, setNavBarDrop1] = useState(false);
+  const [navBarDrop2, setNavBarDrop2] = useState(false);
+  const [subLoading, setSubLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [status, setStatus] = useState([]);
 
   const initialValues = {
-    price: '',
-    salePrice: '',
-    type: '',
-    // type_eng: '',
-    // type_uz: '',
-    status: '',
-    // status_eng: '',
-    // status_uz: '',
-  }
+    price: "",
+    salePrice: "",
+    type: "",
+    status: "",
+  };
   const onSubmit = (values, { resetForm }) => {
+    ownPage(false);
+    infoPageThis(true);
     thirdinfos({
       price: values.price,
-      discount_price : values.salePrice,
-      category_id : Number(values.type),
-      status_id : Number( values.status),
-    })
+      discount_price: values.salePrice,
+      category_id: Number(values.type),
+      status_id: Number(values.status),
+    });
 
-    resetForm()
-  }
-
-
-  
+    resetForm();
+  };
 
   const validationSchema = Yup.object({
-    price: Yup.number().required('Price value is required'),
-    salePrice: Yup.number().required('Saleprice value is required'),
+    price: Yup.number().required("Price value is required"),
+    salePrice: Yup.number().required("Saleprice value is required"),
     // type: Yup.string().required('Type option is required'),
     // type_eng: Yup.string().required('Type option is required'),
     // type_uz: Yup.string().required('Type option is required'),
     // status: Yup.string().required('Status option is required'),
     // status_eng: Yup.string().required('Status option is required'),
     // status_uz: Yup.string().required('Status option is required'),
-  })
+  });
 
-  const removeTags = () => {}
+  const removeTags = () => {};
   const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
-  })
+  });
 
   const loaderButton = (
     <svg
@@ -79,51 +80,51 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
         fill="currentFill"
       />
     </svg>
-  )
-  const selectOnce = useRef()
+  );
+  const selectOnce = useRef();
   useEffect(() => {
     axios
       .get(`${env}attributes?page=0&limit=10`)
       .then((res) => {
-        setData(res?.data.result)
+        setData(res?.data.result);
       })
-      .catch((err) => console.error(err))
-  }, [])
+      .catch((err) => console.error(err));
+  }, []);
 
   useEffect(() => {
     axios
       .get(`${env}categories/categories`)
       .then((res) => {
-        setCategories(res?.data)
+        setCategories(res?.data);
       })
-      .catch((err) => console.error(err))
-  }, [])
+      .catch((err) => console.error(err));
+  }, []);
 
   useEffect(() => {
     axios
       .get(`${env}status-products/getAll`)
       .then((res) => {
-        setStatus(res?.data)
+        setStatus(res?.data);
       })
-      .catch((err) => console.error(err))
-  }, [])
+      .catch((err) => console.error(err));
+  }, []);
 
-  const [addedDate, setAddedDate] = useState([])
+  const [addedDate, setAddedDate] = useState([]);
   const handleSubmit = (e) => {
-    e.preventDefault()
-    let result = data.find((e) => e.attribute_ru === selectOnce.current.value)
+    e.preventDefault();
+    let result = data.find((e) => e.attribute_ru === selectOnce.current.value);
     // setAddedDate(result);
 
-    setShowModal(false)
-    setAddedDate([...addedDate, result])
-  }
+    setShowModal(false);
+    setAddedDate([...addedDate, result]);
+  };
   // console.log(addedDate)
   return (
     <div className="pb-16">
       <form
         onSubmit={(e) => {
-          formik.handleSubmit(e)
-          formik.values = initialValues
+          formik.handleSubmit(e);
+          formik.values = initialValues;
         }}
         className=" flex flex-col"
       >
@@ -134,11 +135,11 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
           hdrop="9"
           downClick={() => setNavBarDrop(!navBarDrop)}
           imgURL={DropImg}
-          rotateDelete={navBarDrop ? '-rotate-180' : '-rotate-0'}
+          rotateDelete={navBarDrop ? "-rotate-180" : "-rotate-0"}
         >
           <div
             className={
-              navBarDrop ? 'h-auto overflow-auto pr-5' : 'h-0 overflow-hidden'
+              navBarDrop ? "h-auto overflow-auto pr-5" : "h-0 overflow-hidden"
             }
           >
             <div className="flex justify-between ">
@@ -151,12 +152,12 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   placeholder="1 290 000"
                   className={
                     formik.touched.price && formik.errors.price
-                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
-                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6"
+                      : "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
                   minLength="3"
                   maxLength="25"
-                  {...formik.getFieldProps('price')}
+                  {...formik.getFieldProps("price")}
                 />
                 {formik.touched.price && formik.errors.price ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -176,12 +177,12 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   placeholder="1 290 000"
                   className={
                     formik.touched.salePrice && formik.errors.salePrice
-                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
-                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6"
+                      : "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
                   minLength="3"
                   maxLength="25"
-                  {...formik.getFieldProps('salePrice')}
+                  {...formik.getFieldProps("salePrice")}
                 />
                 {formik.touched.salePrice && formik.errors.salePrice ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -197,14 +198,16 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   id="type"
                   className={
                     formik.touched.type && formik.errors.type
-                      ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
-                      : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? " h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6"
+                      : " h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
-                  {...formik.getFieldProps('type')}
+                  {...formik.getFieldProps("type")}
                 >
                   {categories.length &&
                     categories.map((el) => (
-                      <option value={el.id} key={el.id}>{el.category_ru}</option>
+                      <option value={el.id} key={el.id}>
+                        {el.category_ru}
+                      </option>
                     ))}
                 </select>
                 {formik.touched.type && formik.errors.type ? (
@@ -238,7 +241,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                       </ul>
                     </div>
                   </div>
-                )
+                );
               })}
 
             <div>
@@ -249,10 +252,10 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   id="status"
                   className={
                     formik.touched.status && formik.errors.status
-                      ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
-                      : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? " h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6"
+                      : " h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
-                  {...formik.getFieldProps('status')}
+                  {...formik.getFieldProps("status")}
                 >
                   {status.length &&
                     status.map((el) => (
@@ -277,11 +280,11 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
           hdrop="9"
           downClick={() => setNavBarDrop1(!navBarDrop1)}
           imgURL={DropImg}
-          rotateDelete={navBarDrop1 ? '-rotate-180' : '-rotate-0'}
+          rotateDelete={navBarDrop1 ? "-rotate-180" : "-rotate-0"}
         >
           <div
             className={
-              navBarDrop1 ? 'h-auto overflow-auto pr-5' : 'h-0 overflow-hidden'
+              navBarDrop1 ? "h-auto overflow-auto pr-5" : "h-0 overflow-hidden"
             }
           >
             <div className="flex justify-between ">
@@ -294,12 +297,12 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   placeholder="1 290 000"
                   className={
                     formik.touched.price && formik.errors.price
-                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
-                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6"
+                      : "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
                   minLength="3"
                   maxLength="25"
-                  {...formik.getFieldProps('price')}
+                  {...formik.getFieldProps("price")}
                 />
                 {formik.touched.price && formik.errors.price ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -317,12 +320,12 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   placeholder="1 290 000"
                   className={
                     formik.touched.salePrice && formik.errors.salePrice
-                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
-                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6"
+                      : "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
                   minLength="3"
                   maxLength="25"
-                  {...formik.getFieldProps('salePrice')}
+                  {...formik.getFieldProps("salePrice")}
                 />
                 {formik.touched.salePrice && formik.errors.salePrice ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -339,14 +342,16 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   id="type_eng"
                   className={
                     formik.touched.type_eng && formik.errors.type_eng
-                      ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
-                      : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? " h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6"
+                      : " h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
-                  {...formik.getFieldProps('type_eng')}
+                  {...formik.getFieldProps("type_eng")}
                 >
                   {categories.length &&
                     categories.map((el) => (
-                      <option value={el.id} key={el.id}>{el.category_en}</option>
+                      <option value={el.id} key={el.id}>
+                        {el.category_en}
+                      </option>
                     ))}
                 </select>
                 {formik.touched.type_eng && formik.errors.type_eng ? (
@@ -380,21 +385,21 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                       </ul>
                     </div>
                   </div>
-                )
+                );
               })}
 
             <div className="relative mt-5">
               <label className="text-base flex flex-col">Status</label>
               <select
-                onChange={() => console.log('Sa')}
+                onChange={() => console.log("Sa")}
                 name="status_eng"
                 id="status_eng"
                 className={
                   formik.touched.status_eng && formik.errors.status_eng
-                    ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
-                    : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                    ? " h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6"
+                    : " h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6"
                 }
-                {...formik.getFieldProps('status_eng')}
+                {...formik.getFieldProps("status_eng")}
               >
                 {status.length &&
                   status.map((el) => (
@@ -418,11 +423,11 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
           hdrop="9"
           downClick={() => setNavBarDrop2(!navBarDrop2)}
           imgURL={DropImg}
-          rotateDelete={navBarDrop2 ? '-rotate-180' : '-rotate-0'}
+          rotateDelete={navBarDrop2 ? "-rotate-180" : "-rotate-0"}
         >
           <div
             className={
-              navBarDrop2 ? 'h-auto overflow-auto pr-5' : 'h-0 overflow-hidden'
+              navBarDrop2 ? "h-auto overflow-auto pr-5" : "h-0 overflow-hidden"
             }
           >
             <div className="flex justify-between ">
@@ -435,12 +440,12 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   placeholder="1 290 000"
                   className={
                     formik.touched.price && formik.errors.price
-                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
-                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6"
+                      : "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
                   minLength="3"
                   maxLength="25"
-                  {...formik.getFieldProps('price')}
+                  {...formik.getFieldProps("price")}
                 />
                 {formik.touched.price && formik.errors.price ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -458,12 +463,12 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   placeholder="1 290 000"
                   className={
                     formik.touched.salePrice && formik.errors.salePrice
-                      ? '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6'
-                      : '  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6"
+                      : "  h-12 w-[340px] text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
                   minLength="3"
                   maxLength="25"
-                  {...formik.getFieldProps('salePrice')}
+                  {...formik.getFieldProps("salePrice")}
                 />
                 {formik.touched.salePrice && formik.errors.salePrice ? (
                   <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
@@ -480,14 +485,16 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                   id="type_uz"
                   className={
                     formik.touched.type_uz && formik.errors.type_uz
-                      ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
-                      : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                      ? " h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6"
+                      : " h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
-                  {...formik.getFieldProps('type_uz')}
+                  {...formik.getFieldProps("type_uz")}
                 >
                   {categories.length &&
                     categories.map((el) => (
-                      <option value={el.id} key={el.id}>{el.category_uz}</option>
+                      <option value={el.id} key={el.id}>
+                        {el.category_uz}
+                      </option>
                     ))}
                 </select>
                 {formik.touched.type_uz && formik.errors.type_uz ? (
@@ -521,7 +528,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                       </ul>
                     </div>
                   </div>
-                )
+                );
               })}
 
             <div className="relative mt-5">
@@ -531,10 +538,10 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                 id="status_uz"
                 className={
                   formik.touched.status_uz && formik.errors.status_uz
-                    ? ' h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6'
-                    : ' h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6'
+                    ? " h-12 w-[340px] px-3 text-base rounded-lg outline-none border border-red-600 mb-3 sm:mb-6"
+                    : " h-12 w-[340px] px-3  text-base rounded-lg outline-none border border-gray-input_radius mb-3 sm:mb-6"
                 }
-                {...formik.getFieldProps('status_uz')}
+                {...formik.getFieldProps("status_uz")}
               >
                 {status.length &&
                   status.map((el) => (
@@ -570,7 +577,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
             Добавить атрибуть
           </h2>
           <button onClick={() => setShowModal(false)} className="rounded-md">
-            <img src={Close} width={25} height={25} alt={'close_image'} />
+            <img src={Close} width={25} height={25} alt={"close_image"} />
           </button>
         </div>
         <form className="mt-6" autoComplete="off" onSubmit={handleSubmit}>
@@ -593,18 +600,17 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
               onClick={() => setShowModal(false)}
               className="bg-[#F2F2F2] w-72 py-3 rounded-xl text-russuanColor font-medium text-lg"
             >
-              
               Отменить
             </button>
             <button
               type="submit"
               className="bg-russuanColor w-72 py-3 ml-8 rounded-xl text-[#fff] font-medium text-lg"
             >
-              {subLoading ? loaderButton : 'Сохранить'}
+              {subLoading ? loaderButton : "Сохранить"}
             </button>
           </div>
         </form>
       </Modal>
     </div>
-  )
+  );
 }

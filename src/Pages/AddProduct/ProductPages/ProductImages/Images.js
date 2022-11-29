@@ -4,7 +4,7 @@ import addImgDoun from "../../../../Assets/Images/HomeContentImg/example.png";
 import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel.svg";
 import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
-export default function Images({ imgInfoRes, imgInfo, img, atrbut }) {
+export default function Images({ imgInfoRes, img, atrbut }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [getImg, setGetImg] = useState([]);
 
@@ -34,11 +34,14 @@ export default function Images({ imgInfoRes, imgInfo, img, atrbut }) {
     setGetImg(newTodo);
     setImgUrl(newDelImg);
   }
+  const [state, setState] = useState([]);
+  const arr = [imgUrl[0]?.url];
+
   const getResultInfo = (e) => {
     e.preventDefault();
-    imgInfoRes(imgUrl);
-    img(false)
-    atrbut(true)
+    imgInfoRes(arr);
+    img(false);
+    atrbut(true);
   };
   return (
     <form onSubmit={getResultInfo}>
