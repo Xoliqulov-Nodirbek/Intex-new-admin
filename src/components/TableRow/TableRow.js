@@ -60,7 +60,6 @@ export default function TableRow({
       <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
     </svg>
   );
-  console.log(data);
   return (
     <tr className={`flex items-center border-b ${styles}`}>
       {children ? (
