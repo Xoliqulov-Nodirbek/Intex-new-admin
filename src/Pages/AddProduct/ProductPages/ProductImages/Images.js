@@ -7,7 +7,6 @@ import axios from "axios";
 export default function Images({ img, atrbut }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [getImg, setGetImg] = useState([]);
-  const arr = [imgUrl[0]?.url];
   const token = window.localStorage.getItem("token");
   const findNewImg = (evt) => {
     setGetImg([
@@ -27,8 +26,8 @@ export default function Images({ img, atrbut }) {
       ]);
     }
   };
-  // let aren = [];
-  // imgUrl.map((item) => aren.push(item.url));
+  let collectingImgs = [];
+  imgUrl.map((item) => collectingImgs.push(item.url));
 
   function handldelete(id) {
     let newTodo = getImg.filter((e) => e.id !== id);
@@ -39,7 +38,9 @@ export default function Images({ img, atrbut }) {
   let formdata = new FormData();
   const getResultInfo = (e) => {
     e.preventDefault();
-    formdata.append("image", arr[0]);
+    for (const item of collectingImgs) {
+      formdata.append("image", item);
+    }
     img(false);
     atrbut(true);
     axios
@@ -54,10 +55,7 @@ export default function Images({ img, atrbut }) {
       )
       .then((res) => {
         if (res.status === 201) {
-          window.localStorage.setItem(
-            "image",
-            JSON.stringify(res.data.image[0])
-          );
+          window.localStorage.setItem("image", JSON.stringify(res.data.image));
         }
       })
       .catch((err) => console.log(err));

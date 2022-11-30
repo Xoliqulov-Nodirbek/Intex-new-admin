@@ -32,9 +32,8 @@ export default function AtributPage({
     status: "",
   };
   const infor = JSON.parse(window.localStorage.getItem("information"));
-  const imageWrapper = JSON.parse(window.localStorage.getItem("image"));
+  const image = JSON.parse(window.localStorage.getItem("image"));
   const token = JSON.parse(window.localStorage.getItem("token"));
-  let image = [imageWrapper];
 
   const onSubmit = (values, { resetForm }) => {
     let atributUInfo = {

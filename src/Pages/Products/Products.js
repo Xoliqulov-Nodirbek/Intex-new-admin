@@ -36,7 +36,6 @@ const Products = () => {
         setLoader(false);
       });
   }, [limit, page, refresh]);
-
   // --- Loader
   const loaders = (
     <svg
