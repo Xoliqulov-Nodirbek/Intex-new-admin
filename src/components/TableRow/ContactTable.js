@@ -6,7 +6,6 @@ import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
 const env = process.env.REACT_APP_ALL_API;
-
 export default function ContactTable({
   children,
   styles,
@@ -16,9 +15,7 @@ export default function ContactTable({
 }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setshowModal] = useState(false);
-
   const token = JSON.parse(window.localStorage.getItem("token"));
-
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true);
@@ -28,7 +25,6 @@ export default function ContactTable({
       e.target.checked = false;
     }
   };
-
   // --- Delete Row
   const DeleteItems = (id) => {
     axios
@@ -44,7 +40,6 @@ export default function ContactTable({
         console.log(err);
       });
   };
-
   // --- Colse
   const close = (
     <svg
@@ -55,8 +50,8 @@ export default function ContactTable({
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <line x1="1" y1="15" x2="15" y2="1" stroke="black" stroke-width="2" />
-      <line x1="1" y1="1" x2="15" y2="15" stroke="black" stroke-width="2" />
+      <line x1="1" y1="15" x2="15" y2="1" stroke="black" strokeWidth="2" />
+      <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
     </svg>
   );
 

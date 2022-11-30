@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DropDown from "../../../../BaseComponents/DropDown/DropDown";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 // Images
 import Drop from "../../../../Assets/Images/HomeContentImg/Drop.svg";
@@ -16,7 +15,6 @@ export default function AtributPage({ setImg, info }) {
   const [data, setData] = useState([]);
   const [countryData, setCountryData] = useState([]);
   const [category, setCategory] = useState([]);
-  const [manufactId, setManufactId] = useState();
   const initialValues = {
     name: "",
     enName: "",
@@ -31,6 +29,7 @@ export default function AtributPage({ setImg, info }) {
   const onSubmit = (values, { resetForm }) => {
     info(false);
     setImg(true);
+
     resetForm();
     const informationResult = {
       name_uz: values.uzName,

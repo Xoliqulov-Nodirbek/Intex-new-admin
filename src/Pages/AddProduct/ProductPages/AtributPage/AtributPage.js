@@ -3,8 +3,8 @@ import DropDown from "../../../../BaseComponents/DropDown/DropDown";
 import DropImg from "../../../../Assets/Images/HomeContentImg/Drop.svg";
 import * as Yup from "yup";
 import { toast, Toaster } from "react-hot-toast";
-import axios, { Axios } from "axios";
-import { FormikConsumer, useFormik } from "formik";
+import axios from "axios";
+import { useFormik } from "formik";
 import MButton from "../../../../BaseComponents/MButton/MButton";
 import { AtributeRu } from "../../../../BaseComponents/TagsInput/AddAtribut";
 import MFilter from "../../../../BaseComponents/MFilter/MFilter";
@@ -64,8 +64,17 @@ export default function AtributPage({
           },
         }
       )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        if (res.status === 201) {
+          console.log(res);
+          window.localStorage.removeItem("information");
+          window.localStorage.removeItem("image");
+          toast.success("Успешно присоединился");
+        }
+      })
+      .catch((err) => {
+        toast.error("Ошибка при вставке или вставке");
+      });
   };
   const validationSchema = Yup.object({
     price: Yup.number().required("Price value is required"),
@@ -631,6 +640,7 @@ export default function AtributPage({
           </div>
         </form>
       </Modal>
+      <Toaster position="bottom-right" />
     </div>
   );
 }

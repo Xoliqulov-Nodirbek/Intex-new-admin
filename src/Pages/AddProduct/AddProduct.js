@@ -3,15 +3,12 @@ import Information from "./ProductPages/Infotmation/Infotmation";
 import ProductImgs from "./ProductPages/ProductImages/Images";
 import AtributPage from "./ProductPages/AtributPage/AtributPage";
 import Line from "./../../BaseComponents/Line/Line";
-import axios from "axios";
 
 export default function AddProduct() {
   const [info, setInfo] = useState(true);
   const [img, setImg] = useState(false);
   const [atr, setAtr] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const token = JSON.parse(window.localStorage.getItem("token"));
 
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">

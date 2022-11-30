@@ -4,7 +4,6 @@ import TextError from "./TextError";
 
 function Input(props) {
   const { label, className, name, ...rest } = props;
-
   return (
     <div className={`flex flex-col ${className}`}>
       <label htmlFor={name} className="text-addProductColor mb-3">

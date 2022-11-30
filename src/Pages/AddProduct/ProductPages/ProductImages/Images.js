@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Dounload from "../../../../Assets/Images/HomeContentImg/dounload.svg";
-import addImgDoun from "../../../../Assets/Images/HomeContentImg/example.png";
 import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel.svg";
 import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
@@ -28,6 +27,8 @@ export default function Images({ img, atrbut }) {
       ]);
     }
   };
+  // let aren = [];
+  // imgUrl.map((item) => aren.push(item.url));
 
   function handldelete(id) {
     let newTodo = getImg.filter((e) => e.id !== id);
@@ -41,7 +42,6 @@ export default function Images({ img, atrbut }) {
     formdata.append("image", arr[0]);
     img(false);
     atrbut(true);
-
     axios
       .post(
         `https://web-production-5638.up.railway.app/api/media/create`,
