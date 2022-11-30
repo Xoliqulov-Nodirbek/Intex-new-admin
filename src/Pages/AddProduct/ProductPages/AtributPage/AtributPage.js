@@ -6,7 +6,6 @@ import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useFormik } from "formik";
 import MButton from "../../../../BaseComponents/MButton/MButton";
-import { AtributeRu } from "../../../../BaseComponents/TagsInput/AddAtribut";
 import MFilter from "../../../../BaseComponents/MFilter/MFilter";
 import { Modal } from "../../../../components/Modal/Modal";
 import Close from "../../../../Assets/Images/SettingsImg/close.svg";
@@ -119,6 +118,7 @@ export default function AtributPage({
         setData(res?.data.result);
       })
       .catch((err) => console.error(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -128,6 +128,7 @@ export default function AtributPage({
         setCategories(res?.data);
       })
       .catch((err) => console.error(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -137,6 +138,7 @@ export default function AtributPage({
         setStatus(res?.data);
       })
       .catch((err) => console.error(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [addedDate, setAddedDate] = useState([]);
