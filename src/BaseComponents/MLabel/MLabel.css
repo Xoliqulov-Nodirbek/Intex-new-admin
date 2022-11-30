@@ -54,3 +54,11 @@
 .label_Canceled{
 background: #22B0F8;
 }
+
+.label_Bestseller{
+  background: #FF3A3A;
+}
+.label_Ordinary{
+  color: black;
+  background: #F2F2F2;
+}
