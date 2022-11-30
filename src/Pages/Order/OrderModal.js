@@ -10,6 +10,7 @@ const env = process.env.REACT_APP_ALL_API;
 function OrderModal({ isShown, onClosed, items, refreshed }) {
   // eslint-disable-next-line no-unused-vars
   const [updateOrder, setUpdateOrder] = useState({});
+  const [status, setStatus] = useState("1");
 
   if (!isShown) return null;
   const token = JSON.parse(window.localStorage.getItem("token"));
@@ -31,8 +32,15 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
             order_number: updateOrder.order_number
               ? updateOrder.order_number
               : items.order_number,
-            status_id: 3,
+            status_id: +status,
           },
+          bascet: [
+            {
+              count: updateOrder.count ? updateOrder.count : items.count,
+              product_id: 0,
+              order_id: 0,
+            },
+          ],
         },
         {
           headers: {
@@ -59,14 +67,17 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
   const handleClick = (e) => {
     if (e.target.id === "wrapper") onClosed();
   };
+  function changeStatus(event) {
+    setStatus(event.target.value);
+  }
 
   return (
-    <div
+    <tr
       onClick={handleClick}
       id="wrapper"
       className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center overflow-y-scroll h-[100vh] z-50 "
     >
-      <div className=" bg-white rounded-xl w-orderModal z-50">
+      <td className=" bg-white rounded-xl w-orderModal max-h-[700px] z-50">
         <form className=" flex flex-col">
           <div className="flex flex-row pt-7 pb-6 px-6 items-center justify-between">
             <h1 className="font-bold text-2xl	text-addProductColor">Изменить</h1>
@@ -75,9 +86,9 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
 
           <div className=" flex flex-wrap  px-6 justify-between">
             <div className="relative">
-              <p className="text-base font-medium mb-3">Номер заказа</p>
+              <p className="text-base font-medium h-4 mb-3">Номер заказа</p>
               <input
-                defaultValue={items.order_number}
+                value={items.order_number}
                 onChange={(e) =>
                   setUpdateOrder({
                     ...updateOrder,
@@ -93,7 +104,7 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
               />
             </div>
             <div className="relative">
-              <p className="text-base font-medium  mb-3">Имя</p>
+              <p className="text-base font-medium h-4 mb-3">Имя</p>
               <input
                 defaultValue={items.name}
                 onChange={(e) =>
@@ -111,7 +122,9 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
               />
             </div>
             <div className="relative">
-              <p className="text-base font-medium  mb-3 mt-8">Номер телефона</p>
+              <p className="text-base font-medium h-4 mb-3 mt-8">
+                Номер телефона
+              </p>
               <div className="bg-white w-submitBtnsWidth flex items-center h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
                 <img
                   src={uzbFlag}
@@ -138,7 +151,7 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
               </div>
             </div>
             <div className="relative">
-              <p className="text-base font-medium  mb-3 mt-8">Адрес</p>
+              <p className="text-base font-medium h-4 mb-3 mt-8">Адрес</p>
               <div className="bg-white w-submitBtnsWidth flex items-center justify-between h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
                 <input
                   defaultValue={items.address}
@@ -166,11 +179,17 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
               </div>
             </div>
             <div className="relative">
-              <p className="text-base font-medium  mb-3 mt-8">
+              <p className="text-base font-medium h-4 mb-3 mt-8">
                 Кол-во продуктов
               </p>
               <input
-                value={items.count}
+                defaultValue={items.count}
+                onChange={(e) =>
+                  setUpdateOrder({
+                    ...updateOrder,
+                    count: e.target.value,
+                  })
+                }
                 type="text"
                 name="numberproduct"
                 id="numberproduct"
@@ -180,55 +199,48 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
               />
             </div>
             <div className="relative">
-              <p className="text-base font-medium  mb-3 mt-8">Обшая цена</p>
+              <p className="text-base font-medium h-4 mb-3 mt-8">Обшая цена</p>
               <div className="bg-white w-submitBtnsWidth flex items-center justify-between h-12  rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
-                <input
-                  value={items.summa}
-                  type="text"
-                  name="sumproduct"
-                  id="sumproduct"
-                  className="outline-0"
-                  minLength="3"
-                  maxLength="25"
-                  placeholder="1 500 000"
-                />
+                <p className="outline-0">{items.summa}</p>
                 <p className="text-base font-normal">Сум</p>
               </div>
             </div>
             <div className="relative">
-              <p className="text-base font-medium text-addProductColor mb-3 mt-8">
+              <p className="text-base font-medium h-4 text-addProductColor mb-3 mt-8">
                 Цена со скидкой
               </p>
               <div className="bg-white w-submitBtnsWidth flex items-center justify-between h-12 rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
-                <input
-                  value={items.discount_summa}
-                  type="text"
-                  name="discount"
-                  id="discount"
-                  className="outline-0"
-                  minLength="3"
-                  maxLength="25"
-                />
+                <p className="outline-0">{items.discount_summa}</p>
                 <p className="text-base font-normal">Сум</p>
               </div>
             </div>
             <div className="relative">
-              <p className="text-base font-medium  mb-3 mt-8">Статус</p>
+              <p className="text-base font-medium h-4 mb-3 mt-8">Cтатус</p>
               <select
-                defaultValue={"check"}
+                value={status}
+                type="change"
+                onChange={changeStatus}
                 id="status"
                 className="bg-white w-submitBtnsWidth outline-0 items-center  h-12  rounded-lg border border-solid  border-borderColor text-addProductColor px-4"
               >
-                <option
-                  className="text-addProductLinks items-center top-0"
-                  value="chance"
-                >
+                <option className="text-black text-lg" value="1">
+                  Оплачен
+                </option>
+                <option className=" text-black text-lg" value="2">
+                  Отменен
+                </option>
+                <option className="text-black text-lg" value="3">
                   В ожидании
+                </option>
+                <option className="text-black text-lg" value="4">
+                  В проссесе
                 </option>
               </select>
             </div>
             <div className="relative">
-              <p className="text-base font-medium  mb-3 mt-8">Время заказа</p>
+              <p className="text-base font-medium h-4 mb-3 mt-8">
+                Время заказа
+              </p>
               <div className="flex flex-row justify-between items-center bg-white w-submitBtnsWidth  h-12 outline-0 rounded-lg border border-solid  border-borderColor text-addProductColor  p-4">
                 <p className="">
                   {items.created_at.slice(0, 10)}{" "}
@@ -254,8 +266,8 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }
 

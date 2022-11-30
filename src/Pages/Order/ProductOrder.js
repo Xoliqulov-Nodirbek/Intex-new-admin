@@ -28,17 +28,44 @@ export default function ProductOrder() {
 
   React.useEffect(() => {
     axios
-      .get(`${env}orders?page=${page}&limit=${limit}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `https://web-production-5638.up.railway.app/api/orders?page=${page}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         setData(res?.data);
 
         setTotalpage(res.data?.total_count.count);
       });
   }, [limit, page, token, refresh]);
+
+  // const IdArrays = data.result?.map((res) => res.id)
+
+  const IdArray = data.result?.map((res) => res.id);
+
+  //   const DeleteAll =(e)=>{
+  //     // console.log(typeof IdArray);
+  //     console.log(e);
+  //     console.log(token);
+  //     axios.delete('https://web-production-5638.up.railway.app/api/orders/deleteAll', {
+  //      headers: {
+  //        Authorization: `Bearer ${token}`,
+  //      },
+  //     },{
+  //       ids: e
+  //     }).then((res)=>{
+  //      console.log(res, e);
+  //      refresh();
+  //    })
+  //    .catch((err)=>{
+  //      console.log(err,e);
+  //    });
+  //    setRefresh(!refresh)
+  // }
 
   return (
     <>
@@ -137,8 +164,18 @@ export default function ProductOrder() {
               из {totalPage / limit} страниц
             </span>
             <span className="flex">
-              <button className="mr-4 text-paginationButtonColor">&#60;</button>
-              <button className=" text-paginationButtonColor">&#62;</button>
+              <button
+                onClick={() => (page ? setPage(page - 1) : null)}
+                className="mr-4 text-paginationButtonColor"
+              >
+                &#60;
+              </button>
+              <button
+                onClick={() => setPage(page + 1)}
+                className=" text-paginationButtonColor"
+              >
+                &#62;
+              </button>
             </span>
           </div>
         </div>

@@ -26,6 +26,7 @@ export default function AtributPage({
   const [status, setStatus] = useState([])
 
   const initialValues = {
+
     price: '',
     salePrice: '',
     type: '',
@@ -39,6 +40,16 @@ export default function AtributPage({
   const imageWrapper = JSON.parse(window.localStorage.getItem('image'))
   const token = JSON.parse(window.localStorage.getItem('token'))
   let image = [imageWrapper]
+
+    price: "",
+    salePrice: "",
+    type: "",
+    status: "",
+  };
+  const infor = JSON.parse(window.localStorage.getItem("information"));
+  const image = JSON.parse(window.localStorage.getItem("image"));
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
 
   const onSubmit = (values, { resetForm }) => {
     let atributeIds = addedDate.map((itm) => itm.ids)
