@@ -15,6 +15,7 @@ const Products = () => {
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [totalPage, setTotalpage] = React.useState(0);
+  const [refresh, setRefresh] = React.useState(false);
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -34,12 +35,12 @@ const Products = () => {
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       });
-  }, [limit, page]);
+  }, [limit, page, refresh]);
 
   // --- Loader
   const loaders = (
     <svg
-      aria-hidden="true"
+      ariaHidden="true"
       className="mr-2 w-14 h-1w-14 text-gray-200 animate-spin dark:text-gray-200 fill-blue-600"
       viewBox="0 0 100 101"
       fill="none"
@@ -108,6 +109,7 @@ const Products = () => {
                     data={item}
                     key={item.id}
                     isChecked={isChecked}
+                    refresh={() => setRefresh(!refresh)}
                     handleChange={handleChange}
                   ></TableRow>
                 );

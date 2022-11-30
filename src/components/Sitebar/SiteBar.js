@@ -157,7 +157,7 @@ export default function SiteBar() {
         <NavLink
           onClick={Logout}
           className={` py-4 opacity-80 flex items-center px-6 text-sm leading-lead font-medium text-navBarColor`}
-          to={"/"}
+          to={"/exit"}
         >
           <ExitICon />
           <span className="ml-navBarIcon">Выйти</span>
@@ -168,7 +168,7 @@ export default function SiteBar() {
           Developed by{" "}
           <span className="text-supportColor">Support IT Solution </span>
         </p>
-      </div>  
+      </div>
       <Modal isVisible={showModal}>
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
           <div className="relative w-full max-w-md h-full md:h-auto">

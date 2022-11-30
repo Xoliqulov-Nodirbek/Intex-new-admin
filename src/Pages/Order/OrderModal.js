@@ -5,7 +5,7 @@ import addressLogo from "../../Assets/Images/NavbarImgs/addresLogo.svg";
 import { useState } from "react";
 import Calendar from "../../Assets/Images/NavbarImgs/date.svg";
 
-const env = process.env.REACT_APP_ALL_API
+const env = process.env.REACT_APP_ALL_API;
 
 function OrderModal({ isShown, onClosed, items, refreshed }) {
   // eslint-disable-next-line no-unused-vars
@@ -13,8 +13,6 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
 
   if (!isShown) return null;
   const token = JSON.parse(window.localStorage.getItem("token"));
-
-  console.log(token);
 
   const handleUpdate = (e) => {
     axios
