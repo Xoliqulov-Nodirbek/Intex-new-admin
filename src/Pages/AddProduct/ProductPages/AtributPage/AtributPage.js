@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import DropDown from "../../../../BaseComponents/DropDown/DropDown";
 import DropImg from "../../../../Assets/Images/HomeContentImg/Drop.svg";
@@ -18,7 +17,7 @@ export default function AtributPage({
   ownPage,
 }) {
   const env = process.env.REACT_APP_ALL_API;
-  const [navBarDrop, setNavBarDrop] = useState(false);
+  const [navBarDrop, setNavBarDrop] = useState(true);
   const [navBarDrop1, setNavBarDrop1] = useState(false);
   const [navBarDrop2, setNavBarDrop2] = useState(false);
   const [subLoading, setSubLoading] = useState(false);
@@ -36,14 +35,12 @@ export default function AtributPage({
     status_uz: "",
     status_eng: "",
   };
-
   const infor = JSON.parse(window.localStorage.getItem("information"));
   const image = JSON.parse(window.localStorage.getItem("image"));
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const onSubmit = (values, { resetForm }) => {
     let atributeIds = addedDate.map((itm) => itm.ids);
-
     let atributUInfo = {
       price: values.price,
       discount_price: values.salePrice,
@@ -80,6 +77,7 @@ export default function AtributPage({
       .catch((err) => {
         toast.error("Ошибка при вставке или вставке");
       });
+    console.log(resultData);
   };
 
   const validationSchema = Yup.object({
@@ -125,6 +123,7 @@ export default function AtributPage({
         setData(res?.data.result);
       })
       .catch((err) => console.error(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -134,6 +133,7 @@ export default function AtributPage({
         setCategories(res?.data);
       })
       .catch((err) => console.error(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -143,6 +143,7 @@ export default function AtributPage({
         setStatus(res?.data);
       })
       .catch((err) => console.error(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [addedDate, setAddedDate] = useState([]);
@@ -150,11 +151,13 @@ export default function AtributPage({
   const handleSubmit = (e) => {
     e.preventDefault();
     let result = data.find((e) => e.attribute_ru === selectOnce.current.value);
+
     setShowModal(false);
     if (!addedDate.includes(result)) {
       setAddedDate([...addedDate, result]);
     }
   };
+
   return (
     <div className="pb-16">
       <form
@@ -257,6 +260,7 @@ export default function AtributPage({
               addedDate.map((el) => {
                 return (
                   <div key={el.id}>
+                    {console.log(addedDate)}
                     <label>{el.attribute_ru}</label>
                     <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
                       <ul className="flex flex-wrap gap-2  ">
