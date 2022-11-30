@@ -49,7 +49,6 @@ export default function AtributPage({
       image,
       ...atributUInfo,
     };
-
     ownPage(false);
     infoPageThis(true);
     resetForm();
