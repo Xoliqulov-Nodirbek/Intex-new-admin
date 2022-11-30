@@ -33,31 +33,37 @@ export default function AtributPage({
     status: "",
   };
   const infor = JSON.parse(window.localStorage.getItem("information"));
-  const image = JSON.parse(window.localStorage.getItem("image"));
+  const imageWrapper = JSON.parse(window.localStorage.getItem("image"));
   const token = JSON.parse(window.localStorage.getItem("token"));
+  let image = [imageWrapper];
+
   const onSubmit = (values, { resetForm }) => {
     let atributUInfo = {
       price: values.price,
       discount_price: values.salePrice,
       category_id: Number(values.type),
       status_id: Number(values.status),
-      attribute_id: addedDate.map((mmm) => mmm.ids),
+      attribute_id: addedDate[0].ids,
     };
-    const data = {
+    const resultData = {
       ...infor,
       image,
       ...atributUInfo,
     };
-    console.log(data);
+
     ownPage(false);
     infoPageThis(true);
     resetForm();
     axios
-      .post("https://web-production-5638.up.railway.app/api/products", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .post(
+        "https://web-production-5638.up.railway.app/api/products",
+        resultData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
@@ -125,15 +131,14 @@ export default function AtributPage({
   }, []);
 
   const [addedDate, setAddedDate] = useState([]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let result = data.find((e) => e.attribute_ru === selectOnce.current.value);
-    // setAddedDate(result);
-
     setShowModal(false);
     setAddedDate([...addedDate, result]);
   };
-
+  // console.log("kelishi kerak", addedDate[0].ids);
   return (
     <div className="pb-16">
       <form
