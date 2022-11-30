@@ -56,7 +56,6 @@ const ProductsCategory = () => {
       />
     </svg>
   );
-
   return (
     <div className="bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
