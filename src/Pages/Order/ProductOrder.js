@@ -5,8 +5,6 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import TableRow2 from "../../components/TableRow/orderTable";
 import axios from "axios";
 
-const env = process.env.REACT_APP_ALL_API;
-
 export default function ProductOrder() {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
@@ -42,31 +40,6 @@ export default function ProductOrder() {
         setTotalpage(res.data?.total_count.count);
       });
   }, [limit, page, token, refresh]);
-
-  // const IdArrays = data.result?.map((res) => res.id)
-
-  const IdArray = data.result?.map((res) => res.id);
-
-  //   const DeleteAll =(e)=>{
-  //     // console.log(typeof IdArray);
-  //     console.log(e);
-  //     console.log(token);
-  //     axios.delete('https://web-production-5638.up.railway.app/api/orders/deleteAll', {
-  //      headers: {
-  //        Authorization: `Bearer ${token}`,
-  //      },
-  //     },{
-  //       ids: e
-  //     }).then((res)=>{
-  //      console.log(res, e);
-  //      refresh();
-  //    })
-  //    .catch((err)=>{
-  //      console.log(err,e);
-  //    });
-  //    setRefresh(!refresh)
-  // }
-
   return (
     <>
       <div className="bg-white border-b rounded-xl mb-[100px] z-30">

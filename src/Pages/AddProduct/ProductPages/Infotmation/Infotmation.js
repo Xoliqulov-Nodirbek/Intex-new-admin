@@ -9,7 +9,7 @@ import MButton from "../../../../BaseComponents/MButton/MButton";
 const env = process.env.REACT_APP_ALL_API;
 const token = JSON.parse(window.localStorage.getItem("token"));
 export default function AtributPage({ setImg, info }) {
-  const [openRu, setOpenRu] = useState(false);
+  const [openRu, setOpenRu] = useState(true);
   const [openEn, setOpenEn] = useState(false);
   const [openUz, setOpenUz] = useState(false);
   const [data, setData] = useState([]);
@@ -29,7 +29,6 @@ export default function AtributPage({ setImg, info }) {
   const onSubmit = (values, { resetForm }) => {
     info(false);
     setImg(true);
-
     resetForm();
     const informationResult = {
       name_uz: values.uzName,

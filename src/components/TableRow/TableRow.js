@@ -60,7 +60,7 @@ export default function TableRow({
       <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
     </svg>
   );
-
+  console.log(data);
   return (
     <tr className={`flex items-center border-b ${styles}`}>
       {children ? (
@@ -98,7 +98,7 @@ export default function TableRow({
           <TableData styles="w-[147px]">220x150x60см</TableData>
           <TableData styles="w-[118px]">1 622 л</TableData>
           <TableData styles="w-[140px]">
-            <MLabel type={`label_${data.status_en}`}>Новинки</MLabel>
+            <MLabel type={`label_${data.status_en}`}>{data.status_ru}</MLabel>
           </TableData>
           <TableData styles="w-[95px] pr-3 justify-center relative">
             <button
