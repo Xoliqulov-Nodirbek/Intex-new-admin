@@ -86,6 +86,7 @@ export default function AtributPage({ setImg, info }) {
       });
   }, []);
   // Category get end
+  console.log(category);
   const validationSchema = Yup.object({
     name: Yup.string()
       .required("Username is required, at least 3 characters")
