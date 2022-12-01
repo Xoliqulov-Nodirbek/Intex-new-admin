@@ -40,14 +40,7 @@ export default function Header() {
     }
   };
   return (
-    <div className="bg-white w-full py-headerPaddingTopBottom px-headerPaddingX border-b-2 flex items-center justify-between">
-      <input
-        id="search-inp"
-        autoComplete="off"
-        className="w-headerInputWidth outline-none py-2.5 pr-3 pl-headerInpPl bg-headerInpBg rounded-xl"
-        type="text"
-        placeholder="Поиск"
-      />
+    <div className="bg-white w-full py-headerPaddingTopBottom px-headerPaddingX border-b-2 flex items-center justify-end">
       <div className="flex items-center space-x-8">
         <div
           onClick={() => setDown(!down)}

@@ -154,21 +154,20 @@ export default function SiteBar() {
           <SettingsIcon />
           <span className="ml-navBarIcon">Настройки сайта</span>
         </NavLink>
-        <NavLink
+        <button
           onClick={Logout}
           className={` py-4 opacity-80 flex items-center px-6 text-sm leading-lead font-medium text-navBarColor`}
-          to={"/"}
         >
           <ExitICon />
           <span className="ml-navBarIcon">Выйти</span>
-        </NavLink>
+        </button>
       </div>
       <div className="text-sm leading-lead pl-5 pb-5 text-navBarColor w-supportWidth absolute bottom-0">
         <p>
           Developed by{" "}
           <span className="text-supportColor">Support IT Solution </span>
         </p>
-      </div>  
+      </div>
       <Modal isVisible={showModal}>
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
           <div className="relative w-full max-w-md h-full md:h-auto">

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Dounload from "../../../../Assets/Images/HomeContentImg/dounload.svg";
-import addImgDoun from "../../../../Assets/Images/HomeContentImg/example.png";
 import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel.svg";
 import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
-export default function Images({ imgInfoRes, imgInfo, img, atrbut }) {
+import axios from "axios";
+export default function Images({ img, atrbut }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [getImg, setGetImg] = useState([]);
-
+  const token = window.localStorage.getItem("token");
   const findNewImg = (evt) => {
     setGetImg([
       ...getImg,
@@ -26,7 +26,8 @@ export default function Images({ imgInfoRes, imgInfo, img, atrbut }) {
       ]);
     }
   };
-  // imgInfoRes(imgUrl);'
+  let collectingImgs = [];
+  imgUrl.map((item) => collectingImgs.push(item.url));
 
   function handldelete(id) {
     let newTodo = getImg.filter((e) => e.id !== id);
@@ -34,11 +35,30 @@ export default function Images({ imgInfoRes, imgInfo, img, atrbut }) {
     setGetImg(newTodo);
     setImgUrl(newDelImg);
   }
+  let formdata = new FormData();
   const getResultInfo = (e) => {
     e.preventDefault();
-    imgInfoRes(imgUrl);
-    img(false)
-    atrbut(true)
+    for (const item of collectingImgs) {
+      formdata.append("image", item);
+    }
+    img(false);
+    atrbut(true);
+    axios
+      .post(
+        `https://web-production-5638.up.railway.app/api/media/create`,
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          window.localStorage.setItem("image", JSON.stringify(res.data.image));
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <form onSubmit={getResultInfo}>

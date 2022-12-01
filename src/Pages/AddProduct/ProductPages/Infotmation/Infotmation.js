@@ -2,48 +2,51 @@ import { useEffect, useState } from "react";
 import DropDown from "../../../../BaseComponents/DropDown/DropDown";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 // Images
 import Drop from "../../../../Assets/Images/HomeContentImg/Drop.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
 const env = process.env.REACT_APP_ALL_API;
 const token = JSON.parse(window.localStorage.getItem("token"));
-export default function AtributPage({ firsInfos, setImg, info }) {
-  const [openRu, setOpenRu] = useState(false);
+export default function AtributPage({ setImg, info }) {
+  const [openRu, setOpenRu] = useState(true);
   const [openEn, setOpenEn] = useState(false);
   const [openUz, setOpenUz] = useState(false);
   const [data, setData] = useState([]);
   const [countryData, setCountryData] = useState([]);
   const [category, setCategory] = useState([]);
-
   const initialValues = {
     name: "",
-    productType: "",
-    ruCountry: "",
-    ruUserInfo: "",
-    ruCategory: "",
-    ruQuantity: "",
     enName: "",
-    enProductType: "",
-    enCountry: "",
-    enUserInfo: "",
-    enCategory: "",
-    enQuantityy: "",
     uzName: "",
-    uzProductType: "",
-    uzCountry: "",
+    ruQuantity: "",
+    ruUserInfo: "",
+    enUserInfo: "",
     uzUserInfo: "",
-    uzCategory: "",
-    uzQuantity: "",
+    ruCountry: "",
+    productType: "",
+  };
+  const onSubmit = (values, { resetForm }) => {
+    info(false);
+    setImg(true);
+    resetForm();
+    const informationResult = {
+      name_uz: values.uzName,
+      name_ru: values.name,
+      name_en: values.enName,
+      count: Number(values.ruQuantity),
+      about_uz: values.uzUserInfo,
+      about_ru: values.ruUserInfo,
+      about_en: values.enUserInfo,
+      country_id: Number(values.ruCountry),
+      manufacturer_id: Number(values.productType),
+    };
+    window.localStorage.setItem(
+      "information",
+      JSON.stringify(informationResult)
+    );
   };
 
-  const onSubmit = (values, { resetForm }) => {
-    info(false)
-    setImg(true)
-    firsInfos(values);
-    resetForm()
-  };
   // Manufactory get start
   useEffect(() => {
     axios
@@ -83,6 +86,7 @@ export default function AtributPage({ firsInfos, setImg, info }) {
       });
   }, []);
   // Category get end
+  console.log(category);
   const validationSchema = Yup.object({
     name: Yup.string()
       .required("Username is required, at least 3 characters")
@@ -101,7 +105,6 @@ export default function AtributPage({ firsInfos, setImg, info }) {
     enCountry: Yup.string().required("Required"),
     enUserInfo: Yup.string().required("Required"),
     enCategory: Yup.string().required("Required"),
-    enQuantityy: Yup.number().required("Required"),
     uzName: Yup.string()
       .required("Username is required, at least 3 characters")
       .min(3, "Minimal 3 characters")
@@ -110,9 +113,7 @@ export default function AtributPage({ firsInfos, setImg, info }) {
     uzCountry: Yup.string().required("Required"),
     uzUserInfo: Yup.string().required("Required"),
     uzCategory: Yup.string().required("Required"),
-    uzQuantity: Yup.number().required("Required"),
   });
-
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -181,7 +182,7 @@ export default function AtributPage({ firsInfos, setImg, info }) {
                 >
                   <option>Выберите призводству продукта</option>
                   {data.map((item) => (
-                    <option id={item.id} key={item.id}>
+                    <option value={item.id} id={item.id} key={item.id}>
                       {item.manufacturer_ru}
                     </option>
                   ))}
@@ -206,7 +207,7 @@ export default function AtributPage({ firsInfos, setImg, info }) {
                 >
                   <option>Выберите призводству продукта</option>
                   {countryData.map((item) => (
-                    <option id={item.id} key={item.id}>
+                    <option value={item.id} id={item.id} key={item.id}>
                       {item.country_ru}
                     </option>
                   ))}
@@ -435,19 +436,19 @@ export default function AtributPage({ firsInfos, setImg, info }) {
                   Количество
                   <input
                     type="number"
-                    name="enQuantityy"
+                    name="ruQuantity"
                     id="name"
                     placeholder="Введите количество продукта"
                     className={
-                      formik.touched.enQuantityy && formik.errors.enQuantityy
+                      formik.touched.ruQuantity && formik.errors.ruQuantity
                         ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
                         : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
                     }
                     minLength="3"
                     maxLength="25"
-                    {...formik.getFieldProps("enQuantityy")}
+                    {...formik.getFieldProps("ruQuantity")}
                   />
-                  {formik.touched.enQuantityy && formik.errors.enQuantityy ? (
+                  {formik.touched.ruQuantity && formik.errors.ruQuantity ? (
                     <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
                       {formik.errors.enQuantityy}
                     </span>
@@ -599,21 +600,21 @@ export default function AtributPage({ firsInfos, setImg, info }) {
                   Количество
                   <input
                     type="number"
-                    name="uzQuantity"
+                    name="ruQuantity"
                     id="name"
                     placeholder="Введите количество продукта"
                     className={
-                      formik.touched.uzQuantity && formik.errors.uzQuantity
+                      formik.touched.ruQuantity && formik.errors.ruQuantity
                         ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
                         : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
                     }
                     minLength="3"
                     maxLength="25"
-                    {...formik.getFieldProps("uzQuantity")}
+                    {...formik.getFieldProps("ruQuantity")}
                   />
-                  {formik.touched.uzQuantity && formik.errors.uzQuantity ? (
+                  {formik.touched.ruQuantity && formik.errors.ruQuantity ? (
                     <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
-                      {formik.errors.uzQuantity}
+                      {formik.errors.ruQuantity}
                     </span>
                   ) : null}
                 </label>

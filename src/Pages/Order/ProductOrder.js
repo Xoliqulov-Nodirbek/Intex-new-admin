@@ -5,8 +5,6 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import TableRow2 from "../../components/TableRow/orderTable";
 import axios from "axios";
 
-const env = process.env.REACT_APP_ALL_API;
-
 export default function ProductOrder() {
   const [data, setData] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
@@ -28,18 +26,20 @@ export default function ProductOrder() {
 
   React.useEffect(() => {
     axios
-      .get(`${env}orders?page=${page}&limit=${limit}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `https://web-production-5638.up.railway.app/api/orders?page=${page}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         setData(res?.data);
 
         setTotalpage(res.data?.total_count.count);
       });
   }, [limit, page, token, refresh]);
-
   return (
     <>
       <div className="bg-white border-b rounded-xl mb-[100px] z-30">
@@ -137,8 +137,18 @@ export default function ProductOrder() {
               из {totalPage / limit} страниц
             </span>
             <span className="flex">
-              <button className="mr-4 text-paginationButtonColor">&#60;</button>
-              <button className=" text-paginationButtonColor">&#62;</button>
+              <button
+                onClick={() => (page ? setPage(page - 1) : null)}
+                className="mr-4 text-paginationButtonColor"
+              >
+                &#60;
+              </button>
+              <button
+                onClick={() => setPage(page + 1)}
+                className=" text-paginationButtonColor"
+              >
+                &#62;
+              </button>
             </span>
           </div>
         </div>

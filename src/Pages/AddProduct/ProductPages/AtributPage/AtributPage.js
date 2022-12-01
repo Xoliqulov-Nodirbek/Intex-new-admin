@@ -3,17 +3,21 @@ import DropDown from '../../../../BaseComponents/DropDown/DropDown'
 import DropImg from '../../../../Assets/Images/HomeContentImg/Drop.svg'
 import * as Yup from 'yup'
 import { toast, Toaster } from 'react-hot-toast'
-import axios, { Axios } from 'axios'
-import { FormikConsumer, useFormik } from 'formik'
+import axios from 'axios'
+import { useFormik } from 'formik'
 import MButton from '../../../../BaseComponents/MButton/MButton'
-import { AtributeRu } from '../../../../BaseComponents/TagsInput/AddAtribut'
 import MFilter from '../../../../BaseComponents/MFilter/MFilter'
 import { Modal } from '../../../../components/Modal/Modal'
 import Close from '../../../../Assets/Images/SettingsImg/close.svg'
 
-export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
+export default function AtributPage({
+  showModal,
+  setShowModal,
+  infoPageThis,
+  ownPage,
+}) {
   const env = process.env.REACT_APP_ALL_API
-  const [navBarDrop, setNavBarDrop] = useState(false)
+  const [navBarDrop, setNavBarDrop] = useState(true)
   const [navBarDrop1, setNavBarDrop1] = useState(false)
   const [navBarDrop2, setNavBarDrop2] = useState(false)
   const [subLoading, setSubLoading] = useState(false)
@@ -25,35 +29,65 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
     price: '',
     salePrice: '',
     type: '',
-    // type_eng: '',
-    // type_uz: '',
     status: '',
-    // status_eng: '',
-    // status_uz: '',
+    type_eng: '',
+    type_uz: '',
+    status_uz: '',
+    status_eng: '',
   }
+  const infor = JSON.parse(window.localStorage.getItem('information'))
+  const image = JSON.parse(window.localStorage.getItem('image'))
+  const token = JSON.parse(window.localStorage.getItem('token'))
+
   const onSubmit = (values, { resetForm }) => {
-    thirdinfos({
+    let atributeIds = addedDate.map((itm) => itm.ids)
+    let atributUInfo = {
       price: values.price,
-      discount_price : values.salePrice,
-      category_id : Number(values.type),
-      status_id : Number( values.status),
-    })
-
+      discount_price: values.salePrice,
+      category_id: Number(values.type),
+      status_id: Number(values.status),
+      attribute_id: atributeIds.flat(),
+    }
+    const resultData = {
+      ...infor,
+      image,
+      ...atributUInfo,
+    }
+    ownPage(false)
+    infoPageThis(true)
     resetForm()
+    axios
+      .post(
+        'https://web-production-5638.up.railway.app/api/products',
+        resultData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          console.log(res)
+          window.localStorage.removeItem('information')
+          window.localStorage.removeItem('image')
+          toast.success('Успешно присоединился')
+        }
+      })
+      .catch((err) => {
+        toast.error('Ошибка при вставке или вставке')
+      })
   }
-
-
-  
 
   const validationSchema = Yup.object({
     price: Yup.number().required('Price value is required'),
     salePrice: Yup.number().required('Saleprice value is required'),
-    // type: Yup.string().required('Type option is required'),
-    // type_eng: Yup.string().required('Type option is required'),
-    // type_uz: Yup.string().required('Type option is required'),
-    // status: Yup.string().required('Status option is required'),
-    // status_eng: Yup.string().required('Status option is required'),
-    // status_uz: Yup.string().required('Status option is required'),
+    type: Yup.string().required('Type option is required'),
+    type_eng: Yup.string().required('Type option is required'),
+    type_uz: Yup.string().required('Type option is required'),
+    status: Yup.string().required('Status option is required'),
+    status_eng: Yup.string().required('Status option is required'),
+    status_uz: Yup.string().required('Status option is required'),
   })
 
   const removeTags = () => {}
@@ -88,6 +122,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
         setData(res?.data.result)
       })
       .catch((err) => console.error(err))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -97,6 +132,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
         setCategories(res?.data)
       })
       .catch((err) => console.error(err))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -106,18 +142,21 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
         setStatus(res?.data)
       })
       .catch((err) => console.error(err))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [addedDate, setAddedDate] = useState([])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     let result = data.find((e) => e.attribute_ru === selectOnce.current.value)
-    // setAddedDate(result);
 
     setShowModal(false)
-    setAddedDate([...addedDate, result])
+    if (!addedDate.includes(result)) {
+      setAddedDate([...addedDate, result])
+    }
   }
-  // console.log(addedDate)
+
   return (
     <div className="pb-16">
       <form
@@ -138,7 +177,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
         >
           <div
             className={
-              navBarDrop ? 'h-auto overflow-auto pr-5' : 'h-0 overflow-hidden'
+              navBarDrop ? 'h-auto overflow-auto pr-5 ' : 'h-0 overflow-hidden '
             }
           >
             <div className="flex justify-between ">
@@ -204,7 +243,9 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                 >
                   {categories.length &&
                     categories.map((el) => (
-                      <option value={el.id} key={el.id}>{el.category_ru}</option>
+                      <option value={el.id} key={el.id}>
+                        {el.category_ru}
+                      </option>
                     ))}
                 </select>
                 {formik.touched.type && formik.errors.type ? (
@@ -214,32 +255,33 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                 ) : null}
               </div>
             </div>
-            {addedDate.length > 0 &&
-              addedDate.map((el) => {
-                return (
-                  <div key={el.id}>
-                    <label>{el.attribute_ru}</label>
-                    <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
-                      <ul className="flex flex-wrap gap-2  ">
-                        {el.ru &&
-                          el?.ru.map((item) => (
-                            <li key={Math.random}>
-                              <MFilter>
-                                {item}
-                                <span
-                                  className="ml-2 cursor-pointer"
-                                  onClick={() => removeTags()}
-                                >
-                                  X
-                                </span>
-                              </MFilter>
-                            </li>
-                          ))}
-                      </ul>
+
+            <div className="grid grid-cols-3 gap-x-14 gap-y-3">
+              {addedDate.length > 0 &&
+                addedDate.map((el) => {
+                  return (
+                    <div key={el.id}>
+                      <label>{el.attribute_ru}</label>
+                      <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
+                        <ul className="flex flex-wrap gap-2  ">
+                          {el.ru &&
+                            el?.ru.map((item, index) => (
+                              <li key={index}>
+                                <MFilter>
+                                  {item}
+                                  <span
+                                    className="ml-2 cursor-pointer"
+                                    onClick={() => removeTags()}
+                                  ></span>
+                                </MFilter>
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+            </div>
 
             <div>
               <div className="relative mt-5">
@@ -346,7 +388,9 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                 >
                   {categories.length &&
                     categories.map((el) => (
-                      <option value={el.id} key={el.id}>{el.category_en}</option>
+                      <option value={el.id} key={el.id}>
+                        {el.category_en}
+                      </option>
                     ))}
                 </select>
                 {formik.touched.type_eng && formik.errors.type_eng ? (
@@ -356,37 +400,38 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                 ) : null}
               </div>
             </div>
-            {addedDate.length > 0 &&
-              addedDate.map((el) => {
-                return (
-                  <div key={el.id}>
-                    <label>{el.attribute_en}</label>
-                    <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
-                      <ul className="flex flex-wrap gap-2  ">
-                        {el.en &&
-                          el?.en.map((item) => (
-                            <li key={Math.random}>
-                              <MFilter>
-                                {item}
-                                <span
-                                  className="ml-2 cursor-pointer"
-                                  // onClick={() => removeTags()}
-                                >
-                                  X
-                                </span>
-                              </MFilter>
-                            </li>
-                          ))}
-                      </ul>
+            <div className="grid grid-cols-3 gap-x-14 gap-y-3">
+              {addedDate.length > 0 &&
+                addedDate.map((el) => {
+                  return (
+                    <div key={el.id}>
+                      <label>{el.attribute_en}</label>
+                      <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
+                        <ul className="flex flex-wrap gap-2  ">
+                          {el.en &&
+                            el?.en.map((item, index) => (
+                              <li key={index}>
+                                <MFilter>
+                                  {item}
+                                  <span
+                                    className="ml-2 cursor-pointer"
+                                    // onClick={() => removeTags()}
+                                  >
+                                    
+                                  </span>
+                                </MFilter>
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+            </div>
 
             <div className="relative mt-5">
               <label className="text-base flex flex-col">Status</label>
               <select
-                onChange={() => console.log('Sa')}
                 name="status_eng"
                 id="status_eng"
                 className={
@@ -487,7 +532,9 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                 >
                   {categories.length &&
                     categories.map((el) => (
-                      <option value={el.id} key={el.id}>{el.category_uz}</option>
+                      <option value={el.id} key={el.id}>
+                        {el.category_uz}
+                      </option>
                     ))}
                 </select>
                 {formik.touched.type_uz && formik.errors.type_uz ? (
@@ -497,32 +544,35 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
                 ) : null}
               </div>
             </div>
-            {addedDate.length > 0 &&
-              addedDate.map((el) => {
-                return (
-                  <div key={el.id}>
-                    <label>{el.attribute_uz}</label>
-                    <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
-                      <ul className="flex flex-wrap gap-2  ">
-                        {el.uz &&
-                          el?.uz.map((item) => (
-                            <li key={Math.random}>
-                              <MFilter>
-                                {item}
-                                <span
-                                  className="ml-2 cursor-pointer"
-                                  // onClick={() => removeTags()}
-                                >
-                                  X
-                                </span>
-                              </MFilter>
-                            </li>
-                          ))}
-                      </ul>
+
+            <div className="grid grid-cols-3 gap-x-14 gap-y-3">
+              {addedDate.length > 0 &&
+                addedDate.map((el) => {
+                  return (
+                    <div key={el.id}>
+                      <label>{el.attribute_uz}</label>
+                      <div className=" w-[340px] h-[48px] border rounded-lg border-gray-200 p-1 flex items-center flex-wrap">
+                        <ul className="flex flex-wrap gap-2  ">
+                          {el.uz &&
+                            el?.uz.map((item, index) => (
+                              <li key={index}>
+                                <MFilter>
+                                  {item}
+                                  <span
+                                    className="ml-2 cursor-pointer"
+                                    // onClick={() => removeTags()}
+                                  >
+                                    
+                                  </span>
+                                </MFilter>
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+            </div>
 
             <div className="relative mt-5">
               <label className="text-base flex flex-col">Status</label>
@@ -579,9 +629,15 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
             <select
               ref={selectOnce}
               className="w-[330px] h-12 rounded-lg border border-gray-200 outline-none "
+              name="select"
             >
               {data.map((datas) => (
-                <option value={datas.attribute_ru} id={datas.id} key={datas.id}>
+                <option
+                  value={datas.attribute_ru}
+                  id={datas.id}
+                  key={datas.id}
+                  name={datas.id}
+                >
                   {datas.attribute_ru}
                 </option>
               ))}
@@ -593,7 +649,6 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
               onClick={() => setShowModal(false)}
               className="bg-[#F2F2F2] w-72 py-3 rounded-xl text-russuanColor font-medium text-lg"
             >
-              
               Отменить
             </button>
             <button
@@ -605,6 +660,7 @@ export default function AtributPage({ showModal, setShowModal, thirdinfos }) {
           </div>
         </form>
       </Modal>
+      <Toaster position="bottom-right" />
     </div>
   )
 }

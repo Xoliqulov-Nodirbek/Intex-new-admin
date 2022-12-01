@@ -40,7 +40,7 @@ const ProductsCategory = () => {
   // --- Loader
   const loaders = (
     <svg
-      aria-hidden="true"
+      ariaHidden="true"
       className="mr-2 w-14 h-1w-14 text-gray-200 animate-spin dark:text-gray-200 fill-blue-600"
       viewBox="0 0 100 101"
       fill="none"
@@ -56,7 +56,6 @@ const ProductsCategory = () => {
       />
     </svg>
   );
-
   return (
     <div className="bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
