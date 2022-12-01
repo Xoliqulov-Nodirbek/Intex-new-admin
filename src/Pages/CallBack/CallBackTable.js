@@ -153,7 +153,7 @@ export default function TableContactRow() {
               maxLength={1}
             />
             <span className="mr-3.5 text-sm text-paginationButtonColor">
-              из {totalPage / limit} страниц
+              из {Math.floor(totalPage / limit)} страниц
             </span>
             <span className="flex">
               <button className="mr-4 text-paginationButtonColor">&#60;</button>

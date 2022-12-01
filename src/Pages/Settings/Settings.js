@@ -215,6 +215,7 @@ export default function Home() {
       />
     </svg>
   );
+
   const loaderButton = (
     <svg
       className="inline mr-2 w-6 h-6 text-text-white animate-spin dark:text-white fill-gray-400 dark:fill-gray-400"

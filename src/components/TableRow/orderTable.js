@@ -105,7 +105,7 @@ export default function TableRow2({
               <TableData styles="w-[153px] text-sm">
                 {data.discount_summa ? data.discount_summa + " cум" : "-"}
               </TableData>
-              <TableData styles="w-[145px] text-sm flex flex-col">
+              <TableData styles="w-[145px] text-sm grid grid-cols-1">
                 <h4>{data.created_at.slice(0, 10)}</h4>
                 <h5 className="text-xs">{data.created_at.slice(11, 16)}</h5>
               </TableData>
@@ -121,7 +121,7 @@ export default function TableRow2({
                   <img src={ThreeDotsSvg} alt="three dots icon" />
                 </button>
                 {showModal ? (
-                  <ul className="bg-white w-[160px] absolute border rounded-lg shadow-lg space-y-2 z-40 -right-10">
+                  <ul className="bg-white w-[160px] absolute border rounded-lg shadow-lg space-y-2 z-40 right-0">
                     <div className="relative">
                       <button
                         onClick={() => setIsShown(true)}
