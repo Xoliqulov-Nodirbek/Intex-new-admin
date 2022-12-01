@@ -68,11 +68,10 @@ export default function AtributPage({
       )
       .then((res) => {
         if (res.status === 201) {
-          console.log(res)
           window.localStorage.removeItem('information')
           window.localStorage.removeItem('image')
-          toast.success('Успешно присоединился')
         }
+        toast.success('Успешно присоединился')
       })
       .catch((err) => {
         toast.error('Ошибка при вставке или вставке')
@@ -80,14 +79,14 @@ export default function AtributPage({
   }
 
   const validationSchema = Yup.object({
-    price: Yup.number().required('Price value is required'),
-    salePrice: Yup.number().required('Saleprice value is required'),
-    type: Yup.string().required('Type option is required'),
-    type_eng: Yup.string().required('Type option is required'),
-    type_uz: Yup.string().required('Type option is required'),
-    status: Yup.string().required('Status option is required'),
-    status_eng: Yup.string().required('Status option is required'),
-    status_uz: Yup.string().required('Status option is required'),
+    price: Yup.number().required('Required!'),
+    salePrice: Yup.number().required('Required!'),
+    type: Yup.string().required('Required!'),
+    type_eng: Yup.string().required('Required!'),
+    type_uz: Yup.string().required('Required!'),
+    status: Yup.string().required('Required!'),
+    status_eng: Yup.string().required('Required!'),
+    status_uz: Yup.string().required('Required!'),
   })
 
   const removeTags = () => {}
@@ -241,6 +240,7 @@ export default function AtributPage({
                   }
                   {...formik.getFieldProps('type')}
                 >
+                  <option hidden >Тип</option>
                   {categories.length &&
                     categories.map((el) => (
                       <option value={el.id} key={el.id}>
@@ -386,6 +386,7 @@ export default function AtributPage({
                   }
                   {...formik.getFieldProps('type_eng')}
                 >
+                  <option hidden>Type</option>
                   {categories.length &&
                     categories.map((el) => (
                       <option value={el.id} key={el.id}>
@@ -530,6 +531,7 @@ export default function AtributPage({
                   }
                   {...formik.getFieldProps('type_uz')}
                 >
+                  <option hidden >Turi</option>
                   {categories.length &&
                     categories.map((el) => (
                       <option value={el.id} key={el.id}>
