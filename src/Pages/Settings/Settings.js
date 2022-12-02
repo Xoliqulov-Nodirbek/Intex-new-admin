@@ -132,6 +132,7 @@ export default function Home() {
 
   // --- Delete Link
   const linkDelete = (id, e) => {
+    
     e.preventDefault();
 
     axios
@@ -144,7 +145,6 @@ export default function Home() {
         if (res?.status === 200) {
           console.log(res);
           axios.get(`${env}social-networks`).then((data) => {
-            console.log(data);
             setLinks(data?.data);
           });
         }

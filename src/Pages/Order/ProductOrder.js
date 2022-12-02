@@ -4,6 +4,7 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import TableRow2 from "../../components/TableRow/orderTable";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function ProductOrder() {
   const [data, setData] = React.useState([]);
@@ -15,8 +16,23 @@ export default function ProductOrder() {
   const [refresh, setRefresh] = React.useState(false);
   const [deleteAll, setDeleteAll] = React.useState([]);
 
-  const token = JSON.parse(window.localStorage.getItem("token"));
   const env = process.env.REACT_APP_ALL_API;
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
+  const lang = useSelector((state) => state.data.lang);
+  const search = useSelector(state => state.data.search)
+
+  function searchProduct(inputValue, data) {
+    let regex = new RegExp(inputValue, "gi");
+    const filterInput = data.filter((product) =>
+      product[`name_${lang}`]?.match(regex)
+    );
+
+    return filterInput;
+  }
+
+
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -36,7 +52,7 @@ export default function ProductOrder() {
         }
       )
       .then((res) => {
-        setData(res?.data);
+        setData(res?.data.result);
 
         setTotalpage(res.data?.total_count.count);
       });
@@ -69,6 +85,7 @@ export default function ProductOrder() {
   // console.log("with id", deleteAll);
 
   // console.log(deleteAll.length);
+
 
   return (
     <>
@@ -127,8 +144,8 @@ export default function ProductOrder() {
               </TableRow2>
             </thead>
             <tbody className="bg-white">
-              {data.result?.length ? (
-                data.result?.map((item) => {
+              {data.length && search.length ? (
+                searchProduct(search, data).map((item) => {
                   return (
                     <TableRow2
                       styles="py-1.5"
@@ -143,7 +160,20 @@ export default function ProductOrder() {
                   );
                 })
               ) : (
-                <tr></tr>
+                data.map((item) => {
+                  return (
+                    <TableRow2
+                      styles="py-1.5"
+                      data={item}
+                      refresh={() => setRefresh(!refresh)}
+                      key={item.id}
+                      isChecked={isChecked}
+                      setDeleteAll={setDeleteAll}
+                      deleteAll={deleteAll}
+                      handleChanges={handleChange}
+                    ></TableRow2>
+                  );
+                })
               )}
             </tbody>
           </table>
