@@ -46,6 +46,7 @@ const languages = {
         settings: "Site settings",
         exit: "Exit",
     },
+    
     main:{
         filter:"Filter",
         searchProduct: "Search products ",
