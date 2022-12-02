@@ -16,7 +16,10 @@ const Products = () => {
   const [page, setPage] = React.useState(0);
   const [totalPage, setTotalpage] = React.useState(0);
   const [refresh, setRefresh] = React.useState(false);
+  const [deleteAll, setDeleteAll] = React.useState([]);
 
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const env = process.env.REACT_APP_ALL_API;
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -55,17 +58,47 @@ const Products = () => {
       />
     </svg>
   );
+  const IdArray = data.result?.map((res) => res.id);
+  // console.log(IdArray);
+  const DeleteAll = (e) => {
+    axios
+      .delete(
+        `${env}products/delete`,
 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            ids: isChecked ? IdArray : deleteAll,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res, IdArray);
+        setRefresh(!refresh);
+      })
+      .catch((err) => {
+        console.log(err, IdArray);
+      });
+  };
   return (
     <div className="bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
         <input
-          className="mr-3 w-4 h-4"
+          className="mr-3 w-4 h-4 cursor-pointer"
           type="checkbox"
           onChange={() => setIsChecked(!isChecked)}
         />
-        <span className="text-[#b9b9b9] mr-3">{checkedCount}, Выбрано</span>
-        <img src={Trash} alt="Trash icon" />
+        <span className="text-[#b9b9b9] mr-3">
+          {isChecked ? data.result.length : deleteAll.length}, Выбрано
+        </span>
+        <img
+          className="cursor-pointer"
+          onClick={DeleteAll}
+          src={Trash}
+          alt="Trash icon"
+        />
       </div>
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
@@ -109,6 +142,8 @@ const Products = () => {
                     key={item.id}
                     isChecked={isChecked}
                     refresh={() => setRefresh(!refresh)}
+                    setDeleteAll={setDeleteAll}
+                    deleteAll={deleteAll}
                     handleChange={handleChange}
                   ></TableRow>
                 );

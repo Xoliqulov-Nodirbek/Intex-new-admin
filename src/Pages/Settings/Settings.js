@@ -199,7 +199,7 @@ export default function Home() {
   // --- Loaders
   const loader = (
     <svg
-      aria-hidden="true"
+      ariaHidden="true"
       className="mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-400 fill-blue-600"
       viewBox="0 0 100 101"
       fill="none"
