@@ -10,13 +10,15 @@ import {
   ExitICon,
   SettingsIcon,
 } from "../../Assets/Images/NavbarImgs/NavBarIcons";
-
+import { useSelector } from "react-redux";
 export default function SiteBar() {
   const [innnerActice, setInnnerActice] = useState(false);
   const [categoryActive, setCategoryActive] = useState(false);
   const [atributActive, setAtributActive] = useState(false);
   const [navBarDrop, setNavBarDrop] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const languages = useSelector((state) => state.data.localization);
+  const lang = useSelector((state) => state.data.lang);
 
   function handActive() {
     setInnnerActice(true);
@@ -78,7 +80,9 @@ export default function SiteBar() {
           to={"/"}
         >
           <ProductIcon />
-          <span className="ml-navBarIcon">Продукты</span>
+          <span className="ml-navBarIcon">
+            {languages[lang].header.products}
+          </span>
           <img
             className={`absolute right-6 duration-200 -rotate-90 ${
               navBarDrop ? "rotate-0" : ""
@@ -104,7 +108,7 @@ export default function SiteBar() {
               } py-2.5 opacity-80 pl-14 block font-normal text-navBarColor text-sm`}
               to={"/"}
             >
-              Список продуктов
+              {languages[lang].sitebar.productList}
             </Link>
           </li>
           <li>
@@ -115,7 +119,7 @@ export default function SiteBar() {
               } py-2.5 opacity-80 pl-14 block font-normal text-navBarColor text-sm`}
               to={"/category"}
             >
-              Категории
+              {languages[lang].sitebar.category}
             </Link>
           </li>
           <li>
@@ -126,7 +130,7 @@ export default function SiteBar() {
               } py-2.5 opacity-80 pl-14 block font-normal text-navBarColor text-sm  `}
               to={"/atribut"}
             >
-              Атрибуты
+              {languages[lang].sitebar.atribut}
             </Link>
           </li>
         </ul>
@@ -136,7 +140,7 @@ export default function SiteBar() {
           to={"/order"}
         >
           <OrderICon />
-          <span className="ml-navBarIcon">Заказы</span>
+          <span className="ml-navBarIcon">{languages[lang].sitebar.order}</span>
         </NavLink>
         <NavLink
           onClick={delteInnerlink}
@@ -144,7 +148,9 @@ export default function SiteBar() {
           to={"/callBack"}
         >
           <CallIcon />
-          <span className="ml-navBarIcon">Обратный связ</span>
+          <span className="ml-navBarIcon">
+            {languages[lang].sitebar.recall}
+          </span>
         </NavLink>
         <NavLink
           onClick={delteInnerlink}
@@ -152,14 +158,16 @@ export default function SiteBar() {
           to={"/settings"}
         >
           <SettingsIcon />
-          <span className="ml-navBarIcon">Настройки сайта</span>
+          <span className="ml-navBarIcon">
+            {languages[lang].sitebar.settings}
+          </span>
         </NavLink>
         <button
           onClick={Logout}
           className={` py-4 opacity-80 flex items-center px-6 text-sm leading-lead font-medium text-navBarColor`}
         >
           <ExitICon />
-          <span className="ml-navBarIcon">Выйти</span>
+          <span className="ml-navBarIcon">{languages[lang].sitebar.exit}</span>
         </button>
       </div>
       <div className="text-sm leading-lead pl-5 pb-5 text-navBarColor w-supportWidth absolute bottom-0">

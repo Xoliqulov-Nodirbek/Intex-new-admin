@@ -5,24 +5,32 @@ import usaFlag from "../../Assets/Images/HeaderImgs/usa-flag.svg";
 import uzbFlag from "../../Assets/Images/HeaderImgs/uzb-flag.svg";
 import Notification from "../../Assets/Images/HeaderImgs/notification.svg";
 import avatar from "../../Assets/Images/HeaderImgs/avatar.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { changeLang } from "../../redux/siteDataReducer";
 
 export default function Header() {
   const [down, setDown] = useState(false);
   const [flagImg, setFlagImg] = useState(ruFlag);
   const [langName, setLangName] = useState("Ру");
 
+  const lang = useSelector((state) => state.data.lang);
+  const dispatch = useDispatch();
+
   const chooseName = (evt) => {
     if (evt.target.textContent === "Uz") {
       setLangName("Uz");
       setFlagImg(uzbFlag);
+      dispatch(changeLang("uz"));
     }
     if (evt.target.textContent === "Us") {
       setLangName("Us");
       setFlagImg(usaFlag);
+      dispatch(changeLang("en"));
     }
     if (evt.target.textContent === "Ру") {
       setLangName("Ру");
       setFlagImg(ruFlag);
+      dispatch(changeLang("ru"));
     }
   };
   const chooseImg = (evt) => {

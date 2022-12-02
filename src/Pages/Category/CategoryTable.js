@@ -4,6 +4,7 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableCat from "../../components/TableRow/CategoryTable";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import { useSelector } from "react-redux";
 
@@ -19,6 +20,8 @@ const ProductsCategory = () => {
   const [page, setPage] = React.useState(0);
   const [data, setData] = React.useState([]);
   const [deleteAll, setDeleteAll] = React.useState([]);
+  const languages = useSelector((state) => state.data.localization);
+  const lang = useSelector((state) => state.data.lang);
 
   const lang = useSelector((state) => state.data.lang);
   const search = useSelector((state) => state.data.search);
@@ -125,13 +128,13 @@ const ProductsCategory = () => {
                 ID
               </TableHeader>
               <TableHeader styles="w-[227px]" sortIcon={true}>
-                Категория продукта
+                {languages[lang].main.productName}
               </TableHeader>
               <TableHeader styles="w-[250px]" sortIcon={true}>
-                Кол-во под категория
+                {languages[lang].main.colvo}
               </TableHeader>
               <TableHeader styles="min-w-[474px] " sortIcon={true}>
-                Под категории
+                {languages[lang].main.subCat}
               </TableHeader>
               <TableHeader styles="w-[95px] pr-3 justify-center">
                 <button>
@@ -187,10 +190,10 @@ const ProductsCategory = () => {
             <option value="10">10</option>
           </select>
           <span className="m-0 mr-3 text-paginationColor text-sm">
-            Элементы на каждой странице
+            {languages[lang].main.elementsPage}
           </span>
           <span className="text-sm text-paginationButtonColor">
-            1-5 из {totalPage} предметов
+            1-5 из {languages[lang].main.itemsNumb} {totalPage}
           </span>
         </div>
         <div className="flex items-center">
@@ -202,7 +205,7 @@ const ProductsCategory = () => {
             maxLength={1}
           />
           <span className="mr-3.5 text-sm text-paginationButtonColor">
-            из {Math.floor(totalPage / limit)} страниц
+            из {Math.floor(totalPage / limit)} {languages[lang].main.pages}{" "}
           </span>
           <span className="flex">
             <button

@@ -9,15 +9,19 @@ const siteProducts = createSlice({
   initialState: {
     localization: languages,
     lang: "ru",
+
     search: '',
+
   },
   reducers: {
     changeLang: (state, action) => {
       state.lang = action.payload;
     },
+
     searchProduction: (state, action) => {
       state.search = action.payload
     }
+
   },
 });
 
