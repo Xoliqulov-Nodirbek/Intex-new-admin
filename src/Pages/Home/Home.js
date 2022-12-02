@@ -4,11 +4,23 @@ import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import Mbutton from "../../BaseComponents/MButton/MButton";
 import "../../BaseComponents/MButton/MButton.css";
 import Products from "../Products/Products";
+
 import { useSelector } from "react-redux";
 
 export default function Home() {
   const languages = useSelector((state) => state.data.localization);
   const lang = useSelector((state) => state.data.lang);
+
+import { useSelector, useDispatch } from "react-redux";
+import { searchProduction } from "../../redux/siteDataReducer";
+
+
+export default function Home() {
+
+  const search = useSelector(state => state.data.search)
+  const dispatch = useDispatch()
+
+ 
   return (
     <>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
@@ -38,6 +50,10 @@ export default function Home() {
                 type="text"
                 placeholder={languages[lang].main.searchProduct}
                 autoComplete="off"
+                value={search}
+                onChange={(e) => {
+                   dispatch(searchProduction(e.target.value))
+                }}
               />
             </div>
             <div className="flex items-center">

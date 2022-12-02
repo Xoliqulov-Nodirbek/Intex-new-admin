@@ -5,10 +5,9 @@ import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 import AttributeTable from "../../components/TableRow/AttributeTable";
+import { useSelector } from "react-redux";
 
 const env = process.env.REACT_APP_ALL_API;
-const token = JSON.parse(window.localStorage.getItem("token"));
-
 const AtributeProducts = () => {
   const [loader, setLoader] = React.useState(false);
   const [refresh, setRefresh] = React.useState(false);
@@ -20,6 +19,8 @@ const AtributeProducts = () => {
   const [data, setData] = React.useState([]);
   const [deleteAll, setDeleteAll] = React.useState([]);
 
+  const token = JSON.parse(window.localStorage.getItem('token'))
+
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -28,6 +29,18 @@ const AtributeProducts = () => {
     }
   };
 
+  const lang = useSelector((state) => state.data.lang);
+  const search = useSelector((state) => state.data.search);
+
+  function searchProduct(inputValue, data) {
+    let regex = new RegExp(inputValue, "gi");
+    const filterInput = data.filter((product) =>
+      product[`attribute_${lang}`]?.match(regex)
+    );
+
+    return filterInput;
+  }
+
   // --- Get Product
   React.useEffect(() => {
     setLoader(true);
@@ -35,7 +48,7 @@ const AtributeProducts = () => {
     axios
       .get(`${env}attributes?page=${page}&limit=${limit}`)
       .then((res) => {
-        setData(res?.data);
+        setData(res?.data.result);
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       })
@@ -132,12 +145,12 @@ const AtributeProducts = () => {
             </TableRow>
           </thead>
           <tbody className="bg-white">
-            {data.result?.length && loader ? (
+            {data.length && loader ? (
               <div className="flex items-center justify-center my-5">
                 {loaders}
               </div>
-            ) : (
-              data.result?.map((item) => {
+            ) : search.length > 0 ? (
+              searchProduct(search, data).map((item) => {
                 return (
                   <AttributeTable
                     styles="py-1.5"
@@ -147,6 +160,19 @@ const AtributeProducts = () => {
                     handleChange={handleChange}
                     setDeleteAll={setDeleteAll}
                     deleteAll={deleteAll}
+                    refresh={() => setRefresh(!refresh)}
+                  ></AttributeTable>
+                );
+              })
+            ) : (
+              data.map((item) => {
+                return (
+                  <AttributeTable
+                    styles="py-1.5"
+                    data={item}
+                    key={item.id}
+                    isChecked={isChecked}
+                    handleChange={handleChange}
                     refresh={() => setRefresh(!refresh)}
                   ></AttributeTable>
                 );

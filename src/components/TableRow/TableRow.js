@@ -6,6 +6,10 @@ import MLabel from "../../BaseComponents/MLabel/MLabel";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 import { useSelector } from "react-redux";
+
+import { searchProduction } from "../../redux/siteDataReducer";
+
+
 const env = process.env.REACT_APP_ALL_API;
 const imageEnv = process.env.REACT_APP_IMAGE;
 
@@ -18,12 +22,15 @@ export default function TableRow({
   deleteAll,
   setDeleteAll,
 }) {
+
   const [checker, setChecker] = useState(false);
   const [showModal, setshowModal] = useState(false);
   const languages = useSelector((state) => state.data.localization);
   const lang = useSelector((state) => state.data.lang);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
+
+
 
   const handleCheck = (e) => {
     if (e.target.checked) {

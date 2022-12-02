@@ -6,6 +6,8 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+import { useSelector } from "react-redux";
+
 const env = process.env.REACT_APP_ALL_API;
 const token = JSON.parse(window.localStorage.getItem("token"));
 const ProductsCategory = () => {
@@ -21,6 +23,20 @@ const ProductsCategory = () => {
   const languages = useSelector((state) => state.data.localization);
   const lang = useSelector((state) => state.data.lang);
 
+  const lang = useSelector((state) => state.data.lang);
+  const search = useSelector((state) => state.data.search);
+
+  function searchProduct(inputValue, data) {
+    let regex = new RegExp(inputValue, "gi");
+    const filterInput = data.filter((product) => product[`name_${lang}`]?.match(regex)
+    );
+
+    return filterInput;
+  }
+
+
+  // searchProduct(search, data)
+
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -35,7 +51,7 @@ const ProductsCategory = () => {
     axios
       .get(`${env}categories/getAll?page=${page}&limit=${limit}`)
       .then((res) => {
-        setData(res?.data);
+        setData(res?.data.result);
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       });
@@ -128,12 +144,25 @@ const ProductsCategory = () => {
             </TableCat>
           </thead>
           <tbody className="bg-white">
-            {data.result?.length && loader ? (
+            {data.length && loader ? (
               <div className="flex items-center justify-center my-5">
                 {loaders}
               </div>
+            ) : search.length > 0 ? (
+              data.map((item) => {
+                return (
+                  <TableCat
+                    styles="py-1.5"
+                    data={item}
+                    key={item.id}
+                    isChecked={isChecked}
+                    handleChange={handleChange}
+                    refresh={() => setRefresh(!refresh)}
+                  ></TableCat>
+                );
+              })
             ) : (
-              data.result?.map((item) => {
+              data.map((item) => {
                 return (
                   <TableCat
                     styles="py-1.5"
