@@ -6,7 +6,7 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 
 const env = process.env.REACT_APP_ALL_API;
-
+const token = JSON.parse(window.localStorage.getItem("token"));
 const ProductsCategory = () => {
   const [refresh, setRefresh] = useState(false);
   const [loader, setLoader] = React.useState(false);
@@ -16,6 +16,7 @@ const ProductsCategory = () => {
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [data, setData] = React.useState([]);
+  const [deleteAll, setDeleteAll] = React.useState([]);
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -56,16 +57,46 @@ const ProductsCategory = () => {
       />
     </svg>
   );
+  const IdArray = data.result?.map((res) => res.id);
+  const DeleteAll = (e) => {
+    axios
+      .delete(
+        `${env}categories/deleteAll`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            ids: isChecked ? IdArray : deleteAll,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res, IdArray);
+        setRefresh(!refresh);
+      })
+      .catch((err) => {
+        console.log(err, IdArray);
+      });
+  };
   return (
     <div className="bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
         <input
-          className="mr-3 w-4 h-4"
+          className="mr-3 w-4 h-4 cursor-pointer"
           type="checkbox"
           onChange={() => setIsChecked(!isChecked)}
         />
-        <span className="text-[#b9b9b9] mr-3">{checkedCount}, Выбрано</span>
-        <img src={Trash} alt="Trash icon" />
+        <span className="text-[#b9b9b9] mr-3">
+          {isChecked ? data.result.length : deleteAll.length}, Выбрано
+        </span>
+        <img
+          className="cursor-pointer"
+          onClick={DeleteAll}
+          src={Trash}
+          alt="Trash icon"
+        />
       </div>
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
@@ -106,6 +137,8 @@ const ProductsCategory = () => {
                     data={item}
                     key={item.id}
                     isChecked={isChecked}
+                    setDeleteAll={setDeleteAll}
+                    deleteAll={deleteAll}
                     handleChange={handleChange}
                     refresh={() => setRefresh(!refresh)}
                   ></TableCat>

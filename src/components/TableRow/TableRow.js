@@ -5,12 +5,9 @@ import MLabel from "../../BaseComponents/MLabel/MLabel";
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
-import MainProduct from "../../Assets/Images/ProductsImgs/main.png";
 
 const env = process.env.REACT_APP_ALL_API;
 const imageEnv = process.env.REACT_APP_IMAGE;
-
-
 
 export default function TableRow({
   children,
@@ -18,6 +15,8 @@ export default function TableRow({
   data,
   isChecked,
   refresh,
+  deleteAll,
+  setDeleteAll,
 }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setshowModal] = useState(false);
@@ -27,10 +26,13 @@ export default function TableRow({
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true);
+      setDeleteAll([...deleteAll, data.id]);
       e.target.checked = true;
     } else {
       setChecker(false);
       e.target.checked = false;
+      deleteAll = deleteAll.filter((item) => item !== data.id);
+      setDeleteAll(deleteAll);
     }
   };
 
@@ -94,21 +96,21 @@ export default function TableRow({
             image={false}
           >
             {
-                <img
-                  className="mr-2"
-                  src={`${imageEnv}${data.image[0]}`}
-                  alt="Product main"
-                  width={42}
-                  height={38}
-                />
+              <img
+                className="mr-2"
+                src={`${imageEnv}${data.image[0]}`}
+                alt="Product main"
+                width={42}
+                height={38}
+              />
             }
             {data.name_uz}
           </TableData>
           <TableData styles="w-[153px]">{data.price}</TableData>
           <TableData styles="w-[153px]">{data.discount_price} сум</TableData>
-          <TableData styles="w-[99px]">4</TableData>
+          <TableData styles="w-[99px]">{data.count}</TableData>
           <TableData styles="w-[147px]">220x150x60см</TableData>
-          <TableData styles="w-[118px]">1 622 л</TableData>
+          <TableData styles="w-[118px]">-</TableData>
           <TableData styles="w-[140px]">
             <MLabel type={`label_${data.status_en}`}>{data.status_ru}</MLabel>
           </TableData>

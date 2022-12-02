@@ -16,7 +16,7 @@ export default function ProductOrder() {
   const [deleteAll, setDeleteAll] = React.useState([]);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
-
+  const env = process.env.REACT_APP_ALL_API;
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -47,7 +47,7 @@ export default function ProductOrder() {
   const DeleteAll = (e) => {
     axios
       .delete(
-        "https://web-production-5638.up.railway.app/api/orders/deleteAll",
+        `${env}orders/deleteAll`,
 
         {
           headers: {
@@ -75,14 +75,19 @@ export default function ProductOrder() {
       <div className="bg-white border-b rounded-xl mb-[100px] z-30">
         <div className="flex py-3 px-4 items-center">
           <input
-            className="mr-3 w-4 h-4"
+            className="mr-3 w-4 h-4 cursor-pointer"
             type="checkbox"
             onChange={() => setIsChecked(!isChecked)}
           />
           <span className="text-[#b9b9b9] mr-3">
             {isChecked ? data.result.length : deleteAll.length}, Выбрано
           </span>
-          <img onClick={DeleteAll} src={Trash} alt="Trash icon" />
+          <img
+            className="cursor-pointer"
+            onClick={DeleteAll}
+            src={Trash}
+            alt="Trash icon"
+          />
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full">

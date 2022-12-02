@@ -7,26 +7,30 @@ import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 
 const env = process.env.REACT_APP_ALL_API;
-
 export default function AttributeTable({
   children,
   styles,
   data,
   refresh,
   isChecked,
+  deleteAll,
+  setDeleteAll,
 }) {
   const [checker, setChecker] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const attribute = data.ru;
-  
+
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true);
+      setDeleteAll([...deleteAll, data.id]);
       e.target.checked = true;
     } else {
       setChecker(false);
+      deleteAll = deleteAll.filter((item) => item !== data.id);
+      setDeleteAll(deleteAll);
       e.target.checked = false;
     }
   };

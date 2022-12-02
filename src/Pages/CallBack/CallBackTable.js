@@ -18,6 +18,7 @@ export default function TableContactRow() {
   const [page, setPage] = useState(0);
   // Datas
   const [data, setData] = useState([]);
+  const [deleteAll, setDeleteAll] = useState([]);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
 
@@ -69,18 +70,48 @@ export default function TableContactRow() {
       />
     </svg>
   );
+  const IdArray = data.result?.map((res) => res.id);
+  const DeleteAll = (e) => {
+    console.log(token);
+    axios
+      .delete(
+        `${env}consultations/deleteAll`,
 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            ids: isChecked ? IdArray : deleteAll,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res, IdArray);
+        setRefresh(!refresh);
+      })
+      .catch((err) => {
+        console.log(err, IdArray);
+      });
+  };
   return (
     <>
       <div className="bg-white border-b rounded-xl mb-[100px]">
         <div className="flex py-3 px-4 items-center">
           <input
-            className="mr-3 w-4 h-4"
+            className="mr-3 w-4 h-4 cursor-pointer"
             type="checkbox"
             onChange={() => setIsChecked(!isChecked)}
           />
-          <span className="text-[#b9b9b9] mr-3">{checkedCount}, Выбрано</span>
-          <img src={Trash} alt="Trash icon" />
+          <span className="text-[#b9b9b9] mr-3">
+            {isChecked ? data.result.length : deleteAll.length}, Выбрано
+          </span>
+          <img
+            className="cursor-pointer"
+            onClick={DeleteAll}
+            src={Trash}
+            alt="Trash icon"
+          />
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full">
@@ -119,6 +150,8 @@ export default function TableContactRow() {
                       data={item}
                       key={item.id}
                       isChecked={isChecked}
+                      setDeleteAll={setDeleteAll}
+                      deleteAll={deleteAll}
                       handleChanges={handleChange}
                       refresh={() => setRefresh(!refresh)}
                     />

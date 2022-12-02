@@ -12,6 +12,8 @@ export default function ContactTable({
   data,
   isChecked,
   refresh,
+  deleteAll,
+  setDeleteAll,
 }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setshowModal] = useState(false);
@@ -19,10 +21,13 @@ export default function ContactTable({
   const handleCheck = (e) => {
     if (e.target.checked) {
       setChecker(true);
+      setDeleteAll([...deleteAll, data.id]);
       e.target.checked = true;
     } else {
       setChecker(false);
       e.target.checked = false;
+      deleteAll = deleteAll.filter((item) => item !== data.id);
+      setDeleteAll(deleteAll);
     }
   };
   // --- Delete Row

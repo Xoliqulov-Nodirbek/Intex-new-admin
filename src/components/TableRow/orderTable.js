@@ -15,8 +15,6 @@ export default function TableRow2({
   data,
   isChecked,
   refresh,
-  deleteAll,
-  setDeleteAll,
 }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +23,9 @@ export default function TableRow2({
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const DeleteItems = () => {
+    console.log(data.id);
+    console.log(token);
+
     axios
       .delete(
         `https://web-production-5638.up.railway.app/api/orders/delete/${data.id}`,
@@ -35,6 +36,7 @@ export default function TableRow2({
         }
       )
       .then(() => {
+        console.log("deleted");
         refresh();
       })
       .catch((err) => {
@@ -44,16 +46,13 @@ export default function TableRow2({
 
   const handleCheck = (e) => {
     if (e.target.checked) {
-      setChecker(e.target.checked);
-      setDeleteAll([...deleteAll, data.id]);
+      setChecker(true);
+      e.target.checked = true;
     } else {
-      setChecker(e.target.checked);
-
-      deleteAll = deleteAll.filter((item) => item !== data.id);
-      setDeleteAll(deleteAll);
+      setChecker(false);
+      e.target.checked = false;
     }
   };
-
   const close = (
     <svg
       className="flex items-center justify-center object-fill"
@@ -69,103 +68,108 @@ export default function TableRow2({
   );
 
   return (
-    <div>
-      <tbody>
-        <tr className={`flex items-center border-b ${styles}`}>
-          {children ? (
-            children
-          ) : (
-            <>
-              <TableData styles="w-11 pr-3 justify-center">
-                <input
-                  className="inputs h-4 w-4"
-                  type="checkbox"
-                  checked={
-                    checker === true && isChecked === false
-                      ? true
-                      : checker === false && isChecked === false
-                      ? false
-                      : checker === false && isChecked === true
-                      ? true
-                      : checker === true && isChecked === true
-                      ? true
-                      : true
-                  }
-                  onChange={(e) => handleCheck(e)}
-                />
-              </TableData>
-              <TableData styles="w-[80px] ">{data.id}</TableData>
-              <TableData styles="w-[148px] ">{data.order_number}</TableData>
-              <TableData styles="w-[148px] truncate ">{data.name}</TableData>
-              <TableData styles="w-[178px] text-sm">{data.phone}</TableData>
-              <TableData styles="w-[254px] text-blue-500 underline underline-offset-2 text-sm">
-                {data.address ? data.address : "-"}
-              </TableData>
-              <TableData styles="w-[178px] text-sm">
-                {data.count ? data.count : "-"}
-              </TableData>
-              <TableData styles="w-[153px] text-sm">
-                {data.summa ? data.summa + "cум" : "-"}{" "}
-              </TableData>
-              <TableData styles="w-[153px] text-sm">
-                {data.discount_summa ? data.discount_summa + " cум" : "-"}
-              </TableData>
-              <TableData styles="w-[145px] text-sm grid grid-cols-1">
-                <h4>{data.created_at.slice(0, 10)}</h4>
-                <h5 className="text-xs">{data.created_at.slice(11, 16)}</h5>
-              </TableData>
-              <TableData styles="w-[145px]">
-                <MLabel type={`label_${data.name_en}`}>{data.name_ru}</MLabel>
-              </TableData>
-              <TableData styles="w-[95px] pr-3 justify-center relative">
-                <button
-                  onClick={() => setShowModal(true)}
-                  type="button"
-                  className="px-8 py-2"
-                >
-                  <img src={ThreeDotsSvg} alt="three dots icon" />
-                </button>
-                {showModal ? (
-                  <ul className="bg-white w-[160px] absolute border rounded-lg shadow-lg space-y-2 z-40 right-0">
-                    <div className="relative">
-                      <button
-                        onClick={() => setIsShown(true)}
-                        type="button"
-                        className="flex items-center relative px-2 py-[10px]"
-                      >
-                        <img
-                          className="mr-2"
-                          src={Edit}
-                          alt="just a icon to edit"
-                        />
-                        <span className="block">Изменить</span>
-                      </button>
-                      <button
-                        onClick={() => DeleteItems(data.id)}
-                        type="button"
-                        className="flex items-center relative px-2 py-[10px]"
-                      >
-                        <img
-                          className="mr-2"
-                          src={Trash}
-                          alt="just a icon to edit"
-                        />
-                        <span className="block">Удалить</span>
-                      </button>
-                      <span
-                        onClick={() => setShowModal(false)}
-                        className="ml-6 absolute top-[6px] cursor-pointer right-0 px-3 py-2"
-                      >
-                        {close}
-                      </span>
-                    </div>
-                  </ul>
-                ) : null}
-              </TableData>
-            </>
-          )}
-        </tr>
-      </tbody>
-    </div>
+    <>
+      <tr className={`flex items-center border-b ${styles}`}>
+        {children ? (
+          children
+        ) : (
+          <>
+            <TableData styles="w-11 pr-3 justify-center">
+              <input
+                className="inputs h-4 w-4"
+                type="checkbox"
+                checked={
+                  checker === true && isChecked === false
+                    ? true
+                    : checker === false && isChecked === false
+                    ? false
+                    : checker === false && isChecked === true
+                    ? true
+                    : checker === true && isChecked === true
+                    ? true
+                    : true
+                }
+                onChange={(e) => handleCheck(e)}
+              />
+            </TableData>
+            <TableData styles="w-[80px] ">{data.id}</TableData>
+            <TableData styles="w-[148px] ">{data.order_number}</TableData>
+            <TableData styles="w-[148px] truncate ">{data.name}</TableData>
+            <TableData styles="w-[178px] text-sm">{data.phone}</TableData>
+            <TableData styles="w-[254px] text-blue-500 underline underline-offset-2 text-sm">
+              {data.address ? data.address : "-"}
+            </TableData>
+            <TableData styles="w-[178px] text-sm">
+              {data.count ? data.count : "-"}
+            </TableData>
+            <TableData styles="w-[153px] text-sm">
+              {data.summa ? data.summa + "cум" : "-"}{" "}
+            </TableData>
+            <TableData styles="w-[153px] text-sm">
+              {data.discount_summa ? data.discount_summa + " cум" : "-"}
+            </TableData>
+            <TableData styles="w-[145px] text-sm grid grid-cols">
+              <h4>{data.created_at.slice(0, 10)}</h4>
+              <h5 className="text-xs">{data.created_at.slice(11, 16)}</h5>
+            </TableData>
+            <TableData styles="w-[145px]">
+              <MLabel type={`label_${data.name_en}`}>{data.name_ru}</MLabel>
+            </TableData>
+            <TableData styles="w-[95px] pr-3 justify-center relative">
+              <button
+                onClick={() => setShowModal(true)}
+                type="button"
+                className="px-8 py-2"
+              >
+                <img src={ThreeDotsSvg} alt="three dots icon" />
+              </button>
+              {showModal ? (
+                <ul className="bg-white w-[160px] absolute border rounded-lg shadow-lg space-y-2 z-40 -right-0">
+                  <div className="relative">
+                    <button
+                      onClick={() => setIsShown(true)}
+                      type="button"
+                      className="flex items-center relative px-2 py-[10px]"
+                    >
+                      <img
+                        className="mr-2"
+                        src={Edit}
+                        alt="just a icon to edit"
+                      />
+                      <span className="block">Изменить</span>
+                    </button>
+                    <button
+                      onClick={() => DeleteItems(data.id)}
+                      type="button"
+                      className="flex items-center relative px-2 py-[10px]"
+                    >
+                      <img
+                        className="mr-2"
+                        src={Trash}
+                        alt="just a icon to edit"
+                      />
+                      <span className="block">Удалить</span>
+                    </button>
+                    <span
+                      onClick={() => setShowModal(false)}
+                      className="ml-6 absolute top-[6px] cursor-pointer right-0 px-3 py-2"
+                    >
+                      {close}
+                    </span>
+                  </div>
+                </ul>
+              ) : null}
+            </TableData>
+          </>
+        )}
+      </tr>
+
+      <OrderModal
+        isShown={isShown}
+        onClosed={() => setIsShown(false)}
+        items={data}
+        refreshed={refresh}
+      />
+    </>
   );
 }

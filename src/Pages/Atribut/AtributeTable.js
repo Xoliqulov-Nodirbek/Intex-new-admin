@@ -1,51 +1,54 @@
-import React from 'react'
-import ThreeDotsSvg from '../../Assets/Images/ProductsImgs/threedots.svg'
-import TableHeader from '../../components/TableHeader/TableHeader'
-import TableRow from '../../components/TableRow/TableRow'
-import Trash from '../../Assets/Images/ProductsImgs/trash.svg'
-import axios from 'axios'
-import AttributeTable from '../../components/TableRow/AttributeTable'
+import React from "react";
+import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
+import TableHeader from "../../components/TableHeader/TableHeader";
+import TableRow from "../../components/TableRow/TableRow";
+import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
+import axios from "axios";
+import AttributeTable from "../../components/TableRow/AttributeTable";
 
-const env = process.env.REACT_APP_ALL_API
+const env = process.env.REACT_APP_ALL_API;
+const token = JSON.parse(window.localStorage.getItem("token"));
+
 const AtributeProducts = () => {
-  const [loader, setLoader] = React.useState(false)
-  const [refresh, setRefresh] = React.useState(false)
-  const [isChecked, setIsChecked] = React.useState(false)
-  const [checkedCount, setCheckedCount] = React.useState(0)
-  const [totalPage, setTotalpage] = React.useState(0)
-  const [limit, setLimit] = React.useState(5)
-  const [page, setPage] = React.useState(0)
-  const [data, setData] = React.useState([])
+  const [loader, setLoader] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(false);
+  const [checkedCount, setCheckedCount] = React.useState(0);
+  const [totalPage, setTotalpage] = React.useState(0);
+  const [limit, setLimit] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const [data, setData] = React.useState([]);
+  const [deleteAll, setDeleteAll] = React.useState([]);
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
-      setCheckedCount(checkedCount + 1)
+      setCheckedCount(checkedCount + 1);
     } else {
-      setCheckedCount(checkedCount - 1)
+      setCheckedCount(checkedCount - 1);
     }
-  }
+  };
 
   // --- Get Product
   React.useEffect(() => {
-    setLoader(true)
+    setLoader(true);
 
     axios
       .get(`${env}attributes?page=${page}&limit=${limit}`)
       .then((res) => {
-        setData(res?.data)
-        setTotalpage(res.data?.total_count.count)
-        setLoader(false)
+        setData(res?.data);
+        setTotalpage(res.data?.total_count.count);
+        setLoader(false);
       })
       .catch((err) => console.error(err))
       .finally(() => {
-        setLoader(false)
-      })
-  }, [limit, page, refresh])
+        setLoader(false);
+      });
+  }, [limit, page, refresh]);
 
   // --- Loader
   const loaders = (
     <svg
-      aria-hidden="true"
+      ariaHidden="true"
       className="mr-2 w-14 h-1w-14 text-gray-200 animate-spin dark:text-gray-200 fill-blue-600"
       viewBox="0 0 100 101"
       fill="none"
@@ -60,18 +63,47 @@ const AtributeProducts = () => {
         fill="currentFill"
       />
     </svg>
-  )
+  );
+  const IdArray = data.result?.map((res) => res.id);
+  const DeleteAll = (e) => {
+    axios
+      .delete(
+        `${env}attributes/deleteAll`,
 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            ids: isChecked ? IdArray : deleteAll,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res, IdArray);
+        setRefresh(!refresh);
+      })
+      .catch((err) => {
+        console.log(err, IdArray);
+      });
+  };
   return (
     <div className=" bg-white border-b rounded-xl mb-[100px] mt-5">
       <div className="flex py-3 px-4 items-center">
         <input
-          className="mr-3 w-4 h-4"
+          className="mr-3 w-4 h-4 cursor-pointer"
           type="checkbox"
           onChange={() => setIsChecked(!isChecked)}
         />
-        <span className="text-[#b9b9b9] mr-3">{checkedCount}, Выбрано</span>
-        <img src={Trash} alt="Trash icon" />
+        <span className="text-[#b9b9b9] mr-3">
+          {isChecked ? data.result.length : deleteAll.length}, Выбрано
+        </span>
+        <img
+          className="cursor-pointer"
+          onClick={DeleteAll}
+          src={Trash}
+          alt="Trash icon"
+        />
       </div>
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
@@ -113,9 +145,11 @@ const AtributeProducts = () => {
                     key={item.id}
                     isChecked={isChecked}
                     handleChange={handleChange}
+                    setDeleteAll={setDeleteAll}
+                    deleteAll={deleteAll}
                     refresh={() => setRefresh(!refresh)}
                   ></AttributeTable>
-                )
+                );
               })
             )}
           </tbody>
@@ -152,7 +186,7 @@ const AtributeProducts = () => {
             <button
               className="mr-4 text-paginationButtonColor"
               onClick={() => {
-                page === 0 ? setPage(0) : setPage(page - 1)
+                page === 0 ? setPage(0) : setPage(page - 1);
               }}
             >
               &#60;
@@ -162,7 +196,7 @@ const AtributeProducts = () => {
               onClick={() => {
                 page === Math.floor(totalPage / limit)
                   ? setPage(Math.floor(totalPage / limit))
-                  : setPage(page + 1)
+                  : setPage(page + 1);
               }}
             >
               &#62;
@@ -171,6 +205,6 @@ const AtributeProducts = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default AtributeProducts
+  );
+};
+export default AtributeProducts;

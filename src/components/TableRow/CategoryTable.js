@@ -14,6 +14,8 @@ export default function TableCat({
   data,
   isChecked,
   refresh,
+  deleteAll,
+  setDeleteAll,
 }) {
   const [checker, setChecker] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -26,9 +28,12 @@ export default function TableCat({
     if (e.target.checked) {
       setChecker(true);
       e.target.checked = true;
+      setDeleteAll([...deleteAll, data.id]);
     } else {
       setChecker(false);
       e.target.checked = false;
+      deleteAll = deleteAll.filter((item) => item != data.id);
+      setDeleteAll(deleteAll);
     }
   };
 
