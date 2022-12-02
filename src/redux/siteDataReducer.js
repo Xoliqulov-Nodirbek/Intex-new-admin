@@ -12,6 +12,7 @@ const siteProducts = createSlice({
     changeLang: (state, action) => {
       state.lang = action.payload;
     },
+    
   },
 });
 
