@@ -6,13 +6,11 @@ const siteProducts = createSlice({
   initialState: {
     localization: languages,
     lang: "ru",
-    
   },
   reducers: {
     changeLang: (state, action) => {
       state.lang = action.payload;
     },
-    
   },
 });
 

@@ -5,7 +5,7 @@ import TableData from "../TableData/TableData";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
-
+import { useSelector } from "react-redux";
 const env = process.env.REACT_APP_ALL_API;
 
 export default function TableCat({
@@ -23,6 +23,8 @@ export default function TableCat({
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const categoryResult = data?.ru;
+  const languages = useSelector((state) => state.data.localization);
+  const lang = useSelector((state) => state.data.lang);
 
   const handleCheck = (e) => {
     if (e.target.checked) {
@@ -91,7 +93,13 @@ export default function TableCat({
             </TableData>
             <TableData styles="w-[80px]">{data.id}</TableData>
             <TableData styles="w-[227px] truncate" image={false}>
-              {data.category_ru}
+              {lang === "ru"
+                ? data.category_ru
+                : lang === "uz"
+                ? data.category_uz
+                : lang === "en"
+                ? data.category_en
+                : ""}
             </TableData>
             <TableData styles="w-[250px]">{data.ru.length}</TableData>
             <TableData styles="min-w-[474px]">
@@ -123,7 +131,9 @@ export default function TableCat({
                         src={Trash}
                         alt="just a icon to edit"
                       />
-                      <span className="block">Удалить</span>
+                      <span className="block">
+                        {languages[lang].main.delete}
+                      </span>
                     </button>
                     <span
                       onClick={() => setIsClicked(false)}

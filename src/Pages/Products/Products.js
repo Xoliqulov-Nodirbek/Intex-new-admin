@@ -4,6 +4,7 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const env = process.env.REACT_APP_ALL_API;
 
@@ -17,6 +18,8 @@ const Products = () => {
   const [totalPage, setTotalpage] = React.useState(0);
   const [refresh, setRefresh] = React.useState(false);
   const [deleteAll, setDeleteAll] = React.useState([]);
+  const languages = useSelector((state) => state.data.localization);
+  const lang = useSelector((state) => state.data.lang);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
   const env = process.env.REACT_APP_ALL_API;
@@ -38,6 +41,7 @@ const Products = () => {
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, refresh]);
   // --- Loader
   const loaders = (
@@ -91,7 +95,8 @@ const Products = () => {
           onChange={() => setIsChecked(!isChecked)}
         />
         <span className="text-[#b9b9b9] mr-3">
-          {isChecked ? data.result.length : deleteAll.length}, Выбрано
+          {isChecked ? data.result.length : deleteAll.length},{" "}
+          {languages[lang].main.select}
         </span>
         <img
           className="cursor-pointer"
@@ -111,16 +116,26 @@ const Products = () => {
                 ID
               </TableHeader>
               <TableHeader styles="w-[300px]" sortIcon={true}>
-                Название товара
+                {languages[lang].main.productName}
               </TableHeader>
-              <TableHeader styles="w-[153px]">Цена</TableHeader>
-              <TableHeader styles="w-[153px]">Цена со скидкой</TableHeader>
+              <TableHeader styles="w-[153px]">
+                {languages[lang].main.price}
+              </TableHeader>
+              <TableHeader styles="w-[153px]">
+                {languages[lang].main.salePrice}
+              </TableHeader>
               <TableHeader styles="w-[99px]" sortIcon={true}>
-                Кол-во
+                {languages[lang].main.quantity}
               </TableHeader>
-              <TableHeader styles="w-[147px]">Размер</TableHeader>
-              <TableHeader styles="w-[118px]">Объем</TableHeader>
-              <TableHeader styles="w-[140px]">Статус</TableHeader>
+              <TableHeader styles="w-[147px]">
+                {languages[lang].main.size}
+              </TableHeader>
+              <TableHeader styles="w-[118px]">
+                {languages[lang].main.volume}
+              </TableHeader>
+              <TableHeader styles="w-[140px]">
+                {languages[lang].main.status}
+              </TableHeader>
               <TableHeader styles="w-[95px] pr-3 justify-center">
                 <button>
                   <img src={ThreeDotsSvg} alt="three dots icon" />
@@ -162,10 +177,10 @@ const Products = () => {
             <option value="10">10</option>
           </select>
           <span className="m-0 mr-3 text-paginationColor text-sm">
-            Элементы на каждой странице
+            {languages[lang].main.elementsPage}
           </span>
           <span className="text-sm text-paginationButtonColor">
-            1-5 из {totalPage} предметов
+            1-5 из {languages[lang].main.itemsNumb} {totalPage}
           </span>
         </div>
         <div className="flex items-center">
@@ -177,7 +192,7 @@ const Products = () => {
             maxLength={1}
           />
           <span className="mr-3.5 text-sm text-paginationButtonColor">
-            из {Math.floor(totalPage / limit)} страниц
+            из {Math.floor(totalPage / limit)} {languages[lang].main.pages}
           </span>
           <span className="flex">
             <button

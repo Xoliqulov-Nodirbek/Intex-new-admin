@@ -5,7 +5,7 @@ import MLabel from "../../BaseComponents/MLabel/MLabel";
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
-
+import { useSelector } from "react-redux";
 const env = process.env.REACT_APP_ALL_API;
 const imageEnv = process.env.REACT_APP_IMAGE;
 
@@ -20,6 +20,8 @@ export default function TableRow({
 }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setshowModal] = useState(false);
+  const languages = useSelector((state) => state.data.localization);
+  const lang = useSelector((state) => state.data.lang);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
 
@@ -51,7 +53,6 @@ export default function TableRow({
         console.log(err);
       });
   };
-
   // --- Colse
   const close = (
     <svg
@@ -104,15 +105,31 @@ export default function TableRow({
                 height={38}
               />
             }
-            {data.name_uz}
+            {lang === "ru"
+              ? data.name_ru
+              : lang === "uz"
+              ? data.name_uz
+              : lang === "en"
+              ? data.name_en
+              : ""}
           </TableData>
           <TableData styles="w-[153px]">{data.price}</TableData>
-          <TableData styles="w-[153px]">{data.discount_price} сум</TableData>
+          <TableData styles="w-[153px]">
+            {data.discount_price} {languages[lang].main.sum}
+          </TableData>
           <TableData styles="w-[99px]">{data.count}</TableData>
           <TableData styles="w-[147px]">220x150x60см</TableData>
           <TableData styles="w-[118px]">-</TableData>
           <TableData styles="w-[140px]">
-            <MLabel type={`label_${data.status_en}`}>{data.status_ru}</MLabel>
+            <MLabel type={`label_${data.status_en}`}>
+              {lang === "ru"
+                ? data.status_ru
+                : lang === "uz"
+                ? data.status_uz
+                : lang === "en"
+                ? data.status_en
+                : ""}
+            </MLabel>
           </TableData>
           <TableData styles="w-[95px] pr-3 justify-center relative">
             <button
@@ -134,7 +151,7 @@ export default function TableRow({
                       src={Trash}
                       alt="just a icon to edit"
                     />
-                    <span className="block">Удалить</span>
+                    <span className="block">{languages[lang].main.delete}</span>
                   </button>
                   <span
                     onClick={() => setshowModal(false)}
