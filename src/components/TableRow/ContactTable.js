@@ -96,7 +96,7 @@ export default function ContactTable({
                 <img src={ThreeDotsSvg} alt="three dots icon" />
               </button>
               {showModal ? (
-                <ul className="bg-white w-[160px] absolute border rounded-lg shadow-lg space-y-2 z-40 -right-10">
+                <ul className="bg-white w-[160px] absolute border rounded-lg shadow-lg space-y-2 z-40 right-0">
                   <div className="relative">
                     <button
                       onClick={() => DeleteItems(data.id)}
