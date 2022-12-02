@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 
 import { searchProduction } from "../../redux/siteDataReducer";
 
-
 const env = process.env.REACT_APP_ALL_API;
 const imageEnv = process.env.REACT_APP_IMAGE;
 
@@ -22,15 +21,12 @@ export default function TableRow({
   deleteAll,
   setDeleteAll,
 }) {
-
   const [checker, setChecker] = useState(false);
   const [showModal, setshowModal] = useState(false);
   const languages = useSelector((state) => state.data.localization);
   const lang = useSelector((state) => state.data.lang);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
-
-
 
   const handleCheck = (e) => {
     if (e.target.checked) {
@@ -74,6 +70,7 @@ export default function TableRow({
       <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
     </svg>
   );
+
   return (
     <tr className={`flex items-center border-b ${styles}`}>
       {children ? (
@@ -106,7 +103,7 @@ export default function TableRow({
             {
               <img
                 className="mr-2"
-                src={`${imageEnv}${data.image[0]}`}
+                src={`${imageEnv}${data.image}`}
                 alt="Product main"
                 width={42}
                 height={38}
