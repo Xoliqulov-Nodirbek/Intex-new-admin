@@ -6,10 +6,9 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-import { useSelector } from "react-redux";
-
 const env = process.env.REACT_APP_ALL_API;
 const token = JSON.parse(window.localStorage.getItem("token"));
+
 const ProductsCategory = () => {
   const [refresh, setRefresh] = useState(false);
   const [loader, setLoader] = React.useState(false);
@@ -22,18 +21,16 @@ const ProductsCategory = () => {
   const [deleteAll, setDeleteAll] = React.useState([]);
   const languages = useSelector((state) => state.data.localization);
   const lang = useSelector((state) => state.data.lang);
-
-  const lang = useSelector((state) => state.data.lang);
   const search = useSelector((state) => state.data.search);
 
   function searchProduct(inputValue, data) {
     let regex = new RegExp(inputValue, "gi");
-    const filterInput = data.filter((product) => product[`name_${lang}`]?.match(regex)
+    const filterInput = data.filter((product) =>
+      product[`name_${lang}`]?.match(regex)
     );
 
     return filterInput;
   }
-
 
   // searchProduct(search, data)
 
