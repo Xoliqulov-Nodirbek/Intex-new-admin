@@ -296,6 +296,7 @@ export default function AtributPage({
                   }
                   {...formik.getFieldProps('status')}
                 >
+                  <option hidden>Статус</option>
                   {status.length &&
                     status.map((el) => (
                       <option key={el.id} id={el.id} value={el.id}>
@@ -442,6 +443,7 @@ export default function AtributPage({
                 }
                 {...formik.getFieldProps('status_eng')}
               >
+                <option hidden>Status</option>
                 {status.length &&
                   status.map((el) => (
                     <option key={el.id} id={el.id} value={el.id}>
@@ -588,6 +590,7 @@ export default function AtributPage({
                 }
                 {...formik.getFieldProps('status_uz')}
               >
+                <option hidden >Status</option>
                 {status.length &&
                   status.map((el) => (
                     <option key={el.id} id={el.id} value={el.id}>
