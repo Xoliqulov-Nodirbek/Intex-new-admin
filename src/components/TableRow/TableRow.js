@@ -5,8 +5,12 @@ import MLabel from "../../BaseComponents/MLabel/MLabel";
 // Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
+import MainProduct from "../../Assets/Images/ProductsImgs/main.png";
 
 const env = process.env.REACT_APP_ALL_API;
+const imageEnv = process.env.REACT_APP_IMAGE;
+
+
 
 export default function TableRow({
   children,
@@ -87,8 +91,17 @@ export default function TableRow({
           <TableData styles="w-[66px]">{data.id}</TableData>
           <TableData
             styles="w-[300px] truncate whitespace-nowrap overflow-hidden text-ellipsis"
-            image={true}
+            image={false}
           >
+            {
+                <img
+                  className="mr-2"
+                  src={`${imageEnv}${data.image[0]}`}
+                  alt="Product main"
+                  width={42}
+                  height={38}
+                />
+            }
             {data.name_uz}
           </TableData>
           <TableData styles="w-[153px]">{data.price}</TableData>
