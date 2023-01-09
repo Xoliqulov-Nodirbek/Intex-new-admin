@@ -16,9 +16,7 @@ function Verification() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [email, setEmail] = useState(
-    JSON.parse(window.localStorage.getItem("email"))
-  );
+  const [email, setEmail] = useState(JSON.parse(window.localStorage.getItem("email")));
   const navigate = useNavigate();
 
   const postRequest = async (e) => {
@@ -26,7 +24,7 @@ function Verification() {
 
     setLoading(true);
     axios
-      .post(`${env}admins/forgot-password/confirm`, {
+      .post(`${env}auth/forgot-password/confirm`, {
         email: email,
         confirmation_code: Number(password),
       })
@@ -78,20 +76,10 @@ function Verification() {
               to="/forget"
               className="bg-blue-form_btn flex items-center justify-center w-8 h-8 rounded-lg absolute left-6 top-6"
             >
-              <img
-                src={Arrow}
-                alt="arrow"
-                width={24}
-                height={24}
-                property={"true"}
-              />
+              <img src={Arrow} alt="arrow" width={24} height={24} property={"true"} />
             </Link>
-            <h1 className="font-bold text-3xl text-supportColor">
-              INTEX-MARKET
-            </h1>
-            <p className="font-bold text-2xl text-navBarColor mt-3">
-              Введите SMS-код
-            </p>
+            <h1 className="font-bold text-3xl text-supportColor">INTEX-MARKET</h1>
+            <p className="font-bold text-2xl text-navBarColor mt-3">Введите SMS-код</p>
             <p className="text-sm text-navBarColor mt-2 mb-5 w-10/12 mx-auto">
               Введите SMS-код, полученный на ваш Адрес электронной почты
             </p>
@@ -133,13 +121,7 @@ function Verification() {
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (
-                    <img
-                      className="mx-auto"
-                      src={Loader}
-                      alt="loader"
-                      width={28}
-                      height={28}
-                    />
+                    <img className="mx-auto" src={Loader} alt="loader" width={28} height={28} />
                   ) : (
                     "Потвердить"
                   )}

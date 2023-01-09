@@ -104,7 +104,7 @@ export default function Home() {
 
     setSubLoading(true);
     axios
-      .put(`${env}social-networks/update`, links, {
+      .put(`${env}social-networks`, links, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -132,11 +132,10 @@ export default function Home() {
 
   // --- Delete Link
   const linkDelete = (id, e) => {
-    
     e.preventDefault();
 
     axios
-      .delete(`${env}social-networks/delete/${id}`, {
+      .delete(`${env}social-networks/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -159,7 +158,7 @@ export default function Home() {
     setSubLoading(true);
     axios
       .post(
-        `${env}social-networks/create`,
+        `${env}social-networks`,
         {
           name: createLinkTitle,
           link: createLinkText,
@@ -246,9 +245,7 @@ export default function Home() {
           to="/settings
         "
         >
-          <h2 className="font-normal text-navSubColor text-xs ml-2.5">
-            Настройки сайта
-          </h2>
+          <h2 className="font-normal text-navSubColor text-xs ml-2.5">Настройки сайта</h2>
         </Link>
       </div>
       <div className="px-7 pt-6 mb-40">
@@ -256,52 +253,30 @@ export default function Home() {
         <div className="w-full mt-4 bg-white rounded-xl px-6 py-7">
           <div>
             <div className="flex justify-between items-center">
-              <h2 className="text-lg text-navBarColor font-bold">
-                Контактная информация
-              </h2>
-              <button
-                onClick={() => setShowModal(true)}
-                className="p-1"
-                type="button"
-              >
+              <h2 className="text-lg text-navBarColor font-bold">Контактная информация</h2>
+              <button onClick={() => setShowModal(true)} className="p-1" type="button">
                 <img src={EditImg} alt="edit" />
               </button>
             </div>
             <div className="grid grid-cols-2 w-[80%] gap-5 space-x-16 mt-6">
               <div>
                 <div>
-                  <h3 className="font-bold text-base text-supportColor mb-2">
-                    Адрес
-                  </h3>
-                  <p className="text-sm text-navBarColor">
-                    {loading ? loader : data.address_ru}
-                  </p>
+                  <h3 className="font-bold text-base text-supportColor mb-2">Адрес</h3>
+                  <p className="text-sm text-navBarColor">{loading ? loader : data.address_ru}</p>
                 </div>
                 <div className="mt-6">
-                  <h3 className="font-bold text-base text-supportColor mb-2">
-                    Номер телефона
-                  </h3>
-                  <p className="text-sm text-navBarColor">
-                    {loading ? loader : data.phone}
-                  </p>
+                  <h3 className="font-bold text-base text-supportColor mb-2">Номер телефона</h3>
+                  <p className="text-sm text-navBarColor">{loading ? loader : data.phone}</p>
                 </div>
               </div>
               <div>
                 <div>
-                  <h3 className="font-bold text-base text-supportColor mb-2">
-                    E-mail
-                  </h3>
-                  <p className="text-sm text-navBarColor">
-                    {loading ? loader : data.email}
-                  </p>
+                  <h3 className="font-bold text-base text-supportColor mb-2">E-mail</h3>
+                  <p className="text-sm text-navBarColor">{loading ? loader : data.email}</p>
                 </div>
                 <div className="mt-6">
-                  <h3 className="font-bold text-base text-supportColor mb-2">
-                    График работы
-                  </h3>
-                  <p className="text-sm text-navBarColor">
-                    {loading ? loader : data.work_ru}
-                  </p>
+                  <h3 className="font-bold text-base text-supportColor mb-2">График работы</h3>
+                  <p className="text-sm text-navBarColor">{loading ? loader : data.work_ru}</p>
                 </div>
               </div>
             </div>
@@ -311,9 +286,7 @@ export default function Home() {
           {/* ------- */}
           <div>
             <div className="flex justify-between items-center">
-              <h2 className="text-lg text-navBarColor font-bold">
-                Cоциальные сети
-              </h2>
+              <h2 className="text-lg text-navBarColor font-bold">Cоциальные сети</h2>
               <div className="flex items-center">
                 <button
                   onClick={() => setShowModal2(true)}
@@ -322,11 +295,7 @@ export default function Home() {
                 >
                   <img className="w-8 h-8" src={Add} alt="edit" />
                 </button>
-                <button
-                  onClick={() => setShowModal1(true)}
-                  className="p-1"
-                  type="button"
-                >
+                <button onClick={() => setShowModal1(true)} className="p-1" type="button">
                   <img src={EditImg} alt="edit" />
                 </button>
               </div>
@@ -337,9 +306,7 @@ export default function Home() {
                 : links.length > 0 &&
                   links?.map((data) => (
                     <div className="mb-8" key={data.id}>
-                      <h3 className="font-bold text-base text-supportColor mb-2">
-                        {data.name}
-                      </h3>
+                      <h3 className="font-bold text-base text-supportColor mb-2">{data.name}</h3>
                       <a href={data.link} className="text-sm text-navBarColor">
                         {data.link}
                       </a>
@@ -354,9 +321,7 @@ export default function Home() {
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
         <div className="w-730">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl text-addProductColor font-bold">
-              Изменить информацию
-            </h2>
+            <h2 className="text-2xl text-addProductColor font-bold">Изменить информацию</h2>
             <button onClick={() => setShowModal(false)} className="rounded-md">
               <img src={Close} width={25} height={25} alt={"close_image"} />
             </button>
@@ -382,13 +347,7 @@ export default function Home() {
                 <label className="relative text-base font-medium text-addProductColor">
                   Номер телефона
                   <div className="bg-white w-submitBtnsWidth flex items-center h-11 rounded-lg border border-solid  border-borderColor text-addProductColor p-4 mt-2">
-                    <img
-                      src={Flag}
-                      className="w-6 h-4"
-                      width={22}
-                      height={15}
-                      alt="site_logo"
-                    />
+                    <img src={Flag} className="w-6 h-4" width={22} height={15} alt="site_logo" />
                     <input
                       type="text"
                       placeholder="(90) 123 45 67"
@@ -464,19 +423,13 @@ export default function Home() {
       >
         <div className="w-730">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl text-addProductColor font-bold">
-              Изменить информацию
-            </h2>
+            <h2 className="text-2xl text-addProductColor font-bold">Изменить информацию</h2>
             <button onClick={() => setShowModal1(false)} className="rounded-md">
               <img src={Close} width={25} height={25} alt={"close_image"} />
             </button>
           </div>
           <div className="mt-6">
-            <form
-              className="space-y-6"
-              onSubmit={putDataLink}
-              autoComplete="off"
-            >
+            <form className="space-y-6" onSubmit={putDataLink} autoComplete="off">
               {links.length > 0 &&
                 links.map((item) => (
                   <label
@@ -537,9 +490,7 @@ export default function Home() {
 
       {/* --- Add Links --- */}
       <Modal isVisible={showModal2} onClose={() => setShowModal2(false)}>
-        <h2 className="text-2xl text-addProductColor font-bold">
-          Добавить социальную сеть
-        </h2>
+        <h2 className="text-2xl text-addProductColor font-bold">Добавить социальную сеть</h2>
         <form className="mt-6" autoComplete="off" onSubmit={AddLink}>
           <label className="flex flex-col text-base text-addProductColor font-medium w-1/2  ">
             Тип социальный сеть
