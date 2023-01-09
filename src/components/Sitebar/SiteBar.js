@@ -3,6 +3,7 @@ import Logo from "../../Assets/Images/NavbarImgs/Site-logo.svg";
 import { NavLink, Link } from "react-router-dom";
 import DropIcon from "../../Assets/Images/HomeContentImg/Drop.svg";
 import { Modal } from "../../components/Modal/Modal";
+import { UserImg } from "../../Assets/Images/NavbarImgs/NavBarIcons";
 import {
   ProductIcon,
   CallIcon,
@@ -80,13 +81,9 @@ export default function SiteBar() {
           to={"/"}
         >
           <ProductIcon />
-          <span className="ml-navBarIcon">
-            {languages[lang].header.products}
-          </span>
+          <span className="ml-navBarIcon">{languages[lang].header.products}</span>
           <img
-            className={`absolute right-6 duration-200 -rotate-90 ${
-              navBarDrop ? "rotate-0" : ""
-            }`}
+            className={`absolute right-6 duration-200 -rotate-90 ${navBarDrop ? "rotate-0" : ""}`}
             src={DropIcon}
             alt="Drop IMg"
             width={10}
@@ -95,9 +92,7 @@ export default function SiteBar() {
         </NavLink>
         <ul
           className={` duration-500 ${
-            navBarDrop
-              ? "h-auto overflow-auto opacity-100"
-              : "h-0 overflow-hidden opacity-0"
+            navBarDrop ? "h-auto overflow-auto opacity-100" : "h-0 overflow-hidden opacity-0"
           }`}
         >
           <li>
@@ -148,9 +143,15 @@ export default function SiteBar() {
           to={"/callBack"}
         >
           <CallIcon />
-          <span className="ml-navBarIcon">
-            {languages[lang].sitebar.recall}
-          </span>
+          <span className="ml-navBarIcon">{languages[lang].sitebar.recall}</span>
+        </NavLink>
+        <NavLink
+          onClick={delteInnerlink}
+          className="py-4 opacity-80 flex items-center px-6 text-sm leading-lead font-medium text-navBarColor"
+          to={"/userpage"}
+        >
+          <UserImg />
+          <span className="ml-navBarIcon">Пользователи</span>
         </NavLink>
         <NavLink
           onClick={delteInnerlink}
@@ -158,9 +159,7 @@ export default function SiteBar() {
           to={"/settings"}
         >
           <SettingsIcon />
-          <span className="ml-navBarIcon">
-            {languages[lang].sitebar.settings}
-          </span>
+          <span className="ml-navBarIcon">{languages[lang].sitebar.settings}</span>
         </NavLink>
         <button
           onClick={Logout}
@@ -172,8 +171,7 @@ export default function SiteBar() {
       </div>
       <div className="text-sm leading-lead pl-5 pb-5 text-navBarColor w-supportWidth absolute bottom-0">
         <p>
-          Developed by{" "}
-          <span className="text-supportColor">Support IT Solution </span>
+          Developed by <span className="text-supportColor">Support IT Solution </span>
         </p>
       </div>
       <Modal isVisible={showModal}>

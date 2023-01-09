@@ -22,7 +22,6 @@ const Products = () => {
   const lang = useSelector((state) => state.data.lang);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
-  const env = process.env.REACT_APP_ALL_API;
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -34,13 +33,11 @@ const Products = () => {
   // --- Get Product
   React.useEffect(() => {
     setLoader(true);
-    axios
-      .get(`${env}products/getAll?page=${page}&limit=${limit}`)
-      .then((res) => {
-        setData(res?.data);
-        setTotalpage(res.data?.total_count.count);
-        setLoader(false);
-      });
+    axios.get(`${env}products/getAll?page=${page}&limit=${limit}`).then((res) => {
+      setData(res?.data);
+      setTotalpage(res.data?.total_count.count);
+      setLoader(false);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, refresh]);
   // --- Loader
@@ -95,15 +92,9 @@ const Products = () => {
           onChange={() => setIsChecked(!isChecked)}
         />
         <span className="text-[#b9b9b9] mr-3">
-          {isChecked ? data.result.length : deleteAll.length},{" "}
-          {languages[lang].main.select}
+          {isChecked ? data.result.length : deleteAll.length}, {languages[lang].main.select}
         </span>
-        <img
-          className="cursor-pointer"
-          onClick={DeleteAll}
-          src={Trash}
-          alt="Trash icon"
-        />
+        <img className="cursor-pointer" onClick={DeleteAll} src={Trash} alt="Trash icon" />
       </div>
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
@@ -118,24 +109,14 @@ const Products = () => {
               <TableHeader styles="w-[300px]" sortIcon={true}>
                 {languages[lang].main.productName}
               </TableHeader>
-              <TableHeader styles="w-[153px]">
-                {languages[lang].main.price}
-              </TableHeader>
-              <TableHeader styles="w-[153px]">
-                {languages[lang].main.salePrice}
-              </TableHeader>
+              <TableHeader styles="w-[153px]">{languages[lang].main.price}</TableHeader>
+              <TableHeader styles="w-[153px]">{languages[lang].main.salePrice}</TableHeader>
               <TableHeader styles="w-[99px]" sortIcon={true}>
                 {languages[lang].main.quantity}
               </TableHeader>
-              <TableHeader styles="w-[147px]">
-                {languages[lang].main.size}
-              </TableHeader>
-              <TableHeader styles="w-[118px]">
-                {languages[lang].main.volume}
-              </TableHeader>
-              <TableHeader styles="w-[140px]">
-                {languages[lang].main.status}
-              </TableHeader>
+              <TableHeader styles="w-[147px]">{languages[lang].main.size}</TableHeader>
+              <TableHeader styles="w-[118px]">{languages[lang].main.volume}</TableHeader>
+              <TableHeader styles="w-[140px]">{languages[lang].main.status}</TableHeader>
               <TableHeader styles="w-[95px] pr-3 justify-center">
                 <button>
                   <img src={ThreeDotsSvg} alt="three dots icon" />
@@ -145,9 +126,7 @@ const Products = () => {
           </thead>
           <tbody className="bg-white">
             {data.result?.length && loader ? (
-              <div className="flex items-center justify-center my-5">
-                {loaders}
-              </div>
+              <div className="flex items-center justify-center my-5">{loaders}</div>
             ) : (
               data.result?.map((item) => {
                 return (
