@@ -15,9 +15,7 @@ export default function AddProduct() {
   return (
     <div className="py-6 overflow-scroll h-[100vh] px-headerPaddingX">
       <div className="mb-6">
-        <h2 className="font-bold text-2xl leading-8">
-          {languages[lang].main.addProduct}
-        </h2>
+        <h2 className="font-bold text-2xl leading-8">{languages[lang].main.addProduct}</h2>
       </div>
       <div className="bg-white p-6 rounded-xl">
         <ul className="flex items-center list-none space-x-4 w-addProductListWidth border-b-2">
