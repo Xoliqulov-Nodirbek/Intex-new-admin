@@ -39,7 +39,6 @@ export default function Authentication() {
             <Route path="/addProduct" element={<AddProduct />} />
             <Route path="/addCategory" element={<AddCategory />} />
             <Route path="/addAtribut" element={<AddAtribut />} />
-            <Route path="/addAtribut" element={<AddAtribut />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -58,16 +58,10 @@ export default function AddCategory() {
     if (tags_en.length === 0 || tags_ru.length === 0 || tags_uz.length === 0) {
       return;
     }
-    if (
-      tags_en.length !== tags_ru.length ||
-      tags_en.length !== tags_uz.length
-    ) {
+    if (tags_en.length !== tags_ru.length || tags_en.length !== tags_uz.length) {
       return;
     }
-    if (
-      tags_en.length === tags_ru.length &&
-      tags_en.length === tags_uz.length
-    ) {
+    if (tags_en.length === tags_ru.length && tags_en.length === tags_uz.length) {
       for (let i = 0; i < tags_en.length; i++) {
         arr.push({
           category_ru: tags_ru[i],
@@ -82,7 +76,7 @@ export default function AddCategory() {
     }
 
     axios
-      .post(`${env}categories/create`, arr, {
+      .post(`${env}categories`, arr, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -124,11 +118,7 @@ export default function AddCategory() {
                 hdrop={9}
                 imgURL={DropImg}
                 imgAlt={"Drop img"}
-                rotateDelete={
-                  showContent
-                    ? "-rotate-180 duration-300"
-                    : "-rotate-0 duration-300"
-                }
+                rotateDelete={showContent ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}
               >
                 <div
                   className={`${
@@ -158,17 +148,11 @@ export default function AddCategory() {
                 hdrop={9}
                 imgURL={DropImg}
                 imgAlt={"Drop img"}
-                rotateDelete={
-                  enShowContent
-                    ? "-rotate-180 duration-300"
-                    : "-rotate-0 duration-300"
-                }
+                rotateDelete={enShowContent ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}
               >
                 <div
                   className={`${
-                    enShowContent
-                      ? "h-auto overflow-auto"
-                      : "h-0 overflow-hidden"
+                    enShowContent ? "h-auto overflow-auto" : "h-0 overflow-hidden"
                   } duration-300`}
                 >
                   <div className="flex items-end justify-between">
@@ -194,17 +178,11 @@ export default function AddCategory() {
                 hdrop={9}
                 imgURL={DropImg}
                 imgAlt={"Drop img"}
-                rotateDelete={
-                  uzShowContent
-                    ? "-rotate-180 duration-300"
-                    : "-rotate-0 duration-300"
-                }
+                rotateDelete={uzShowContent ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}
               >
                 <div
                   className={`${
-                    uzShowContent
-                      ? "h-auto overflow-auto"
-                      : "h-0 overflow-hidden"
+                    uzShowContent ? "h-auto overflow-auto" : "h-0 overflow-hidden"
                   } duration-300`}
                 >
                   <div className="flex items-end justify-between">

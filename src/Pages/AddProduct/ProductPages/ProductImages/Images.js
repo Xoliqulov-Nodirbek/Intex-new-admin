@@ -4,6 +4,9 @@ import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel
 import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
 import axios from "axios";
+
+const env = process.env.REACT_APP_ALL_API;
+
 export default function Images({ img, atrbut }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [getImg, setGetImg] = useState([]);
@@ -44,15 +47,11 @@ export default function Images({ img, atrbut }) {
     img(false);
     atrbut(true);
     axios
-      .post(
-        `https://web-production-5638.up.railway.app/api/media/create`,
-        formdata,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(`${env}media`, formdata, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         if (res.status === 201) {
           window.localStorage.setItem("image", JSON.stringify(res.data.image));
@@ -64,26 +63,14 @@ export default function Images({ img, atrbut }) {
     <form onSubmit={getResultInfo}>
       <h2 className="font-medium text-base mt-6">Изображение</h2>
       <label className="inline-block mb-4   ">
-        <input
-          onChange={findNewImg}
-          className="visually-hidden"
-          type="file"
-        ></input>
+        <input onChange={findNewImg} className="visually-hidden" type="file"></input>
         <div className="cursor-pointer w-productImgUploadWidth py-8 bg-bgUpload rounded-xl text-center">
-          <img
-            className="mx-auto mb-1"
-            src={Dounload}
-            alt="dounload"
-            width="60"
-            height="60"
-          />
+          <img className="mx-auto mb-1" src={Dounload} alt="dounload" width="60" height="60" />
           <p>Загрузите изображения продукта</p>
         </div>
       </label>
       <div className="">
-        <h2 className="font-semibold text-lg text-paginationButtonColor mb-4">
-          Изображение
-        </h2>
+        <h2 className="font-semibold text-lg text-paginationButtonColor mb-4">Изображение</h2>
         <div className="flex items-center space-x-3">
           {getImg.map((item) => (
             <div key={Math.random()} className="relative">
@@ -95,12 +82,7 @@ export default function Images({ img, atrbut }) {
                 height="116"
               />
               <div className="flex cursor-pointer items-center space-x-2 absolute top-2.5 right-2">
-                <img
-                  src={delterImgUnAdded}
-                  alt="delete img"
-                  width="32"
-                  height="32"
-                />
+                <img src={delterImgUnAdded} alt="delete img" width="32" height="32" />
                 <img
                   onClick={() => handldelete(item.id)}
                   src={delterImgAdded}

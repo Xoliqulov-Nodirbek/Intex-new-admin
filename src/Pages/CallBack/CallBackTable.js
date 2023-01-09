@@ -28,14 +28,10 @@ export default function TableContactRow() {
 
   function searchProduct(inputValue, data) {
     let regex = new RegExp(inputValue, "gi");
-    const filterInput = data.filter((product) =>
-      product[`name`]?.match(regex)
-    );
+    const filterInput = data.filter((product) => product[`name`]?.match(regex));
 
     return filterInput;
   }
-
-
 
   // --- Check count
   const handleChange = (evt) => {
@@ -121,12 +117,7 @@ export default function TableContactRow() {
           <span className="text-[#b9b9b9] mr-3">
             {isChecked ? data.result.length : deleteAll.length}, Выбрано
           </span>
-          <img
-            className="cursor-pointer"
-            onClick={DeleteAll}
-            src={Trash}
-            alt="Trash icon"
-          />
+          <img className="cursor-pointer" onClick={DeleteAll} src={Trash} alt="Trash icon" />
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full">
@@ -154,9 +145,7 @@ export default function TableContactRow() {
             </thead>
             <tbody className="bg-white">
               {data.length && loader ? (
-                <div className="flex items-center justify-center my-5">
-                  {loaders}
-                </div>
+                <div className="flex items-center justify-center my-5">{loaders}</div>
               ) : search.length > 0 ? (
                 searchProduct(search, data).map((item) => {
                   return (
@@ -170,7 +159,7 @@ export default function TableContactRow() {
                     />
                   );
                 })
-              ): (
+              ) : (
                 data.map((item) => {
                   return (
                     <ContactTable
@@ -201,9 +190,7 @@ export default function TableContactRow() {
             <span className="m-0 mr-3 text-paginationColor text-sm">
               Элементы на каждой странице
             </span>
-            <span className="text-sm text-paginationButtonColor">
-              1-5 из {totalPage} предметов
-            </span>
+            <span className="text-sm text-paginationButtonColor">1-5 из {totalPage} предметов</span>
           </div>
           <div className="flex items-center">
             <input

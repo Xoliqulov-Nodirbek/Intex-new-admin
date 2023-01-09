@@ -28,7 +28,7 @@ function NewPassword() {
     setLoading(true);
     if (newPassword === newPassword1) {
       axios
-        .post(`${env}admins/reset_password`, {
+        .post(`${env}auth/reset_password`, {
           password: newPassword,
           varification_number: verificationPassword,
         })
@@ -61,12 +61,8 @@ function NewPassword() {
         <div className="max-w-login_content w-full">
           <div className="flex flex-col text-center bg-white p-11 rounded-xl relative">
             <Toaster position="top-center" reverseOrder={false} />
-            <h1 className="font-bold text-3xl text-supportColor">
-              INTEX-MARKET
-            </h1>
-            <p className="font-bold text-2xl text-navBarColor mt-8 mb-6">
-              Введите новый пароль
-            </p>
+            <h1 className="font-bold text-3xl text-supportColor">INTEX-MARKET</h1>
+            <p className="font-bold text-2xl text-navBarColor mt-8 mb-6">Введите новый пароль</p>
             <form className="flex flex-col text-center" onSubmit={postRequest}>
               <div className="mb-6">
                 <div className="relative">
@@ -147,13 +143,7 @@ function NewPassword() {
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (
-                    <img
-                      className="mx-auto"
-                      src={Loader}
-                      alt="loader"
-                      width={28}
-                      height={28}
-                    />
+                    <img className="mx-auto" src={Loader} alt="loader" width={28} height={28} />
                   ) : (
                     "Отправить СМС"
                   )}
