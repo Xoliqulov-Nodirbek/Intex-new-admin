@@ -39,49 +39,43 @@ export default function AddProduct() {
         <div className="bg-white p-6 rounded-xl">
           <ul className="flex items-center list-none space-x-4 w-addProductListWidth border-b-2">
             <li
+              onClick={() => {
+                setInfo(true);
+                setImg(false);
+                setAtr(false);
+              }}
               className={` font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
             >
               Pусский язык
               {info ? <Line /> : ""}
             </li>
             <li
+              onClick={() => {
+                setInfo(false);
+                setImg(true);
+                setAtr(false);
+              }}
               className={`font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
             >
               Узбекский язык
               {img ? <Line /> : ""}
             </li>
-            <div className="relative">
-              <li
-                className={` font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
-              >
-                Aнглийский язык
-                {atr ? <Line /> : ""}
-              </li>
-              {atr ? (
-                <button
-                  className="absolute -right-[870px] top-1   text-sm text-[#109EF4]"
-                  onClick={() => setShowModal(true)}
-                >
-                  + Добавить атрибуть
-                </button>
-              ) : (
-                ""
-              )}
-            </div>
+            <li
+              onClick={() => {
+                setInfo(false);
+                setImg(false);
+                setAtr(true);
+              }}
+              className={` font-medium relative cursor-pointer text-sm text-addProductLinks leading-lead pb-2.5`}
+            >
+              Aнглийский язык
+              {atr ? <Line /> : ""}
+            </li>
           </ul>
           <div>
-            {info ? <Information info={setInfo} setImg={setImg} /> : ""}
-            {img ? <ProductImgs img={setImg} atrbut={setAtr} /> : ""}
-            {atr ? (
-              <AtributPage
-                showModal={showModal}
-                setShowModal={setShowModal}
-                ownPage={setAtr}
-                infoPageThis={setInfo}
-              />
-            ) : (
-              ""
-            )}
+            {info ? <Information infoPage={setInfo} imgPage={setImg} atrPage={setAtr} /> : ""}
+            {img ? <ProductImgs infoPage={setInfo} imgPage={setImg} atrPage={setAtr} /> : ""}
+            {atr ? <AtributPage infoPage={setInfo} imgPage={setImg} atrPage={setAtr} /> : ""}
           </div>
         </div>
       </div>
