@@ -55,7 +55,6 @@ const data = [
 function UserPage() {
   const [getImg, setGetImg] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  // const [showModal1, setShowModal1] = useState(false);
   const [icon, setIcon] = useState(false);
   const [password, setPassword] = useState("");
   const [icon1, setIcon1] = useState(false);
