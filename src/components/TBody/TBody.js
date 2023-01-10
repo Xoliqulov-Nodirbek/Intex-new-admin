@@ -6,8 +6,6 @@ import Delete from "../../Assets/Images/TableImgs/trash.svg";
 import "./TBody.css";
 
 export default function TBody({ vitalData }) {
-  const [showModal, setShowModal] = useState(false);
-
   const handleClick = (e) => {
     if (e.target.id === "oram") setShowModal(false);
   };
@@ -17,7 +15,6 @@ export default function TBody({ vitalData }) {
       e.target.parentNode.classList.add("relative");
       e.target.nextElementSibling.classList.remove("hidden");
       e.target.nextElementSibling.classList.add("grid");
-      setShowModal(true);
     } else {
       e.target.nextElementSibling.classList.add("hidden");
     }
