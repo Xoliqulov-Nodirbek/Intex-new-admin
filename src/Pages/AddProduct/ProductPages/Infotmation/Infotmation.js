@@ -1,126 +1,68 @@
-import { useEffect, useState } from "react";
-import DropDown from "../../../../BaseComponents/DropDown/DropDown";
+import { useState } from "react";
 import { useFormik } from "formik";
+import Dounload from "../../../../Assets/Images/HomeContentImg/dounload.svg";
+import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel.svg";
+import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
 import * as Yup from "yup";
-import axios from "axios";
 // Images
-import Drop from "../../../../Assets/Images/HomeContentImg/Drop.svg";
 import MButton from "../../../../BaseComponents/MButton/MButton";
-const env = process.env.REACT_APP_ALL_API;
-const token = JSON.parse(window.localStorage.getItem("token"));
-export default function AtributPage({ setImg, info }) {
-  const [openRu, setOpenRu] = useState(true);
-  const [openEn, setOpenEn] = useState(false);
-  const [openUz, setOpenUz] = useState(false);
-  const [data, setData] = useState([]);
-  const [countryData, setCountryData] = useState([]);
-  const [category, setCategory] = useState([]);
+// const env = process.env.REACT_APP_ALL_API;
+// const token = JSON.parse(window.localStorage.getItem("token"));
+export default function AtributPage({ infoPage, imgPage, atrPage }) {
+  const [imgUrl, setImgUrl] = useState([]);
+  const [getImg, setGetImg] = useState([]);
   const initialValues = {
-    name: "",
-    enName: "",
-    uzName: "",
-    ruQuantity: "",
-    ruUserInfo: "",
-    ruCategory: "",
-    enUserInfo: "",
-    uzUserInfo: "",
-    ruCountry: "",
-    uzCountry: "",
-    productType: "",
-    enProductType: "",
-    enCountry: "",
-    enCategory: "",
-    uzProductType: "",
-    uzCategory: "",
+    ru_name: "",
+    ru_price: "",
+    ru_salePrice: "",
+    ru_UserInfo: "",
   };
   const onSubmit = (values, { resetForm }) => {
-    info(false);
-    setImg(true);
+    infoPage(false);
+    imgPage(true);
+    atrPage(false);
     resetForm();
 
     const informationResult = {
       name_uz: values.uzName,
-      name_ru: values.name,
-      name_en: values.enName,
-      count: Number(values.ruQuantity),
-      about_uz: values.uzUserInfo,
-      about_ru: values.ruUserInfo,
-      about_en: values.enUserInfo,
-      country_id: Number(values.ruCountry),
-      manufacturer_id: Number(values.productType),
     };
     window.localStorage.setItem("information", JSON.stringify(informationResult));
   };
-
-  const handleClick = () => {
-    console.log("Hello world");
-  };
-
-  // Manufactory get start
-  useEffect(() => {
-    axios
-      .get(`${env}manufacturers`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setData(res?.data);
-      });
-  }, []);
-  // Manufactory get end
-  // Country get start
-  useEffect(() => {
-    axios
-      .get(`${env}countries`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setCountryData(res?.data);
-      });
-  }, []);
-  // Country get end
-  // Category get start
-  useEffect(() => {
-    axios
-      .get(`${env}categories`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setCategory(res?.data);
-      });
-  }, []);
-  // Category get end
-
+  function handldelete(id) {
+    let newTodo = getImg.filter((e) => e.id !== id);
+    let newDelImg = imgUrl.filter((e) => e.id !== id);
+    setGetImg(newTodo);
+    setImgUrl(newDelImg);
+  }
   const validationSchema = Yup.object({
-    name: Yup.string().required("Required"),
-    productType: Yup.string().required("Required"),
-    ruCountry: Yup.string().required("Required"),
-    ruUserInfo: Yup.string().required("Required"),
-    ruCategory: Yup.string().required("Required"),
-    ruQuantity: Yup.number().required("Required"),
-
-    enName: Yup.string().required("Required"),
-    enProductType: Yup.string().required("Required"),
-    enCountry: Yup.string().required("Required"),
-    enUserInfo: Yup.string().required("Required"),
-    enCategory: Yup.string().required("Required"),
-    uzName: Yup.string().required("Required"),
-    uzProductType: Yup.string().required("Required"),
-    uzCountry: Yup.string().required("Required"),
-    uzUserInfo: Yup.string().required("Required"),
-    uzCategory: Yup.string().required("Required"),
+    ru_name: Yup.string().required("Required"),
+    ru_price: Yup.number().required("Required"),
+    ru_salePrice: Yup.number().required("Required"),
+    ru_UserInfo: Yup.string().required("Required"),
   });
   const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
   });
-
+  const findNewImg = (evt) => {
+    setGetImg([
+      ...getImg,
+      {
+        img: window.URL.createObjectURL(evt.target.files[0]),
+        id: getImg.length ? getImg[getImg.length - 1].id + 1 : 0,
+      },
+    ]);
+    if (evt.target && evt.target.files[0]) {
+      setImgUrl([
+        ...imgUrl,
+        {
+          id: imgUrl.length ? imgUrl[imgUrl.length - 1].id + 1 : 0,
+          url: evt.target.files[0],
+        },
+      ]);
+    }
+  };
   return (
     <div>
       <form
@@ -128,485 +70,155 @@ export default function AtributPage({ setImg, info }) {
           formik.handleSubmit(e);
           formik.values = initialValues;
         }}
-        className=" flex flex-col"
+        className="mt-[23px] mb-[40px]"
       >
-        <DropDown
-          dropName="Русский"
-          imgAlt="drop img"
-          wDrop="12"
-          hdrop="9"
-          imgURL={Drop}
-          downClick={() => setOpenRu(!openRu)}
-          rotateDelete={`${openRu ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}`}
-        >
-          <div className={`${openRu ? "h-auto overflow-auto pb-8" : "h-0 overflow-hidden"}`}>
-            <div className="flex items-center justify-between mb-6">
-              <label className="text-base relative flex flex-col w-[346px]">
-                Название продукта
+        <div className="flex justify-between border-b-2 pb-6 mb-6">
+          <div className="w-[30%]">
+            <h2 className="font-bold text-lg mb-6 text-[#2B3D90]">Информация и изображение </h2>
+            <label className="text-base relative flex flex-col w-[346px]">
+              Название продукта
+              <input
+                type="text"
+                name="ru_name"
+                id="name"
+                placeholder="Каркасный басейн Intex прямоуголь.."
+                className={
+                  formik.touched.ru_name && formik.errors.ru_name
+                    ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
+                    : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
+                }
+                minLength="3"
+                maxLength="25"
+                {...formik.getFieldProps("ru_name")}
+              />
+              {formik.touched.ru_name && formik.errors.ru_name ? (
+                <span className="text-red-600 text-xs absolute -bottom-4  left-2">
+                  {formik.errors.ru_name}
+                </span>
+              ) : null}
+            </label>
+            <div className="space-y-6 mt-6">
+              <div className="flex items-center justify-between">
+                <h2 className="font-bold text-lg text-[#2B3D90]">Атрибуты</h2>
+                <button type="button" className="text-sm text-[#109EF4]">
+                  + Добавить атрибуть
+                </button>
+              </div>
+              <label className="text-base flex flex-col">
+                Цена
                 <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Каркасный басейн Intex прямоуголь.."
+                  type="number"
+                  name="ru_price"
+                  id="price"
+                  placeholder="1 290 000"
                   className={
-                    formik.touched.name && formik.errors.name
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
+                    formik.touched.ru_price && formik.errors.ru_price
+                      ? "  h-12 w-[340px] mt-3 text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600"
+                      : "  h-12 w-[340px] mt-3 text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius"
                   }
                   minLength="3"
                   maxLength="25"
-                  {...formik.getFieldProps("name")}
+                  {...formik.getFieldProps("ru_price")}
                 />
-                {formik.touched.name && formik.errors.name ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4  left-2">
-                    {formik.errors.name}
+                {formik.touched.ru_price && formik.errors.ru_price ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.ru_price}
                   </span>
                 ) : null}
               </label>
-              <label className="text-base relative flex flex-col w-[346px]">
-                Призводства
-                <select
-                  name="productType"
-                  id="name"
+              <label className="text-base flex flex-col">
+                Цена со скидкой
+                <input
+                  type="number"
+                  name="ru_salePrice"
+                  id="salePrice"
+                  placeholder="1 290 000"
                   className={
-                    formik.touched.productType && formik.errors.productType
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
+                    formik.touched.ru_salePrice && formik.errors.ru_salePrice
+                      ? "  h-12 w-[340px] mt-3 text-base rounded-lg p-2 sm:p-4 outline-none border border-red-600 mb-3 sm:mb-6"
+                      : "  h-12 w-[340px] mt-3 text-base rounded-lg p-2 sm:p-4 outline-none border border-gray-input_radius mb-3 sm:mb-6"
                   }
-                  {...formik.getFieldProps("productType")}
-                >
-                  <option>Выберите призводству продукта</option>
-                  {data.map((item) => (
-                    <option value={item.id} id={item.id} key={item.id}>
-                      {item.manufacturer_ru}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched.productType && formik.errors.productType ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.productType}
-                  </span>
-                ) : null}
-              </label>
-              <label className="text-base relative flex flex-col w-[346px]">
-                Страна призводства
-                <select
-                  name="ruCountry"
-                  id="name"
-                  className={
-                    formik.touched.ruCountry && formik.errors.ruCountry
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  {...formik.getFieldProps("ruCountry")}
-                >
-                  <option>Выберите страна призводства</option>
-                  {countryData.map((item) => (
-                    <option value={item.id} id={item.id} key={item.id} onClick={handleClick}>
-                      {item.country_ru}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched.ruCountry && formik.errors.ruCountry ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.ruCountry}
+                  minLength="3"
+                  maxLength="25"
+                  {...formik.getFieldProps("ru_salePrice")}
+                />
+                {formik.touched.ru_salePrice && formik.errors.ru_salePrice ? (
+                  <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
+                    {formik.errors.ru_salePrice}
                   </span>
                 ) : null}
               </label>
             </div>
-            <div className="flex items-center justify-between">
-              <label className="text-base relative flex flex-col w-[65%]">
-                Описание продукта
-                <textarea
-                  rows={5}
-                  name="ruUserInfo"
-                  id="name"
-                  placeholder="Введите Описание продукта"
-                  className={
-                    formik.touched.ruUserInfo && formik.errors.ruUserInfo
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  minLength="3"
-                  maxLength="25"
-                  {...formik.getFieldProps("ruUserInfo")}
-                />
-                {formik.touched.ruUserInfo && formik.errors.ruUserInfo ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.ruUserInfo}
-                  </span>
-                ) : null}
-              </label>
-              <div>
-                <label className="text-base relative flex flex-col w-[346px]">
-                  Категория
-                  <select
-                    name="ruCategory"
-                    id="name"
-                    className={
-                      formik.touched.ruCategory && formik.errors.ruCategory
-                        ? " p-4 text-base rounded-lg outline-none border border-red-600"
-                        : " p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                    }
-                    {...formik.getFieldProps("ruCategory")}
-                  >
-                    <option>Выберите категория продукта</option>
-                    {category.map((item) => (
-                      <option id={item.id} key={item.id}>
-                        {item.category_ru}
-                      </option>
-                    ))}
-                  </select>
-                  {formik.touched.ruCategory && formik.errors.ruCategory ? (
-                    <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                      {formik.errors.ruCategory}
-                    </span>
-                  ) : null}
-                </label>
-                <label className="text-base relative flex flex-col w-[346px] mt-4 ">
-                  Количество
-                  <input
-                    type="number"
-                    name="ruQuantity"
-                    id="name"
-                    placeholder="Введите количество продукта"
-                    className={
-                      formik.touched.ruQuantity && formik.errors.ruQuantity
-                        ? " p-4 text-base rounded-lg outline-none border border-red-600"
-                        : " p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                    }
-                    minLength="3"
-                    maxLength="25"
-                    {...formik.getFieldProps("ruQuantity")}
+          </div>
+          <div className="w-[68%]">
+            <label className="text-base relative flex flex-col">
+              Описание продукта
+              <textarea
+                rows={8}
+                name="ru_UserInfo"
+                id="name"
+                placeholder="Введите Описание продукта"
+                className={
+                  formik.touched.ru_UserInfo && formik.errors.ru_UserInfo
+                    ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
+                    : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
+                }
+                minLength="3"
+                maxLength="25"
+                {...formik.getFieldProps("ru_UserInfo")}
+              />
+              {formik.touched.ru_UserInfo && formik.errors.ru_UserInfo ? (
+                <span className="text-red-600 text-xs absolute -bottom-4 left-2">
+                  {formik.errors.ru_UserInfo}
+                </span>
+              ) : null}
+            </label>
+            <div>
+              <h2 className="font-medium text-bold mt-6 mb-2">Изображение</h2>
+              <label className="inline-block mb-4   ">
+                <input
+                  required
+                  onChange={findNewImg}
+                  className="visually-hidden"
+                  type="file"
+                ></input>
+                <div className="cursor-pointer w-productImgUploadWidth py-8 bg-bgUpload rounded-xl text-center">
+                  <img
+                    className="mx-auto mb-1"
+                    src={Dounload}
+                    alt="dounload"
+                    width="60"
+                    height="60"
                   />
-                  {formik.touched.ruQuantity && formik.errors.ruQuantity ? (
-                    <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                      {formik.errors.ruQuantity}
-                    </span>
-                  ) : null}
-                </label>
+                  <p>Загрузите изображения продукта</p>
+                </div>
+              </label>
+              <div className="flex space-x-2.5">
+                {getImg.map((item) => (
+                  <div key={Math.random()} className="relative">
+                    <img
+                      className="rounded-xl object-cover w-[163px] h-[116px] shadow-lg"
+                      src={item.img}
+                      alt="Upload img"
+                      width="163"
+                      height="116"
+                    />
+                    <div className="flex cursor-pointer items-center space-x-2 absolute top-2.5 right-2">
+                      <img src={delterImgUnAdded} alt="delete img" width="32" height="32" />
+                      <img
+                        onClick={() => handldelete(item.id)}
+                        src={delterImgAdded}
+                        alt="delete img"
+                        width="32"
+                        height="32"
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </DropDown>
-        <DropDown
-          dropName="English"
-          imgAlt="drop img"
-          wDrop="12"
-          hdrop="9"
-          imgURL={Drop}
-          downClick={() => setOpenEn(!openEn)}
-          rotateDelete={`${openEn ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}`}
-        >
-          <div className={`${openEn ? "h-auto overflow-auto pb-8" : "h-0 overflow-hidden"}`}>
-            <div className="flex items-center justify-between mb-6">
-              <label className="text-base relative flex flex-col w-[346px]">
-                Product's name
-                <input
-                  type="text"
-                  name="enName"
-                  id="name"
-                  placeholder="Frame pool Intex rectangular.."
-                  className={
-                    formik.touched.enName && formik.errors.enName
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  minLength="3"
-                  maxLength="25"
-                  {...formik.getFieldProps("enName")}
-                />
-                {formik.touched.enName && formik.errors.enName ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.uzName}
-                  </span>
-                ) : null}
-              </label>
-              <label className="text-base relative flex flex-col w-[346px]">
-                Production
-                <select
-                  name="enProductType"
-                  id="name"
-                  className={
-                    formik.touched.enProductType && formik.errors.enProductType
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  {...formik.getFieldProps("enProductType")}
-                >
-                  <option>Choose a product</option>
-                  {data.map((item) => (
-                    <option key={item.id} id={item.id}>
-                      {item.manufacturer_en}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched.enProductType && formik.errors.enProductType ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.enProductType}
-                  </span>
-                ) : null}
-              </label>
-              <label className="text-base relative flex flex-col w-[346px]">
-                Country of origin
-                <select
-                  name="enCountry"
-                  id="name"
-                  className={
-                    formik.touched.enCountry && formik.errors.enCountry
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  {...formik.getFieldProps("enCountry")}
-                >
-                  <option>Select country of origin</option>
-                  {countryData.map((item) => (
-                    <option id={item.id} key={item.id}>
-                      {item.country_en}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched.enCountry && formik.errors.enCountry ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.enCountry}
-                  </span>
-                ) : null}
-              </label>
-            </div>
-            <div className="flex items-center justify-between">
-              <label className="text-base relative flex flex-col w-[65%]">
-                Product description
-                <textarea
-                  rows={5}
-                  name="enUserInfo"
-                  id="name"
-                  placeholder="Enter product description"
-                  className={
-                    formik.touched.enUserInfo && formik.errors.enUserInfo
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  minLength="3"
-                  maxLength="25"
-                  {...formik.getFieldProps("enUserInfo")}
-                />
-                {formik.touched.enUserInfo && formik.errors.enUserInfo ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.enUserInfo}
-                  </span>
-                ) : null}
-              </label>
-              <div>
-                <label className="text-base relative flex flex-col w-[346px]">
-                  Category
-                  <select
-                    name="enCategory"
-                    id="name"
-                    className={
-                      formik.touched.enCategory && formik.errors.enCategory
-                        ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                        : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                    }
-                    {...formik.getFieldProps("enCategory")}
-                  >
-                    <option>Select category</option>
-                    {category.map((item) => (
-                      <option id={item.id} key={item.id}>
-                        {item.category_en}
-                      </option>
-                    ))}
-                  </select>
-                  {formik.touched.enCategory && formik.errors.enCategory ? (
-                    <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                      {formik.errors.enCategory}
-                    </span>
-                  ) : null}
-                </label>
-                <label className="text-base relative flex flex-col w-[346px] mt-4">
-                  Quantity
-                  <input
-                    type="number"
-                    name="ruQuantity"
-                    id="name"
-                    placeholder="Enter quantity of product"
-                    className={
-                      formik.touched.ruQuantity && formik.errors.ruQuantity
-                        ? "  p-4 text-base rounded-lg outline-none border border-red-600"
-                        : "  p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                    }
-                    minLength="3"
-                    maxLength="25"
-                    {...formik.getFieldProps("ruQuantity")}
-                  />
-                  {formik.touched.ruQuantity && formik.errors.ruQuantity ? (
-                    <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                      {formik.errors.ruQuantity}
-                    </span>
-                  ) : null}
-                </label>
-              </div>
-            </div>
-          </div>
-        </DropDown>
-        <DropDown
-          dropName="O’zbekcha"
-          imgAlt="drop img"
-          wDrop="12"
-          hdrop="9"
-          imgURL={Drop}
-          downClick={() => setOpenUz(!openUz)}
-          rotateDelete={`${openUz ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}`}
-        >
-          <div className={`${openUz ? "h-auto overflow-auto pb-8" : "h-0 overflow-hidden"}`}>
-            <div className="flex items-center justify-between mb-6">
-              <label className="text-base relative flex flex-col w-[346px]">
-                Mahsulot nomi
-                <input
-                  type="text"
-                  name="uzName"
-                  id="name"
-                  placeholder="Ramkali basseyn Intex to'rtburchak.."
-                  className={
-                    formik.touched.uzName && formik.errors.uzName
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  minLength="3"
-                  maxLength="25"
-                  {...formik.getFieldProps("uzName")}
-                />
-                {formik.touched.uzName && formik.errors.uzName ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.uzName}
-                  </span>
-                ) : null}
-              </label>
-              <label className="text-base relative flex flex-col w-[346px]">
-                Ishlab chiqaruvchi
-                <select
-                  name="uzProductType"
-                  id="name"
-                  className={
-                    formik.touched.uzProductType && formik.errors.uzProductType
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  {...formik.getFieldProps("uzProductType")}
-                >
-                  <option>Ishlab chiqaruvchini tanlang</option>
-                  {data.map((item) => (
-                    <option key={item.id} id={item.id}>
-                      {item.manufacturer_uz}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched.uzProductType && formik.errors.uzProductType ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.uzProductType}
-                  </span>
-                ) : null}
-              </label>
-              <label className="text-base relative flex flex-col w-[346px]">
-                Ishlab chiqaruvchi mamlakat
-                <select
-                  name="uzCountry"
-                  id="name"
-                  className={
-                    formik.touched.uzCountry && formik.errors.uzCountry
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  {...formik.getFieldProps("uzCountry")}
-                >
-                  <option>Ishlab chiqaruvchi davlat</option>
-                  {countryData.map((item) => (
-                    <option id={item.id} key={item.id}>
-                      {item.country_uz}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched.uzCountry && formik.errors.uzCountry ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.uzCountry}
-                  </span>
-                ) : null}
-              </label>
-            </div>
-            <div className="flex items-center justify-between">
-              <label className="text-base relative flex flex-col w-[65%]">
-                Mahsulot ta'rifi
-                <textarea
-                  rows={5}
-                  name="uzUserInfo"
-                  id="name"
-                  placeholder="Mahsulot ta'rifini yozing"
-                  className={
-                    formik.touched.uzUserInfo && formik.errors.uzUserInfo
-                      ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                      : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                  }
-                  minLength="3"
-                  maxLength="25"
-                  {...formik.getFieldProps("uzUserInfo")}
-                />
-                {formik.touched.uzUserInfo && formik.errors.uzUserInfo ? (
-                  <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                    {formik.errors.uzUserInfo}
-                  </span>
-                ) : null}
-              </label>
-              <div>
-                <label className="text-base relative flex flex-col w-[346px]">
-                  Kategoriya
-                  <select
-                    name="uzCategory"
-                    id="name"
-                    className={
-                      formik.touched.uzCategory && formik.errors.uzCategory
-                        ? " mt-3 p-4 text-base rounded-lg outline-none border border-red-600"
-                        : " mt-3 p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                    }
-                    {...formik.getFieldProps("uzCategory")}
-                  >
-                    <option>Kategoriya turlari</option>
-                    {category.map((item) => (
-                      <option id={item.id} key={item.id}>
-                        {item.category_uz}
-                      </option>
-                    ))}
-                  </select>
-                  {formik.touched.uzCategory && formik.errors.uzCategory ? (
-                    <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                      {formik.errors.uzCategory}
-                    </span>
-                  ) : null}
-                </label>
-                <label className="text-base relative flex flex-col w-[346px] mt-4">
-                  Miqdori
-                  <input
-                    type="number"
-                    name="ruQuantity"
-                    id="name"
-                    placeholder="Mahsulot miqdorini kiriting"
-                    className={
-                      formik.touched.ruQuantity && formik.errors.ruQuantity
-                        ? "  p-4 text-base rounded-lg outline-none border border-red-600"
-                        : "  p-4 text-base rounded-lg outline-none border border-gray-input_radius"
-                    }
-                    minLength="3"
-                    maxLength="25"
-                    {...formik.getFieldProps("ruQuantity")}
-                  />
-                  {formik.touched.ruQuantity && formik.errors.ruQuantity ? (
-                    <span className="text-red-600 text-xs absolute -bottom-4 left-2">
-                      {formik.errors.ruQuantity}
-                    </span>
-                  ) : null}
-                </label>
-              </div>
-            </div>
-          </div>
-        </DropDown>
+        </div>
         <div className="flex items-center justify-center space-x-5 mt-6 pb-6">
           <MButton BType="reject" type="reset">
             Отменить

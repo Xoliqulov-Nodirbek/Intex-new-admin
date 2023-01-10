@@ -8,8 +8,6 @@ import "./TBody.css";
 export default function TBody({ vitalData }) {
   const [showModal, setShowModal] = useState(false);
 
-  // if (!showModal) return null;
-
   const handleClick = (e) => {
     if (e.target.id === "oram") setShowModal(false);
   };
