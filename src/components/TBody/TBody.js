@@ -3,6 +3,7 @@ import { useState } from "react";
 import Dots from "../../Assets/Images/TableImgs/dots.svg";
 import Edit from "../../Assets/Images/TableImgs/edit.svg";
 import Delete from "../../Assets/Images/TableImgs/trash.svg";
+import "./TBody.css";
 
 export default function TBody({ vitalData }) {
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +21,11 @@ export default function TBody({ vitalData }) {
           return (
             <tr className="flex items-center border-t" key={i}>
               <td className="w-11 flex justify-center">
-                <input className="w-4 h-4 cursor-pointer" type="checkbox" name={`input${i}`} />
+                <input
+                  className="w-4 h-4 cursor-pointer"
+                  type="checkbox"
+                  name={`input${i}`}
+                />
               </td>
               {el.map((a, i) => {
                 return (
@@ -32,7 +37,11 @@ export default function TBody({ vitalData }) {
                         alt="basseyn"
                       />
                     ) : null}
-                    <span className={`truncate text-base text-[#24283A] ${a.textClass}`}>
+                    <span
+                      className={`${a.textClass} ${
+                        a?.label ? a?.label : "text-[#24283A]"
+                      } truncate text-base  `}
+                    >
                       {a.title}
                     </span>
                   </td>
@@ -40,7 +49,7 @@ export default function TBody({ vitalData }) {
               })}
               <td
                 onClick={() => setShowModal(true)}
-                className="rrelative flex justify-center flex-grow w-[95px] py-[17px] cursor-pointer"
+                className="relative flex justify-center flex-grow w-[95px] py-[17px] cursor-pointer"
               >
                 <img src={Dots} alt="three dots" />
                 {showModal ? (
