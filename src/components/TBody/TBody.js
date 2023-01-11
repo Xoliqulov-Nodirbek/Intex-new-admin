@@ -26,8 +26,8 @@ export default function TBody({ vitalData }) {
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
-                        src="https://via.placeholder.com/42x38"
-                        alt="basseyn"
+                        src="https://via.placeholder.com/24x24"
+                        alt="admins_image"
                       />
                     ) : null}
                     <span className={`truncate text-base text-[#24283A] ${a.textClass}`}>
@@ -38,7 +38,7 @@ export default function TBody({ vitalData }) {
               })}
               <td
                 onClick={() => setShowModal(true)}
-                className="rrelative flex justify-center flex-grow w-[95px] py-[17px] cursor-pointer"
+                className="relative flex justify-center w-[95px] py-[17px] cursor-pointer"
               >
                 <img src={Dots} alt="three dots" />
                 {showModal ? (
