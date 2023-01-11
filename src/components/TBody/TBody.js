@@ -21,7 +21,7 @@ export default function TBody({ vitalData }) {
       {vitalData.length > 0 &&
         vitalData.map((el, i) => {
           return (
-            <tr className="flex items-center border-t" key={i}>
+            <tr className="flex items-center border-t last:border-b" key={i}>
               <td className="w-11 flex justify-center">
                 <input
                   className="w-[18px] h-[18px] cursor-pointer"
