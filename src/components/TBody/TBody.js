@@ -34,43 +34,20 @@ export default function TBody({ vitalData }) {
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
-                        src="https://via.placeholder.com/24x24"
-                        alt="admins_image"
+                        src="https://via.placeholder.com/42x38"
+                        alt="basseyn"
                       />
                     ) : null}
                     <span
                       className={`${a.textClass} ${
                         a?.label ? a?.label : "text-[#24283A] text-sm"
-                      } truncate text-base  text-sm`}
+                      } truncate   text-sm`}
                     >
                       {a.title}
                     </span>
                   </td>
                 );
               })}
-              <td
-                onClick={() => setShowModal(true)}
-                className="relative flex justify-center w-[95px] py-[17px] cursor-pointer"
-              >
-                <img src={Dots} alt="three dots" />
-                {showModal ? (
-                  <div
-                    id="oram"
-                    onClick={handleClick}
-                    className="absolute grid grid-cols-1 text-start border bg-white p-3 space-y-3 rounded-[5px] shadow-[0px_12px_23px_rgba(150, 150, 150, 0.1)]"
-                  >
-                    <button className="flex items-center">
-                      <img src={Edit} alt="" />
-                      Изменить
-                    </button>
-                    <button className="flex items-center">
-                      <img src={Delete} alt="" />
-                      Удалить
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
               <td className="flex ml-10  flex-grow w-[95px] py-[17px] cursor-pointer relative">
                 <img
                   className={`edit_dots${i}`}
