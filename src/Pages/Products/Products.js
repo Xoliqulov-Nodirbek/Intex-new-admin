@@ -1,12 +1,49 @@
 import React from "react";
-import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
-import TableHeader from "../../components/TableHeader/TableHeader";
-import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import THead from "../../components/THead/THead";
+import TBody from "../../components/TBody/TBody";
 
 const env = process.env.REACT_APP_ALL_API;
+
+const datajon = [
+  {
+    title: "ID",
+    image: true,
+    style: "w-14 justify-center",
+  },
+  {
+    title: "Название товара",
+    image: true,
+    style: "w-[300px] ",
+  },
+  {
+    title: "Цена",
+    image: false,
+    style: "w-[140px]",
+  },
+  {
+    title: "Cо скидкой",
+    image: false,
+    style: "w-[140px]",
+  },
+  {
+    title: "Кол-во",
+    image: true,
+    style: "w-[97px]",
+  },
+  {
+    title: "Категория",
+    image: true,
+    style: "w-[150px]",
+  },
+  {
+    title: "Статус",
+    image: false,
+    style: "w-[120px]",
+  },
+];
 
 const Products = () => {
   const [data, setData] = React.useState([]);
@@ -33,11 +70,16 @@ const Products = () => {
   // --- Get Product
   React.useEffect(() => {
     setLoader(true);
-    axios.get(`${env}products/getAll?page=${page}&limit=${limit}`).then((res) => {
-      setData(res?.data);
-      setTotalpage(res.data?.total_count.count);
-      setLoader(false);
-    });
+    axios
+      .get(
+        `https://intex-shop-production.up.railway.app/api/products?page=${page}&limit=${limit}`
+      )
+      .then((res) => {
+        setData(res?.data?.result);
+        // console.log(res?.data?.result);
+        setTotalpage(res.data?.total_count.count);
+        setLoader(false);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, refresh]);
   // --- Loader
@@ -83,6 +125,42 @@ const Products = () => {
         console.log(err, IdArray);
       });
   };
+
+  const vitalData = data.map((item) => {
+    return [
+      {
+        title: item.id,
+        style: "w-14 flex justify-center",
+      },
+      {
+        title: item.about_en,
+        image: item.image[0],
+        style: "w-[300px] flex pl-3 items-center",
+      },
+      {
+        title: item.price,
+        style: "w-[140px]",
+      },
+      {
+        title: item.discount_price,
+        style: "w-[140px]",
+      },
+      {
+        title: item.count,
+        style: "w-[97px]",
+      },
+      {
+        title: item.category_en ? item.category_en : "Каркасные",
+        style: "w-[150px]",
+      },
+      {
+        title: item.status_en ? item.status_en : "new",
+        style: "w-[120px]",
+        label: `label label_${item.status_en}`,
+        statusStyle: "",
+      },
+    ];
+  });
   return (
     <div className="bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
@@ -92,58 +170,20 @@ const Products = () => {
           onChange={() => setIsChecked(!isChecked)}
         />
         <span className="text-[#b9b9b9] mr-3">
-          {isChecked ? data.result.length : deleteAll.length}, {languages[lang].main.select}
+          {isChecked ? data.result.length : deleteAll.length},{" "}
+          {languages[lang].main.select}
         </span>
-        <img className="cursor-pointer" onClick={DeleteAll} src={Trash} alt="Trash icon" />
+        <img
+          className="cursor-pointer"
+          onClick={DeleteAll}
+          src={Trash}
+          alt="Trash icon"
+        />
       </div>
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
-          <thead className="bg-[#f2f2f2]">
-            <TableRow styles="py-[13px]">
-              <TableHeader styles="w-11 pr-3 justify-center">
-                <input className="" type="checkbox" readOnly checked={false} />
-              </TableHeader>
-              <TableHeader styles="w-[66px]" sortIcon={true}>
-                ID
-              </TableHeader>
-              <TableHeader styles="w-[300px]" sortIcon={true}>
-                {languages[lang].main.productName}
-              </TableHeader>
-              <TableHeader styles="w-[153px]">{languages[lang].main.price}</TableHeader>
-              <TableHeader styles="w-[153px]">{languages[lang].main.salePrice}</TableHeader>
-              <TableHeader styles="w-[99px]" sortIcon={true}>
-                {languages[lang].main.quantity}
-              </TableHeader>
-              <TableHeader styles="w-[147px]">{languages[lang].main.size}</TableHeader>
-              <TableHeader styles="w-[118px]">{languages[lang].main.volume}</TableHeader>
-              <TableHeader styles="w-[140px]">{languages[lang].main.status}</TableHeader>
-              <TableHeader styles="w-[95px] pr-3 justify-center">
-                <button>
-                  <img src={ThreeDotsSvg} alt="three dots icon" />
-                </button>
-              </TableHeader>
-            </TableRow>
-          </thead>
-          <tbody className="bg-white">
-            {data.result?.length && loader ? (
-              <div className="flex items-center justify-center my-5">{loaders}</div>
-            ) : (
-              data.result?.map((item) => {
-                return (
-                  <TableRow
-                    styles="py-1.5"
-                    data={item}
-                    key={item.id}
-                    isChecked={isChecked}
-                    refresh={() => setRefresh(!refresh)}
-                    setDeleteAll={setDeleteAll}
-                    deleteAll={deleteAll}
-                    handleChange={handleChange}
-                  ></TableRow>
-                );
-              })
-            )}
-          </tbody>
+          <THead data={datajon}></THead>
+          <TBody vitalData={vitalData}></TBody>
         </table>
       </div>
       <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
