@@ -9,13 +9,10 @@ export default function TBody({ vitalData }) {
     if (e.target.matches(`.edit_dots${i}`)) {
       // e?.target?.parentNode?.classList.add("relative");
       e?.target?.nextElementSibling?.classList.remove("hidden");
-      // e?.target?.nextElementSibling?.classList.add("grid");
+      e?.target?.nextElementSibling?.classList.add("grid");
     } else {
       e?.target?.nextElementSibling?.classList.add("hidden");
-      console.log("u emas");
     }
-
-    console.log(e.target);
   };
   return (
     <tbody className="bg-white">
@@ -61,7 +58,7 @@ export default function TBody({ vitalData }) {
 
                 <div
                   id="oram"
-                  className={`absolute hidden grid left-[10%] top-0 bottom-0 grid-cols-1 text-start border bg-white p-1 space-y-1 rounded-[5px] shadow-[0px_12px_23px_rgba(150, 150, 150, 0.1)]`}
+                  className={`absolute hidden left-[10%] top-0 bottom-0 grid-cols-1 text-start border bg-white p-1 space-y-1 rounded-[5px] shadow-[0px_12px_23px_rgba(150, 150, 150, 0.1)]`}
                 >
                   <button className="flex items-center text-xs">
                     <img src={Edit} alt="" width={16} height={17} />
