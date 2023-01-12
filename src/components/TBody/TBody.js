@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import Dots from "../../Assets/Images/TableImgs/dots.svg";
 import Edit from "../../Assets/Images/TableImgs/edit.svg";
 import Delete from "../../Assets/Images/TableImgs/trash.svg";
@@ -8,11 +7,11 @@ import "./TBody.css";
 export default function TBody({ vitalData }) {
   const handleModal = (e, i) => {
     if (e.target.matches(`.edit_dots${i}`)) {
-      e?.target?.parentNode?.classList.add("relative");
+      // e?.target?.parentNode?.classList.add("relative");
       e?.target?.nextElementSibling?.classList.remove("hidden");
       e?.target?.nextElementSibling?.classList.add("grid");
     } else {
-      e?.target.nextElementSibling?.classList.add("hidden");
+      e?.target?.nextElementSibling?.classList.add("hidden");
     }
   };
   return (
@@ -42,22 +41,24 @@ export default function TBody({ vitalData }) {
                     <span
                       className={`${a.textClass} ${
                         a?.label ? a?.label : "text-[#24283A] text-sm"
-                      } truncate text-base  text-sm`}
+                      } truncate   text-sm`}
                     >
                       {a.title}
                     </span>
                   </td>
                 );
               })}
-              <td
-                className="flex ml-10  flex-grow w-[95px] py-[17px] cursor-pointer"
-                onClick={(e) => handleModal(e, i)}
-              >
-                <img className={`edit_dots${i}`} src={Dots} alt="three dots" />
+              <td className="flex ml-10  flex-grow w-[95px] py-[17px] cursor-pointer relative">
+                <img
+                  className={`edit_dots${i}`}
+                  src={Dots}
+                  alt="three dots"
+                  onClick={(e) => handleModal(e, i)}
+                />
 
                 <div
                   id="oram"
-                  className="absolute hidden left-[10%] top-0 bottom-0 grid-cols-1 text-start border bg-white p-1 space-y-1 rounded-[5px] shadow-[0px_12px_23px_rgba(150, 150, 150, 0.1)]"
+                  className={`absolute hidden left-[10%] top-0 bottom-0 grid-cols-1 text-start border bg-white p-1 space-y-1 rounded-[5px] shadow-[0px_12px_23px_rgba(150, 150, 150, 0.1)]`}
                 >
                   <button className="flex items-center text-xs">
                     <img src={Edit} alt="" width={16} height={17} />
