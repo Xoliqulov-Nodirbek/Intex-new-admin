@@ -3,15 +3,25 @@ import Dots from "../../Assets/Images/TableImgs/dots.svg";
 import Edit from "../../Assets/Images/TableImgs/edit.svg";
 import Delete from "../../Assets/Images/TableImgs/trash.svg";
 import "./TBody.css";
+import CrudModal from "../Modal/Modal";
+import { useRef } from "react";
+import { useState } from "react";
+import MFilter from "../../BaseComponents/MFilter/MFilter";
 
 export default function TBody({ vitalData }) {
+  const modalRef = useRef(null);
+  const [bnnma, setBnnma] = useState(false);
   const handleModal = (e, i) => {
     if (e.target.matches(`.edit_dots${i}`)) {
       // e?.target?.parentNode?.classList.add("relative");
       e?.target?.nextElementSibling?.classList.remove("hidden");
       e?.target?.nextElementSibling?.classList.add("grid");
     } else {
-      e?.target?.nextElementSibling?.classList.add("hidden");
+      // modalRef.current.classList.remove("grid");
+
+      // modalRef.current.classList.add("hidden");
+      setBnnma(true);
+      console.log(bnnma);
     }
   };
   return (
@@ -20,7 +30,11 @@ export default function TBody({ vitalData }) {
       {vitalData.length > 0 &&
         vitalData.map((el, i) => {
           return (
-            <tr className="flex items-center border-t last:border-b" key={i}>
+            <tr
+              className="flex items-center border-t last:border-b"
+              key={i}
+              onClick={(e) => handleModal(e, i)}
+            >
               <td className="w-11 flex justify-center">
                 <input
                   className="w-[18px] h-[18px] cursor-pointer"
@@ -38,27 +52,31 @@ export default function TBody({ vitalData }) {
                         alt="basseyn"
                       />
                     ) : null}
-                    <span
-                      className={`${a.textClass} ${
-                        a?.label ? a?.label : "text-[#24283A] text-sm"
-                      } truncate text-base  text-sm`}
-                    >
-                      {a.title}
-                    </span>
+                    {typeof a.title === "object" ? (
+                      a.title.map((el) => {
+                        return <MFilter>{el}</MFilter>;
+                      })
+                    ) : (
+                      <span
+                        className={`${a.textClass} ${
+                          a?.label ? a?.label : "text-[#24283A] text-sm"
+                        } truncate  text-sm`}
+                      >
+                        {a.title}
+                      </span>
+                    )}
                   </td>
                 );
               })}
-              <td className="flex ml-10  flex-grow w-[95px] py-[17px] cursor-pointer relative">
-                <img
-                  className={`edit_dots${i}`}
-                  src={Dots}
-                  alt="three dots"
-                  onClick={(e) => handleModal(e, i)}
-                />
+              <td className="flex ml-10   flex-grow w-[95px] py-[17px] cursor-pointer relative">
+                <img className={`edit_dots${i}`} src={Dots} alt="three dots" />
 
                 <div
+                  ref={modalRef}
                   id="oram"
-                  className={`absolute hidden left-[10%] top-0 bottom-0 grid-cols-1 text-start border bg-white p-1 space-y-1 rounded-[5px] shadow-[0px_12px_23px_rgba(150, 150, 150, 0.1)]`}
+                  className={`absolute ${
+                    bnnma ? "hidden" : "grid"
+                  } hidden left-[10%] top-0 bottom-0 grid-cols-1 text-start border bg-white p-1 space-y-1 rounded-[5px] shadow-[0px_12px_23px_rgba(150, 150, 150, 0.1)]`}
                 >
                   <button className="flex items-center text-xs">
                     <img src={Edit} alt="" width={16} height={17} />
