@@ -159,9 +159,6 @@ const Products = () => {
         label: `label label_${item.status_en}`,
         statusStyle: "",
       },
-      {
-        title: ["on", "off"],
-      },
     ];
   });
   return (
