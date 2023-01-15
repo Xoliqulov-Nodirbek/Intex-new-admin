@@ -5,7 +5,7 @@ import Unauthentication from "./UnAuthentication";
 function App() {
   const [token] = useToken();
 
-  if (token) {
+  if (true) {
     return <Authentication />;
   } else {
     return <Unauthentication />;
