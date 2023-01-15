@@ -17,22 +17,22 @@ import axios from 'axios'
 const data = [
   {
     title: 'ID',
-    image: true,
+    image: false,
     style: 'w-[80px] justify-center',
   },
   {
     title: 'Название товара',
-    image: true,
+    image: false,
     style: 'w-[300px] ',
   },
   {
     title: 'Вид формы',
-    image: true,
+    image: false,
     style: 'w-[190px]',
   },
   {
     title: 'Значение атрибута',
-    image: true,
+    image: false,
     style: 'w-[480px]',
   },
 ]
@@ -40,10 +40,10 @@ const data = [
 export default function Home() {
   const search = useSelector((state) => state.data.search)
   const [products, setProducts] = useState([])
-  const [limit, setLimit] = React.useState(5);
-  const [totalPage, setTotalpage] = React.useState(0);
-  const [atr, setAtr] = React.useState([]);
-  const [page, setPage] = React.useState(0);
+  const [limit, setLimit] = React.useState(5)
+  const [totalPage, setTotalpage] = React.useState(0)
+  const [atr, setAtr] = React.useState([])
+  const [page, setPage] = React.useState(0)
 
   const dispatch = useDispatch()
 
@@ -60,7 +60,7 @@ export default function Home() {
       .catch((err) => console.error(err))
       .finally(() => {})
   }, [limit, page])
-  
+
   const vitalData = atr.map((item) => {
     return [
       {
@@ -78,7 +78,7 @@ export default function Home() {
       {
         title: item.en,
         style: 'w-[480px] flex pl-3 items-center',
-      }
+      },
     ]
   })
 
@@ -99,7 +99,7 @@ export default function Home() {
     }
   }
   return (
-    <div  >
+    <div>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
         <Link className="flex items-center" to={'/'}>
           <img src={HomeImg} alt="Home Img" width="16" height="16" />
@@ -111,8 +111,8 @@ export default function Home() {
           </h2>
         </Link>
       </div>
-      <div className="pt-6 pb-8 px-homeContentPadding h-[100vh] overflow-auto">
-        <div className='w-[1189px] mb-4' >
+      <div className="pt-6 pb-8 px-homeContentPadding h-[100vh] ">
+        <div className=" mb-4">
           <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">
             Атрибуты
           </h2>
@@ -164,8 +164,10 @@ export default function Home() {
           </div>
         </div>
         {/* <AtributeProducts /> */}
-        <THead data={data}></THead>
-        <TBody vitalData={vitalData}></TBody>
+        <table className="w-full">
+          <THead data={data}></THead>
+          <TBody vitalData={vitalData}></TBody>
+        </table>
       </div>
     </div>
   )
