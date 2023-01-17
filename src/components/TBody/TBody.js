@@ -1,7 +1,5 @@
 import React from "react";
-
 import EditModal from "../EditionModal/Modal";
-
 import "./TBody.css";
 import CrudModal from "../Modal/Modal";
 import { useRef } from "react";
@@ -16,9 +14,9 @@ export default function TBody({ vitalData }) {
         vitalData.map((el, i) => {
           return (
             <tr
-              className="flex items-center border-t last:border-b"
               key={i}
-              onClick={(e) => handleModal(e, i)}
+              onClick={() => onClick(el)}
+              className="flex items-center border-t last:border-b"
             >
               <td className="w-11 flex justify-center">
                 <input
@@ -29,7 +27,7 @@ export default function TBody({ vitalData }) {
               </td>
               {el.map((a, i) => {
                 return (
-                  <td className={`py-3 pl-3 ${a.style}`} key={i}>
+                  <td key={i} className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}>
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
@@ -37,6 +35,13 @@ export default function TBody({ vitalData }) {
                         alt="basseyn"
                       />
                     ) : null}
+                    <span
+                      className={`${a.title ? a.textClass : null} ${
+                        a?.label ? a?.label : "text-[#24283A] text-sm"
+                      } truncate text-sm`}
+                    >
+                      {a.title}
+                    </span>
                     {typeof a.title === "object" ? (
                       a.title.map((el, i) =>
                         el.length ? (
