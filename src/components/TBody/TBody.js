@@ -1,11 +1,7 @@
 import React from "react";
-
 import EditModal from "../EditionModal/Modal";
-
 import "./TBody.css";
-import CrudModal from "../Modal/Modal";
-import { useRef } from "react";
-import { useState } from "react";
+
 import MFilter from "../../BaseComponents/MFilter/MFilter";
 
 export default function TBody({ vitalData }) {
@@ -15,7 +11,7 @@ export default function TBody({ vitalData }) {
       {vitalData.length > 0 &&
         vitalData.map((el, i) => {
           return (
-            <tr className="flex items-center border-t last:border-b" key={i}>
+            <tr key={i} className="flex items-center border-t last:border-b">
               <td className="w-11 flex justify-center">
                 <input
                   className="w-[18px] h-[18px] cursor-pointer"
@@ -25,7 +21,10 @@ export default function TBody({ vitalData }) {
               </td>
               {el.map((a, i) => {
                 return (
-                  <td className={`py-3 pl-3 ${a.style}`} key={i}>
+                  <td
+                    key={i}
+                    className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}
+                  >
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
@@ -33,6 +32,13 @@ export default function TBody({ vitalData }) {
                         alt="basseyn"
                       />
                     ) : null}
+                    <span
+                      className={`${a.title ? a.textClass : null} ${
+                        a?.label ? a?.label : "text-[#24283A] text-sm"
+                      } truncate text-sm`}
+                    >
+                      {a.title}
+                    </span>
                     {typeof a.title === "object" ? (
                       a.title.map((el, i) =>
                         el.length ? (
