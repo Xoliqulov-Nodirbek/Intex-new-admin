@@ -21,7 +21,7 @@ export default function ProductOrder() {
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const lang = useSelector((state) => state.data.lang);
-  const search = useSelector(state => state.data.search)
+  const search = useSelector((state) => state.data.search);
 
   function searchProduct(inputValue, data) {
     let regex = new RegExp(inputValue, "gi");
@@ -31,7 +31,6 @@ export default function ProductOrder() {
 
     return filterInput;
   }
-
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -75,17 +74,16 @@ export default function ProductOrder() {
         }
       )
       .then((res) => {
-        // console.log(res, IdArray);
+        // (res, IdArray);
         setRefresh(!refresh);
       })
       .catch((err) => {
-        console.log(err, IdArray);
+        err, IdArray;
       });
   };
-  // console.log("with id", deleteAll);
+  // ("with id", deleteAll);
 
-  // console.log(deleteAll.length);
-
+  // (deleteAll.length);
 
   return (
     <>
@@ -144,37 +142,35 @@ export default function ProductOrder() {
               </TableRow2>
             </thead>
             <tbody className="bg-white">
-              {data.length && search.length ? (
-                searchProduct(search, data).map((item) => {
-                  return (
-                    <TableRow2
-                      styles="py-1.5"
-                      data={item}
-                      refresh={() => setRefresh(!refresh)}
-                      key={item.id}
-                      isChecked={isChecked}
-                      setDeleteAll={setDeleteAll}
-                      deleteAll={deleteAll}
-                      handleChanges={handleChange}
-                    ></TableRow2>
-                  );
-                })
-              ) : (
-                data.map((item) => {
-                  return (
-                    <TableRow2
-                      styles="py-1.5"
-                      data={item}
-                      refresh={() => setRefresh(!refresh)}
-                      key={item.id}
-                      isChecked={isChecked}
-                      setDeleteAll={setDeleteAll}
-                      deleteAll={deleteAll}
-                      handleChanges={handleChange}
-                    ></TableRow2>
-                  );
-                })
-              )}
+              {data.length && search.length
+                ? searchProduct(search, data).map((item) => {
+                    return (
+                      <TableRow2
+                        styles="py-1.5"
+                        data={item}
+                        refresh={() => setRefresh(!refresh)}
+                        key={item.id}
+                        isChecked={isChecked}
+                        setDeleteAll={setDeleteAll}
+                        deleteAll={deleteAll}
+                        handleChanges={handleChange}
+                      ></TableRow2>
+                    );
+                  })
+                : data.map((item) => {
+                    return (
+                      <TableRow2
+                        styles="py-1.5"
+                        data={item}
+                        refresh={() => setRefresh(!refresh)}
+                        key={item.id}
+                        isChecked={isChecked}
+                        setDeleteAll={setDeleteAll}
+                        deleteAll={deleteAll}
+                        handleChanges={handleChange}
+                      ></TableRow2>
+                    );
+                  })}
             </tbody>
           </table>
         </div>
