@@ -32,15 +32,8 @@ export default function TBody({ vitalData }) {
                         alt="basseyn"
                       />
                     ) : null}
-                    <span
-                      className={`${a.title ? a.textClass : null} ${
-                        a?.label ? a?.label : "text-[#24283A] text-sm"
-                      } truncate text-sm`}
-                    >
-                      {a.title}
-                    </span>
-                    {typeof a.title === "object" ? (
-                      a.title.map((el, i) =>
+                    {typeof a.title === "object" && a.title != null ? (
+                      a?.title?.map((el, i) =>
                         el.length ? (
                           <MFilter key={i}>{el}</MFilter>
                         ) : (
@@ -53,7 +46,7 @@ export default function TBody({ vitalData }) {
                           a?.label ? a?.label : "text-[#24283A] text-sm"
                         } truncate  text-sm`}
                       >
-                        {a.title}
+                        {a?.title}
                       </span>
                     )}
                   </td>

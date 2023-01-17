@@ -68,7 +68,7 @@ export default function Home() {
         // setLoader(false);
       });
   }, [token]);
-  console.log(products);
+  products;
 
   // ------> Table Row Information
   const vitalData = products.map((item) => {
@@ -89,7 +89,8 @@ export default function Home() {
       {
         title: item.category_en,
         style: "w-[140px] pl-3",
-        textClass: "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white",
+        textClass:
+          "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white",
       },
       {
         title: item.category_en,
@@ -114,12 +115,16 @@ export default function Home() {
         </Link>
         <span className="ml-2.5 text-navSubColor ">/</span>
         <Link to="/callBack">
-          <h2 className="font-normal text-navSubColor text-xs ml-2.5">Обратный связ</h2>
+          <h2 className="font-normal text-navSubColor text-xs ml-2.5">
+            Обратный связ
+          </h2>
         </Link>
       </div>
       <div className="pt-6 pb-8 px-homeContentPadding overflow-y-scroll h-[100vh]">
         <div>
-          <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">Обратный связ</h2>
+          <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">
+            Обратный связ
+          </h2>
           <div className="bg-white py-3 px-4 rounded-xl flex items-center justify-between">
             <div className="flex items-center">
               <MButton BType="filter bg-filterBg" type="button">
@@ -134,9 +139,13 @@ export default function Home() {
               />
             </div>
             <div className="flex items-center">
-              <strong className="font-semibold text-base text-homeColor mr-2.5">Сортировка</strong>
+              <strong className="font-semibold text-base text-homeColor mr-2.5">
+                Сортировка
+              </strong>
               <div className="w-homeSortWidth cursor-pointer mr-6 flex items-center justify-between bg-headerInpBg p-3 rounded-xl">
-                <span className="font-medium text-sm text-homeSortWrap">По А-Я</span>
+                <span className="font-medium text-sm text-homeSortWrap">
+                  По А-Я
+                </span>
                 <svg
                   width="24"
                   height="22"
