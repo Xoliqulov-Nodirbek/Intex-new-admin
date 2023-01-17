@@ -4,7 +4,7 @@ import Edit from "../../Assets/Images/TableImgs/edit.svg";
 import Delete from "../../Assets/Images/TableImgs/trash.svg";
 import "./TBody.css";
 
-export default function TBody({ vitalData }) {
+export default function TBody({ vitalData, onClick }) {
   const handleModal = (e, i) => {
     if (e.target.matches(`.edit_dots${i}`)) {
       // e?.target?.parentNode?.classList.add("relative");
@@ -20,7 +20,11 @@ export default function TBody({ vitalData }) {
       {vitalData.length > 0 &&
         vitalData.map((el, i) => {
           return (
-            <tr className="flex items-center border-t last:border-b" key={i}>
+            <tr
+              key={i}
+              onClick={() => onClick(el)}
+              className="flex items-center border-t last:border-b"
+            >
               <td className="w-11 flex justify-center">
                 <input
                   className="w-[18px] h-[18px] cursor-pointer"
@@ -30,7 +34,7 @@ export default function TBody({ vitalData }) {
               </td>
               {el.map((a, i) => {
                 return (
-                  <td className={`py-3 pl-3 ${a.style}`} key={i}>
+                  <td key={i} className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}>
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
@@ -39,9 +43,9 @@ export default function TBody({ vitalData }) {
                       />
                     ) : null}
                     <span
-                      className={`${a.textClass} ${
+                      className={`${a.title ? a.textClass : null} ${
                         a?.label ? a?.label : "text-[#24283A] text-sm"
-                      } truncate   text-sm`}
+                      } truncate text-sm`}
                     >
                       {a.title}
                     </span>
