@@ -1,9 +1,8 @@
 import React from "react";
+import axios from "axios";
 import Edit from "../../Assets/Images/TableImgs/edit.svg";
 import Delete from "../../Assets/Images/TableImgs/trash.svg";
 import Dots from "../../Assets/Images/TableImgs/dots.svg";
-import { Link } from "react-router-dom";
-import axios from "axios";
 
 export default function EditModal({ modalId }) {
   const [isModalOpened, setisModalOpened] = React.useState(false);
