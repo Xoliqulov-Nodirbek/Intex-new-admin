@@ -1,8 +1,8 @@
 import React from "react";
 import EditModal from "../EditionModal/Modal";
-import "./TBody.css";
-
 import MFilter from "../../BaseComponents/MFilter/MFilter";
+// ------> Css
+import "./TBody.css";
 
 export default function TBody({ vitalData }) {
   return (
