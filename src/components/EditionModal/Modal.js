@@ -6,10 +6,13 @@ import Dots from "../../Assets/Images/TableImgs/dots.svg";
 
 export default function EditModal({ modalId }) {
   const [isModalOpened, setisModalOpened] = React.useState(false);
+
+  // ------> Show Modal
   const handleModal = () => {
     setisModalOpened(true);
   };
 
+  // ------> Window Listener
   window.addEventListener("click", (e) => {
     const { name } = e.target;
     if (name !== `modalDots${modalId}`) {
@@ -17,6 +20,7 @@ export default function EditModal({ modalId }) {
     }
   });
 
+  // ------> Delete Row
   const handleDelete = () => {
     axios.delete("URL", {
       headers: {
@@ -27,6 +31,7 @@ export default function EditModal({ modalId }) {
       },
     });
   };
+
   return (
     <td className="flex justify-center ml-10 w-[65px] cursor-pointer relative">
       <img
