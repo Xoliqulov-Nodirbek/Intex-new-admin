@@ -1,8 +1,9 @@
 import React from "react";
 import EditModal from "../EditionModal/Modal";
-import "./TBody.css";
-
 import MFilter from "../../BaseComponents/MFilter/MFilter";
+
+// ------> Css
+import "./TBody.css";
 
 export default function TBody({ vitalData }) {
   return (
@@ -21,10 +22,7 @@ export default function TBody({ vitalData }) {
               </td>
               {el.map((a, i) => {
                 return (
-                  <td
-                    key={i}
-                    className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}
-                  >
+                  <td key={i} className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}>
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
@@ -34,17 +32,13 @@ export default function TBody({ vitalData }) {
                     ) : null}
                     {typeof a.title === "object" && a.title != null ? (
                       a?.title?.map((el, i) =>
-                        el.length ? (
-                          <MFilter key={i}>{el}</MFilter>
-                        ) : (
-                          <span key={i}></span>
-                        )
+                        el.length ? <MFilter key={i}>{el}</MFilter> : <span key={i}></span>
                       )
                     ) : (
                       <span
                         className={`${a.textClass} ${
                           a?.label ? a?.label : "text-[#24283A] text-sm"
-                        } truncate  text-sm`}
+                        } truncate text-sm`}
                       >
                         {a?.title}
                       </span>

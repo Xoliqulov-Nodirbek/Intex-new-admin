@@ -117,9 +117,7 @@ function UserPage() {
         title: item?.status,
         style: "w-[140px] pl-3",
         textClass: `${
-          item?.status
-            ? "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white"
-            : ""
+          item?.status ? "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white" : ""
         } `,
       },
       {
@@ -209,8 +207,6 @@ function UserPage() {
     navigate("/userDetails");
   };
 
-  console.log(vitalData);
-
   return (
     <>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
@@ -222,16 +218,12 @@ function UserPage() {
           to="/userpage
       "
         >
-          <h2 className="font-normal text-navSubColor text-xs ml-2.5">
-            Пользователи
-          </h2>
+          <h2 className="font-normal text-navSubColor text-xs ml-2.5">Пользователи</h2>
         </Link>
       </div>
       <div className="pt-6 pb-8 px-homeContentPadding ">
         <div className="mb-4">
-          <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">
-            Пользователи
-          </h2>
+          <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">Пользователи</h2>
           <div className="bg-white py-3 px-4 rounded-xl flex items-center justify-between">
             <div className="flex items-center">
               <MButton BType="filter bg-filterBg" type="button">
@@ -246,13 +238,9 @@ function UserPage() {
               />
             </div>
             <div className="flex items-center">
-              <strong className="font-semibold text-base text-homeColor mr-2.5">
-                Сортировка
-              </strong>
+              <strong className="font-semibold text-base text-homeColor mr-2.5">Сортировка</strong>
               <div className="w-homeSortWidth cursor-pointer mr-6 flex items-center justify-between bg-headerInpBg p-3 rounded-xl">
-                <span className="font-medium text-sm text-homeSortWrap">
-                  По А-Я
-                </span>
+                <span className="font-medium text-sm text-homeSortWrap">По А-Я</span>
                 <svg
                   width="24"
                   height="22"
@@ -269,11 +257,7 @@ function UserPage() {
                   />
                 </svg>
               </div>
-              <MButton
-                BType="add bg-filterBg"
-                type="button"
-                onClick={() => setShowModal(true)}
-              >
+              <MButton BType="add bg-filterBg" type="button" onClick={() => setShowModal(true)}>
                 Добавить
               </MButton>
             </div>
@@ -290,9 +274,7 @@ function UserPage() {
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
         <div className="w-[730px] bg-white">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl text-addProductColor font-bold">
-              Добавить пользователь
-            </h2>
+            <h2 className="text-2xl text-addProductColor font-bold">Добавить пользователь</h2>
             <button onClick={() => setShowModal(false)} className="rounded-md">
               <img src={Close} width={25} height={25} alt={"close_image"} />
             </button>
@@ -301,9 +283,7 @@ function UserPage() {
             <div className="flex items-center">
               <div
                 className={`flex justify-center text-center w-[163px] h-[163px] rounded-[10px] ${
-                  getImg.length > 0
-                    ? ""
-                    : "border-2 border-dashed border-[#CDCDCD]"
+                  getImg.length > 0 ? "" : "border-2 border-dashed border-[#CDCDCD]"
                 }`}
               >
                 {getImg.length > 0 ? (
@@ -320,23 +300,17 @@ function UserPage() {
                     <img className="block mx-auto" src={Upload} alt="" />
                     <div className="flex items-center mt-3">
                       <img className="w-4 h-4" src={Cloud} alt="cloud_svg" />
-                      <p className="ml-3 font-medium text-sm text-[#04009A]">
-                        Загрузить
-                      </p>
+                      <p className="ml-3 font-medium text-sm text-[#04009A]">Загрузить</p>
                     </div>
                   </div>
                 )}
               </div>
               <div className="ml-4">
-                <p className="mb-4 font-medium text-[#374151] text-sm">
-                  Загрузите аватар
-                </p>
+                <p className="mb-4 font-medium text-[#374151] text-sm">Загрузите аватар</p>
                 <label htmlFor="selectImg" className="inline-block">
                   <div className="flex justify-center items-center w-[200px] h-[44px] rounded-[8px] bg-bgUpload1 cursor-pointer">
                     <img className="w-5 h-5" src={UploadImg} alt="" />
-                    <p className="ml-3 text-sm text-[#377DFF]">
-                      Загрузить фото
-                    </p>
+                    <p className="ml-3 text-sm text-[#377DFF]">Загрузить фото</p>
                   </div>
                   <input
                     onChange={uploadImg}
@@ -377,13 +351,7 @@ function UserPage() {
               <label className="relative text-base font-medium text-addProductColor">
                 Номер телефона
                 <div className="w-full bg-white flex items-center h-11 rounded-lg border border-solid text-addProductColor px-4 mt-2">
-                  <img
-                    src={Flag}
-                    className="w-6 h-4"
-                    width={22}
-                    height={15}
-                    alt="site_logo"
-                  />
+                  <img src={Flag} className="w-6 h-4" width={22} height={15} alt="site_logo" />
                   <p className="ml-1 text-base text-[#0E0F0F]">+998</p>
                   <input
                     required
@@ -395,10 +363,7 @@ function UserPage() {
                 </div>
               </label>
 
-              <label
-                className="text-15 relative flex flex-col text-addProductColor"
-                htmlFor="date"
-              >
+              <label className="text-15 relative flex flex-col text-addProductColor" htmlFor="date">
                 Дата рождение
                 <input
                   required
