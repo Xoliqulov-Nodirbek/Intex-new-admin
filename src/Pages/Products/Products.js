@@ -118,12 +118,11 @@ const Products = () => {
         }
       )
       .then((res) => {
-        // res, IdArray;
+        console.log(res, IdArray);
         setRefresh(!refresh);
       })
       .catch((err) => {
-        // err, IdArray;
-        console.log(err);
+        console.log(err, IdArray);
       });
   };
 
