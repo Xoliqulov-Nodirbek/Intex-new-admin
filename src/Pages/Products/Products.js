@@ -118,11 +118,11 @@ const Products = () => {
         }
       )
       .then((res) => {
-        res, IdArray;
+        console.log(res, IdArray);
         setRefresh(!refresh);
       })
       .catch((err) => {
-        err, IdArray;
+        console.log(err, IdArray);
       });
   };
 
@@ -131,6 +131,7 @@ const Products = () => {
       {
         title: item.id,
         style: "w-14 flex justify-center",
+        id: item.id,
       },
       {
         title: item.about_en,

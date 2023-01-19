@@ -78,7 +78,7 @@ export default function ProductOrder() {
         setRefresh(!refresh);
       })
       .catch((err) => {
-        err, IdArray;
+        console.log(err, IdArray);
       });
   };
   // ("with id", deleteAll);

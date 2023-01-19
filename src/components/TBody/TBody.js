@@ -1,18 +1,39 @@
 import React from "react";
 import EditModal from "../EditionModal/Modal";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
+import axios from "axios";
 
 // ------> Css
 import "./TBody.css";
 
-export default function TBody({ vitalData }) {
+export default function TBody({ vitalData, urlRoute }) {
+  const [deletedItem, setDeletedItem] = React.useState(0);
+  const handleDelete = (e) => {
+    // console.log(e.target.parentNode);
+
+    if (e.target.matches(".deleteBtn")) {
+      // axios.delete(urlRoute, {
+      //   headers: {
+      //     Authorization: ``,
+      //   },
+      //   data: {
+      //     source: "source",
+      //   },
+      // });
+      console.log(e.target.parentNode.parentNode.previousElementSibling);
+    }
+  };
   return (
     <tbody className="bg-white">
       <tr className="h-2.5 bg-[#E5E5E5]"></tr>
       {vitalData.length > 0 &&
         vitalData.map((el, i) => {
           return (
-            <tr key={i} className="flex items-center border-t last:border-b">
+            <tr
+              key={i}
+              className="flex items-center border-t last:border-b"
+              onClick={handleDelete}
+            >
               <td className="w-11 flex justify-center">
                 <input
                   className="w-[18px] h-[18px] cursor-pointer"
@@ -22,7 +43,10 @@ export default function TBody({ vitalData }) {
               </td>
               {el.map((a, i) => {
                 return (
-                  <td key={i} className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}>
+                  <td
+                    key={i}
+                    className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}
+                  >
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
@@ -32,7 +56,11 @@ export default function TBody({ vitalData }) {
                     ) : null}
                     {typeof a.title === "object" && a.title != null ? (
                       a?.title?.map((el, i) =>
-                        el.length ? <MFilter key={i}>{el}</MFilter> : <span key={i}></span>
+                        el.length ? (
+                          <MFilter key={i}>{el}</MFilter>
+                        ) : (
+                          <span key={i}></span>
+                        )
                       )
                     ) : (
                       <span
