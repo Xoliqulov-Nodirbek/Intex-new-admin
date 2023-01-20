@@ -2,37 +2,46 @@ import React from "react";
 import EditModal from "../EditionModal/Modal";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
 import axios from "axios";
+import { useState } from "react";
 
 // ------> Css
 import "./TBody.css";
+import { useEffect } from "react";
+
+const env = process.env.REACT_APP_ALL_API;
 
 export default function TBody({ vitalData, urlRoute }) {
   const [deletedItem, setDeletedItem] = React.useState(0);
-  const handleDelete = (e) => {
-    // console.log(e.target.parentNode);
-
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    setData(vitalData);
+  }, [vitalData]);
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const handleDelete = (e, id) => {
     if (e.target.matches(".deleteBtn")) {
-      // axios.delete(urlRoute, {
-      //   headers: {
-      //     Authorization: ``,
-      //   },
-      //   data: {
-      //     source: "source",
-      //   },
-      // });
-      console.log(e.target.parentNode.parentNode.previousElementSibling);
+      axios.delete(`${env}${urlRoute}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setData([...data.filter((item) => item.mainId !== id)]);
     }
   };
+
+  const handleScroll = () => {
+    console.log("scrolling");
+  };
+
   return (
-    <tbody className="bg-white">
+    <tbody className="bg-white" onScroll={handleScroll}>
       <tr className="h-2.5 bg-[#E5E5E5]"></tr>
-      {vitalData.length > 0 &&
-        vitalData.map((el, i) => {
+      {data.length > 0 &&
+        data.map((el, i) => {
           return (
             <tr
               key={i}
               className="flex items-center border-t last:border-b"
-              onClick={handleDelete}
+              onClick={(e) => handleDelete(e, el.mainId)}
             >
               <td className="w-11 flex justify-center">
                 <input
@@ -41,7 +50,7 @@ export default function TBody({ vitalData, urlRoute }) {
                   name={`input${i}`}
                 />
               </td>
-              {el.map((a, i) => {
+              {el.data.map((a, i) => {
                 return (
                   <td
                     key={i}

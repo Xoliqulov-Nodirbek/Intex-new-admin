@@ -41,7 +41,11 @@ export default function EditModal({ modalId }) {
           Изменить
         </button>
         <button className="deleteBtn flex items-center text-xs py-1">
-          <img className="w-6 h-6 mr-1" src={Delete} alt="delete-icon" />
+          <img
+            className="deleteBtn w-6 h-6 mr-1"
+            src={Delete}
+            alt="delete-icon"
+          />
           Удалить
         </button>
       </div>
