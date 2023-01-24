@@ -59,11 +59,10 @@ export default function TBody({ vitalData, urlRoute }) {
                         alt="basseyn"
                       />
                     ) : null}
+
                     {typeof a.title === "object" && a.title != null ? (
                       a?.title?.map((el, i) =>
-                        el.length ? <MFilter key={i}>{el}</MFilter> : <span key={i}></span>
-                      )
-                    ) : (
+                        el.length ? <MFilter key={i}>{el}</MFilter> : <span key={i}></span>)) : (
                       <span
                         className={`${a.textClass} ${
                           a?.label ? a?.label : "text-[#24283A] text-sm"
